@@ -13,4 +13,4 @@ relationships:
       unconfirmed: true
 ---
 
-After a trial the clock loosens 15% on a timeout, tightens 10% when more than 20% was left, and stays put on a narrow finish. Asymmetric so a struggling student is helped quickly and a strong one squeezed gently; bounded to 3-40 s per problem and rounded to 5 s.
+After a trial the clock loosens 15% on a timeout, tightens 10% when more than 20% was left, and stays put on a narrow finish. Asymmetric so a struggling student is helped quickly and a strong one squeezed gently; rounded to 5 s and held within the limits in play/clock/trial-two-to-ten-minutes.

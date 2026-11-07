@@ -11,7 +11,7 @@ API contract (`contract/`), since that is what any other server depends on:
 Home installs keep following `main` through `scripts/update.sh`; a release is for
 anyone who wants a known version, and these notes say what changed either way.
 
-## Unreleased
+## 2.0.0 — 2026-11-06
 
 **Time Trials sized to the problems.** A trial now asks for as many problems
 as fit in about five minutes at the level's expected pace, from 12 down to 1,

@@ -65,4 +65,5 @@ export default {
   // a circle's equation from circles.
   dependsOn: ['systems', 'quadratic-eq', 'quadratic-formula', 'circles'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

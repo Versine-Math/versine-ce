@@ -58,4 +58,5 @@ export default {
   // level needs slopes and lengths from coord-geometry.
   dependsOn: ['congruence', 'coord-geometry'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

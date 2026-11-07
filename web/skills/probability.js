@@ -61,4 +61,5 @@ export default {
   // percent, and its complement is then 100% less it (percents).
   dependsOn: ['frac-muldiv', 'percents'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

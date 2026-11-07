@@ -61,6 +61,7 @@ export default {
   answerInput: 'int',
   dependsOn: ['equations', 'simplify'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 
   lesson(problem) {
     // The strategy level carries no visual, so it falls back to the

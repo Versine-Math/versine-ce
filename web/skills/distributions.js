@@ -60,4 +60,5 @@ export default {
   // (percents).
   dependsOn: ['data-center', 'roots', 'percents'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

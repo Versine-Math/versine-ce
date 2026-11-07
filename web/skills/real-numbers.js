@@ -65,6 +65,7 @@ export default {
   answerInput: 'frac',
   dependsOn: ['decimals', 'frac-equiv', 'roots', 'rounding'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 
   /** One line of working per step, the same as the other Powers skills. */
   lesson(problem) {

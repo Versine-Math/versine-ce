@@ -58,4 +58,5 @@ export default {
   // circles; a parabola's vertex form from quadratic-graphs.
   dependsOn: ['circles', 'quadratic-graphs'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

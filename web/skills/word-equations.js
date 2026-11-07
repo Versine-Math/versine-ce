@@ -63,4 +63,5 @@ export default {
   answerInput: 'int',
   dependsOn: ['equations-both', 'evaluate', 'inequalities'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

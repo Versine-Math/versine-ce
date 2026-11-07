@@ -61,6 +61,7 @@ export default {
   answerInput: 'decimal',
   dependsOn: ['decimals'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 
   /** The working, a line at a time: which column, which neighbors, which way. */
   lesson(problem) {

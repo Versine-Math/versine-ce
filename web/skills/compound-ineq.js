@@ -56,4 +56,5 @@ export default {
   answerInput: 'solutions',
   dependsOn: ['inequalities'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

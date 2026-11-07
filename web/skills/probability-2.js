@@ -54,4 +54,5 @@ export default {
   // and the conditional levels read a two-way table (bivariate).
   dependsOn: ['probability', 'bivariate'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

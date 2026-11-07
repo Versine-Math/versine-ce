@@ -59,5 +59,6 @@ export default {
   // cofunctions began as complementary angles in trig-ratios.
   dependsOn: ['unit-circle', 'trig-ratios'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
   longerBecause: 'Six families of identities are six techniques, each its own level, and two levels then work with them as a whole: Identity or Not? asks whether an equation holds for every angle, settled by a counterexample or not at all by trying angles, and Next Step in a Proof is the derivation that does settle it. The first is why the second is needed, so they sit side by side, and All Together makes nine.',
 };

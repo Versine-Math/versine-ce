@@ -49,4 +49,5 @@ export default {
   answerInput: 'expr',
   dependsOn: ['factoring'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

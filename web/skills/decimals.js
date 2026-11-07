@@ -67,4 +67,5 @@ export default {
   answerInput: 'decimal',
   dependsOn: ['frac-equiv', 'int-muldiv'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

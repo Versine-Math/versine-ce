@@ -98,6 +98,7 @@ export default {
   answerInput: 'frac',
   dependsOn: ['frac-addsub', 'frac-muldiv', 'int-addsub', 'int-muldiv'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 
   /**
    * Only the opening level walks its working: the sign-and-size picture

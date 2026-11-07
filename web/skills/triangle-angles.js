@@ -64,4 +64,5 @@ export default {
   // solved for x the way angles' Solve for x is.
   dependsOn: ['angles'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

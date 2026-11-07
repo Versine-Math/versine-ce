@@ -53,4 +53,5 @@ export default {
   answerInput: 'linear',
   dependsOn: ['slope', 'evaluate', 'equations'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

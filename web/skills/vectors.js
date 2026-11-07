@@ -63,4 +63,5 @@ export default {
   // requiem: catalogue/structure/eight-level-guide
   longerBecause: 'The plan names eight levels, and the dot product is a ninth: the angle between two vectors and whether they are orthogonal come before calculus and physics, and cannot ride along in Resultants, whose forces and bearings are a different technique. Each of the other seven is its own move -- components, length and angle, the way back, adding, scaling, unit length, resultants -- and All Together makes nine.',
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

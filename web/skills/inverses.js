@@ -58,4 +58,5 @@ export default {
   // requiem: catalogue/content/log-functions-in-logarithms
   dependsOn: ['functions', 'equations', 'composition', 'quadratic-graphs', 'roots'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

@@ -41,6 +41,7 @@ export default {
   answerInput: 'int',
   dependsOn: ['int-addsub', 'int-muldiv'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 
   /**
    * One step per line of working, naming the rule that justified it. The

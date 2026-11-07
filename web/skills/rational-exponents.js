@@ -61,4 +61,5 @@ export default {
   answerInput: 'int',
   dependsOn: ['roots', 'real-numbers', 'monomials'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

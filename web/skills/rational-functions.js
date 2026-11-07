@@ -57,4 +57,5 @@ export default {
   // Factoring and excluded values from rational-expr; degree from polynomials; dividing from poly-division.
   dependsOn: ['rational-expr', 'domain-range', 'polynomials', 'poly-division'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

@@ -236,7 +236,10 @@ Three files, in this order.
 
 **`web/skills/<id>.js`** — what the student sees. Levels with their names,
 slugs, blurbs and par times, and the skill's identity. It imports nothing and
-computes nothing; it is data.
+computes nothing; it is data. A level's par time is the seconds one problem is
+expected to take. It sets how many problems the level's Time Trial asks for and
+the standard its speed is measured against, so set it for the whole problem,
+every step included.
 
 ```js
 export const LEVELS = [

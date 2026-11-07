@@ -67,4 +67,5 @@ export default {
   // the log as the inverse of bˣ from inverses.
   dependsOn: ['exponents', 'rational-exponents', 'equations', 'exponential', 'quadratic-eq', 'radical-eq', 'inverses'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

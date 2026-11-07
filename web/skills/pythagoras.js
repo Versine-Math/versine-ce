@@ -57,4 +57,5 @@ export default {
   answerInput: 'int',
   dependsOn: ['roots', 'coords'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

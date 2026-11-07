@@ -62,4 +62,5 @@ export default {
   dependsOn: ['pythagoras', 'similarity'],
   longerBecause: 'The plan names eight levels, each its own technique: naming the sides, the ratios, a missing side, a missing angle, the two special triangles with their different exact ratios, the cofunctions, and the applied problems. Merging any two would teach one of them in passing, and All Together makes nine.',
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

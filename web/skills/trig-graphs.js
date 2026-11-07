@@ -53,4 +53,5 @@ export default {
   // it is a transformation of a parent function.
   dependsOn: ['unit-circle', 'transformations-f'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

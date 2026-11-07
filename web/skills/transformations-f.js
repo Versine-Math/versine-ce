@@ -53,4 +53,5 @@ export default {
   answerInput: 'pair',
   dependsOn: ['quadratic-graphs', 'abs-value', 'roots'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

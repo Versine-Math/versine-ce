@@ -60,4 +60,5 @@ export default {
   // center by completing the square from quadratic-formula.
   dependsOn: ['area', 'triangle-angles', 'pythagoras', 'quadratic-formula'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

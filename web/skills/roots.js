@@ -60,6 +60,7 @@ export default {
   answerInput: 'int',
   dependsOn: ['exponents', 'int-muldiv'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 
   /** One line of working per step, same as the other worked-lines skills. */
   lesson(problem) {

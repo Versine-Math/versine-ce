@@ -50,4 +50,5 @@ export default {
   // Fractions with x from rational-expr; what is left is solved as in equations and quadratic-eq.
   dependsOn: ['rational-expr', 'equations', 'quadratic-eq', 'proportional', 'word-equations', 'ratio'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

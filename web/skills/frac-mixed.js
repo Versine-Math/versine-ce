@@ -64,5 +64,6 @@ export default {
   answerInput: 'mixed',
   dependsOn: ['frac-addsub', 'frac-muldiv'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 
 };

@@ -57,4 +57,5 @@ export default {
   answerInput: 'solutions',
   dependsOn: ['factoring', 'equations-both'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

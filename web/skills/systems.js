@@ -63,4 +63,5 @@ export default {
   answerInput: 'pair',
   dependsOn: ['linear-eq', 'equations-both', 'word-equations'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

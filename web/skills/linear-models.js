@@ -61,4 +61,5 @@ export default {
   answerInput: 'linear',
   dependsOn: ['linear-eq', 'percents'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

@@ -222,13 +222,13 @@ CLOCK = {
     "loosen": 1.15,      # failed: give 15% more time next attempt
     "tighten": 0.90,     # finished with room to spare: take 10% away
     "spare": 0.20,       # "room to spare" means this much clock left unused
-    "min_pace": 3,       # never demand faster than 3s per problem
-    "max_pace": 40,      # never allow slower than 40s per problem
+    "shortest": 120,     # requiem: play/clock/trial-two-to-ten-minutes
+    "longest": 600,      # a whole trial runs two to ten minutes
     "step": 5,           # clocks are shown to the second; keep them tidy
 }
 
 
-def adapt_clock(duration: int, target: int, passed: bool, time_left: int | None) -> int:
+def adapt_clock(duration: int, passed: bool, time_left: int | None) -> int:
     """The next clock for this student on this level.
 
     Three outcomes, one signal each:
@@ -245,10 +245,8 @@ def adapt_clock(duration: int, target: int, passed: bool, time_left: int | None)
     # Round to a tidy value first, then clamp -- clamping first lets the
     # rounding step slip back past the bound.
     step = CLOCK["step"]
-    low = -(-target * CLOCK["min_pace"] // step) * step     # ceil to a step
-    high = (target * CLOCK["max_pace"] // step) * step      # floor to a step
     nxt = round(nxt / step) * step
-    return int(max(low, min(high, nxt)))
+    return int(max(CLOCK["shortest"], min(CLOCK["longest"], nxt)))
 
 
 def validate_new_user(pin: str, icon: str, accent: str) -> None:
@@ -452,20 +450,19 @@ def submit_run(body: RunIn, user=Depends(current_user)):
         at_floor = False
         if mode_is_trial and body.duration > 0:
             target = s.target or 1
-            next_clock = adapt_clock(body.duration, target, bool(s.passed), s.timeLeft)
-            step = CLOCK["step"]
-            clock_floor = -(-target * CLOCK["min_pace"] // step) * step
-            at_floor = next_clock <= clock_floor
+            next_clock = adapt_clock(body.duration, bool(s.passed), s.timeLeft)
+            at_floor = next_clock <= CLOCK["shortest"]
             conn.execute(
                 """INSERT INTO level_clocks (user_id, skill_id, level, level_slug,
-                                            duration, runs, updated_at)
-                   VALUES (?,?,?,?,?,1,?)
+                                            duration, target, runs, updated_at)
+                   VALUES (?,?,?,?,?,?,1,?)
                    ON CONFLICT(user_id, skill_id, level) DO UPDATE SET
                      level_slug = excluded.level_slug,
                      duration = excluded.duration,
+                     target = excluded.target,
                      runs = level_clocks.runs + 1,
                      updated_at = excluded.updated_at""",
-                (user["id"], body.skill_id, body.level, slug, next_clock, db.now()),
+                (user["id"], body.skill_id, body.level, slug, next_clock, target, db.now()),
             )
 
         data = db.get_progress(conn, user["id"])

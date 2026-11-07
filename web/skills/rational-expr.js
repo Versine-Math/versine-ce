@@ -57,4 +57,5 @@ export default {
   // Factoring from factoring; fraction rules from the fraction skills.
   dependsOn: ['factoring', 'quadratic-eq', 'frac-muldiv', 'frac-addsub'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

@@ -59,4 +59,5 @@ export default {
   // Points in all four quadrants, read and written as pairs.
   dependsOn: ['coords'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

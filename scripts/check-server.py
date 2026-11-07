@@ -499,38 +499,36 @@ def _():
 @test("failing loosens the clock, finishing with room to spare tightens it")
 def _():
     fresh()
-    loose = api.adapt_clock(duration=100, target=10, passed=False, time_left=0)
-    check(loose > 100, f"a failed run should loosen the clock, got {loose}")
-    tight = api.adapt_clock(duration=100, target=10, passed=True, time_left=40)
-    check(tight < 100, f"finishing with 40s spare should tighten, got {tight}")
-    same = api.adapt_clock(duration=100, target=10, passed=True, time_left=5)
-    equal(same, 100, "a narrow finish should leave the clock alone")
+    loose = api.adapt_clock(duration=200, passed=False, time_left=0)
+    check(loose > 200, f"a failed run should loosen the clock, got {loose}")
+    tight = api.adapt_clock(duration=200, passed=True, time_left=80)
+    check(tight < 200, f"finishing with 80s spare should tighten, got {tight}")
+    same = api.adapt_clock(duration=200, passed=True, time_left=5)
+    equal(same, 200, "a narrow finish should leave the clock alone")
 
 
-@test("the clock never demands an impossible pace nor allows an idle one")
+@test("a trial's clock stays between two and ten minutes")
 def _():
     fresh()
-    target = 10
-    floor = api.CLOCK["min_pace"] * target
-    ceiling = api.CLOCK["max_pace"] * target
-    fast = api.adapt_clock(duration=10, target=target, passed=True, time_left=9)
-    check(fast >= floor, f"clock {fast} is under the {floor}s floor")
-    slow = api.adapt_clock(duration=10_000, target=target, passed=False, time_left=0)
-    check(slow <= ceiling, f"clock {slow} is over the {ceiling}s ceiling")
+    fast = api.adapt_clock(duration=10, passed=True, time_left=9)
+    equal(fast, api.CLOCK["shortest"], "clock tightened past the floor")
+    slow = api.adapt_clock(duration=10_000, passed=False, time_left=0)
+    equal(slow, api.CLOCK["longest"], "clock loosened past the ceiling")
 
 
 @test("a trial records the clock it earned for next time")
 def _():
     fresh({"alpha": ["one"]})
     user = make_user()
-    out = run(user, level=0, slug="one", mode="trial", duration=120, levels=1,
-              passed=True, target=10, timeLeft=60)
+    out = run(user, level=0, slug="one", mode="trial", duration=200, levels=1,
+              passed=True, target=10, timeLeft=100)
     check(out["clockNext"] is not None, "no next clock was reported")
-    check(out["clockNext"] < 120, "a comfortable win should tighten the clock")
+    check(out["clockNext"] < 200, "a comfortable win should tighten the clock")
     with db.cursor() as conn:
-        stored = conn.execute("SELECT duration, runs FROM level_clocks WHERE user_id=?",
+        stored = conn.execute("SELECT duration, target, runs FROM level_clocks WHERE user_id=?",
                               (user["id"],)).fetchone()
     equal(stored["duration"], out["clockNext"], "stored clock")
+    equal(stored["target"], 10, "problems the stored clock is for")
     equal(stored["runs"], 1, "clock run count")
 
 

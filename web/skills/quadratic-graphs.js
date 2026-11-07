@@ -61,4 +61,5 @@ export default {
   answerInput: 'pair',
   dependsOn: ['quadratic-formula', 'functions'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

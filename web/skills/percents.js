@@ -66,4 +66,5 @@ export default {
   answerInput: 'int',
   dependsOn: ['decimals', 'frac-equiv', 'ratio'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

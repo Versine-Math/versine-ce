@@ -54,4 +54,5 @@ export default {
   // as a percent of a whole (percents).
   dependsOn: ['linear-models', 'percents'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

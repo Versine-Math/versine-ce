@@ -131,6 +131,15 @@ export const SUBJECTS = [
   { id: 'data', name: 'Chance & Data' },
 ];
 
+// A level's Time Trial is sized from its par time, which each skill keeps beside
+// its levels.
+for (const skill of SKILLS) {
+  skill.levels.forEach((level, i) => {
+    level.parSeconds = skill.parSeconds?.[i];
+    level.isLastLevel = i === skill.levels.length - 1;
+  });
+}
+
 /** Names are short: they sit in a card footer beside the solved count. */
 export const CATEGORIES = [
   // ── Arithmetic ────────────────────────────────────────────────────────
@@ -339,6 +348,9 @@ export function validateGraph() {
   const byId = new Map(SKILLS.map((s) => [s.id, s]));
 
   for (const skill of SKILLS) {
+    if (skill.parSeconds?.length !== skill.levels.length) {
+      problems.push(`${skill.id} has ${skill.parSeconds?.length} par times for ${skill.levels.length} levels`);
+    }
     for (const dep of dependenciesOf(skill)) {
       if (!byId.has(dep)) problems.push(`${skill.id} depends on unknown skill "${dep}"`);
       if (dep === skill.id) problems.push(`${skill.id} depends on itself`);

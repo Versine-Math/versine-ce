@@ -56,4 +56,5 @@ export default {
   answerInput: 'roots',
   dependsOn: ['quadratic-eq', 'roots'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

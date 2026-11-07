@@ -57,4 +57,5 @@ export default {
   // polynomials; the discriminant from quadratic-formula.
   dependsOn: ['exponents', 'roots', 'polynomials', 'quadratic-formula'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

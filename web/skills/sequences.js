@@ -63,4 +63,5 @@ export default {
   answerInput: 'int',
   dependsOn: ['linear-models', 'exponents'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

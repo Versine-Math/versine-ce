@@ -87,6 +87,7 @@ export default {
   answerInput: 'int',
   dependsOn: ['frac-equiv', 'frac-muldiv', 'factors', 'int-muldiv'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 
   /**
    * The rate levels write their working a line at a time, and the sequence is

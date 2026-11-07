@@ -316,8 +316,7 @@ function paceCard(levels = [], clocks = {}) {
 
 function levelRow(skill, lvl, clocks = {}) {
   const levelDef = skill?.levels?.[lvl.level];
-  const { duration, target } = trialSettings(levelDef);
-  const standard = duration / target;          // the fixed yardstick, same for everyone
+  const { pace: standard } = trialSettings(levelDef);   // the fixed yardstick, same for everyone
   const measured = lvl.medianSeconds;
 
   const own = clocks[`${lvl.skillId}:${lvl.level}`];

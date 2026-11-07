@@ -59,4 +59,5 @@ export default {
   // Every volume starts from a base's area, and every surface is areas added.
   dependsOn: ['area'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

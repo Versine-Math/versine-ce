@@ -36,8 +36,8 @@ export const RATING = {
   levelBonus: 0.15,     // per level index within a skill: later levels count more
   accFloor: 0.60,       // accuracy at or below this contributes nothing
   accCeil: 0.95,        // accuracy at or above this is full marks
-  paceFloor: 1.40,      // this many times over the clock's budget scores nothing
-  paceCeil: 0.60,       // this fraction of the budget is full marks
+  paceFloor: 1.40,      // this many times the level's expected pace scores nothing
+  paceCeil: 0.60,       // this fraction of the expected pace is full marks
   speedShare: 0.40,     // how much of quality is speed; the rest is accuracy
 };
 
@@ -84,8 +84,7 @@ export function computeRating(skills, progress, levelStats = []) {
       if (!cleared.includes(i)) return;
 
       const stat = stats.get(`${skill.id}:${i}`);
-      const { duration, target } = trialSettings(levelDef);
-      const allowed = duration / target;
+      const { pace: allowed } = trialSettings(levelDef);
 
       const accuracy = stat?.accuracy ?? 0;
       const median = stat?.medianSeconds ?? null;

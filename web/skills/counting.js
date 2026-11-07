@@ -58,4 +58,5 @@ export default {
   // and Probability by Counting is probability's count over a count.
   dependsOn: ['probability'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

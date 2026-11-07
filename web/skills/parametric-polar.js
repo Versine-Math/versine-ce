@@ -67,4 +67,5 @@ export default {
   // magnitude and direction, radians, and circles' equations.
   dependsOn: ['unit-circle', 'conics', 'vectors', 'quadratic-formula', 'radians', 'circles'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

@@ -59,4 +59,5 @@ export default {
   answerInput: 'expr',
   dependsOn: ['order-ops', 'int-muldiv', 'factors'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

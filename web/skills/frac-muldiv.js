@@ -63,5 +63,6 @@ export default {
   answerInput: 'frac',
   dependsOn: ['frac-addsub'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 
 };

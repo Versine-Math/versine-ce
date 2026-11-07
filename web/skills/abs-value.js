@@ -60,4 +60,5 @@ export default {
   answerInput: 'solutions',
   dependsOn: ['compound-ineq'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

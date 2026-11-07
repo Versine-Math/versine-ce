@@ -58,4 +58,5 @@ export default {
   // here takes a sine or a cosine, so trig-ratios is not needed first.
   dependsOn: ['circles'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

@@ -55,4 +55,5 @@ export default {
   answerInput: 'int',
   dependsOn: ['linear-eq', 'exponents'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

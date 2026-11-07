@@ -37,7 +37,6 @@ export const LEVELS = [
     blurb: 'Three terms at once, left to right.',
     // Three terms take roughly twice as long to work through as two, so the
     // default two-minute clock made this level near-unpassable.
-    trial: { duration: 180 },
   },
   { name: 'All Together', slug: 'all-together', blurb: 'Everything mixed, with no warning which is coming. '
     + 'Clear this against the clock to finish the skill for the day.' },
@@ -62,5 +61,6 @@ export default {
   blurb: 'Positive and negative numbers on the line.',
   answerInput: 'int',
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 
 };

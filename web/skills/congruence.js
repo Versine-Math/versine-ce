@@ -54,4 +54,5 @@ export default {
   // builds on base angles and solving with x on both sides, all taught there.
   dependsOn: ['triangle-angles'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

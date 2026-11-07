@@ -51,4 +51,5 @@ export default {
   // Expanding from polynomials and monomials; zeros from quadratic-eq.
   dependsOn: ['monomials', 'polynomials', 'evaluate', 'quadratic-eq'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

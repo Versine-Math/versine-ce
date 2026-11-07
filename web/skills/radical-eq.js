@@ -51,4 +51,5 @@ export default {
   // Solving from equations and quadratic-eq; roots and powers from their skills.
   dependsOn: ['equations', 'roots', 'quadratic-eq', 'rational-exponents'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

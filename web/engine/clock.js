@@ -9,30 +9,28 @@ import { trialSettings } from './modes.js';
  *   2. a seed derived from how fast the student actually practiced;
  *   3. nothing — the level is not ready for a trial yet.
  *
- * The authored `trial: { duration }` on a level is *not* used as the clock.
- * It stays a fixed reference pace for the Level calculation, so that adapting
- * one student's clock never changes what their Level means relative to
- * anyone else's.
+ * A level's par time is *not* used as the clock. It stays a fixed reference pace
+ * for the Level calculation, so that adapting one student's clock never changes
+ * what their Level means relative to anyone else's.
  */
 
 /** Practice answers needed before a median is worth trusting. */
 export const SEED_SAMPLE = 8;
 
 /**
- * Bounds on seconds-per-problem. Mirrors CLOCK in server/app.py, which applies
- * the same limits when it adapts. They matter here too: a student who blitzes
- * a level they already know can produce a median low enough to seed a clock of
- * nearly zero.
+ * Bounds on a whole trial, in seconds. Mirrors CLOCK in server/app.py, which
+ * applies the same limits when it adapts. They matter here too: a student who
+ * blitzes a level they already know can produce a median low enough to seed a
+ * clock of nearly zero.
  */
-const MIN_PACE = 3;
-const MAX_PACE = 40;
+// requiem: play/clock/trial-two-to-ten-minutes
+const SHORTEST = 120;
+const LONGEST = 600;
 const STEP = 5;
 
 /** Round to a tidy value, then hold it inside the bounds. */
-function tidy(seconds, target) {
-  const low = Math.ceil((target * MIN_PACE) / STEP) * STEP;
-  const high = Math.floor((target * MAX_PACE) / STEP) * STEP;
-  return Math.max(low, Math.min(high, Math.round(seconds / STEP) * STEP));
+function tidy(seconds) {
+  return Math.max(SHORTEST, Math.min(LONGEST, Math.round(seconds / STEP) * STEP));
 }
 
 /**
@@ -44,12 +42,16 @@ function tidy(seconds, target) {
  *            runs:number, reference:number}}
  */
 export function clockFor(levelDef, progress, skillId, level) {
-  const { duration: reference, target } = trialSettings(levelDef);
+  const { pace: reference, target } = trialSettings(levelDef);
   const key = `${skillId}:${level}`;
 
   const stored = progress?.clocks?.[key];
   if (stored?.duration) {
-    return { duration: stored.duration, target, source: 'adapted',
+    // A clock kept for a different number of problems keeps its pace per problem.
+    const duration = stored.target && stored.target !== target
+      ? tidy((stored.duration * target) / stored.target)
+      : stored.duration;
+    return { duration, target, source: 'adapted',
              runs: stored.runs ?? 0, reference };
   }
 
@@ -58,7 +60,7 @@ export function clockFor(levelDef, progress, skillId, level) {
 
   if (stat && stat.attempts >= SEED_SAMPLE && stat.medianSeconds) {
     // Keep up the pace you practiced at and you pass exactly.
-    return { duration: tidy(stat.medianSeconds * target, target), target,
+    return { duration: tidy(stat.medianSeconds * target), target,
              source: 'seeded', runs: 0, reference };
   }
 

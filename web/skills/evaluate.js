@@ -60,6 +60,7 @@ export default {
   answerInput: 'int',
   dependsOn: ['order-ops', 'int-muldiv', 'simplify'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 
   /** Substitution is a sequence of lines, so it steps like order of operations. */
   lesson(problem) {

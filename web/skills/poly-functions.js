@@ -56,4 +56,5 @@ export default {
   // a fraction's excluded values from rational-expr.
   dependsOn: ['quadratic-graphs', 'factoring', 'polynomials', 'functions', 'compound-ineq', 'quadratic-eq', 'rational-expr'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

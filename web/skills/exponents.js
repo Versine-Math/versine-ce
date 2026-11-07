@@ -54,6 +54,7 @@ export default {
   answerInput: 'int',
   dependsOn: ['int-muldiv', 'order-ops'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 
   /**
    * One line of working per rule applied, same as order of operations: the

@@ -66,4 +66,5 @@ export default {
   // its population is scaling a ratio.
   dependsOn: ['decimals', 'ratio'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

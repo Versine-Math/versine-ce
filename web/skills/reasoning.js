@@ -49,4 +49,5 @@ export default {
   // brings congruence and triangle-angles with it).
   dependsOn: ['factors', 'quadrilaterals'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

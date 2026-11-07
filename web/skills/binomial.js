@@ -62,4 +62,5 @@ export default {
   // powers from monomials, polynomials and exponents; chance from probability.
   dependsOn: ['counting', 'monomials', 'polynomials', 'exponents', 'probability'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

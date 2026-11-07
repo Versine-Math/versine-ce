@@ -53,4 +53,5 @@ export default {
   // Terms from sequences; the count of terms from a sum from quadratic-eq.
   dependsOn: ['sequences', 'quadratic-eq'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

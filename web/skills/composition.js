@@ -54,4 +54,5 @@ export default {
   // where a root or a fraction is defined from domain and range.
   dependsOn: ['functions', 'polynomials', 'domain-range'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

@@ -81,6 +81,7 @@ export default {
   answerInput: 'int',
   dependsOn: ['equations', 'int-muldiv'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 
   /** The same line-at-a-time walkthrough the equation skills use. */
   lesson(problem) {

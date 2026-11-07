@@ -101,5 +101,6 @@ export default {
   longerBecause: 'the comparison is taught twice, once with the bar model and '
     + 'once without it, and the pair only works side by side',
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 
 };

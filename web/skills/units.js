@@ -67,4 +67,5 @@ export default {
   // a constant of proportionality, which this skill neither needs nor uses.
   dependsOn: ['decimals', 'frac-signed', 'ratio', 'area', 'volume'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

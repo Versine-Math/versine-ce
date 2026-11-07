@@ -63,4 +63,5 @@ export default {
   // Sine and cosine, and solving with an inverse, are the ratios' work.
   dependsOn: ['trig-ratios'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

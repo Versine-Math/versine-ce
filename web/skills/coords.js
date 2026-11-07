@@ -61,4 +61,5 @@ export default {
   answerInput: 'int',
   dependsOn: ['int-addsub'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

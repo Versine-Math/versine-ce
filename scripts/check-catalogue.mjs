@@ -41,6 +41,37 @@ const thisYear = new Date().getFullYear();
 if (shortDay(`${thisYear}-11-06`) !== 'Nov 6') fail.push(`shortDay gave ${shortDay(`${thisYear}-11-06`)}`);
 if (shortDay('2020-01-09') !== 'Jan 9, 2020') fail.push(`shortDay gave ${shortDay('2020-01-09')}`);
 
+// requiem: play/clock/trial-fits-the-level
+// At the expected pace every level's trial fits inside the clock's limits, with
+// room for the clock to loosen. A level that drifts out has a par time to look at.
+const { trialSettings, TRIAL_SIZE } = await import(join(ROOT, 'web/engine/modes.js'));
+const { clockFor } = await import(join(ROOT, 'web/engine/clock.js'));
+for (const s of SKILLS) {
+  s.levels.forEach((l, i) => {
+    const { pace, target } = trialSettings(l);
+    const expected = pace * target;
+    if (target < TRIAL_SIZE.fewest || target > TRIAL_SIZE.most) fail.push(`${s.id}[${i}]: asks for ${target} problems`);
+    if (expected < 120 || expected > TRIAL_SIZE.lastLevelLongestSeconds) {
+      fail.push(`${s.id}[${i}]: ${target} problems at ${pace}s is ${expected}s, outside 120-${TRIAL_SIZE.lastLevelLongestSeconds}s`);
+    }
+  });
+}
+const complex = { parSeconds: 150 };
+if (trialSettings(complex).target !== 2) fail.push('a 150s problem should ask for 2 in a five-minute trial');
+if (trialSettings({ parSeconds: 400 }).target !== 1) fail.push('a problem longer than five minutes should ask for 1');
+if (trialSettings({ parSeconds: 10 }).target !== 12) fail.push('a quick problem should still ask for 12');
+if (trialSettings({ parSeconds: 100, isLastLevel: true }).target !== 4) fail.push('a last level should stretch to seven minutes and no further');
+if (trialSettings({ parSeconds: 60, isLastLevel: true }).target !== 6) fail.push('a last level should ask for six where six fit');
+
+const clockAt = (stored, stat) => clockFor(complex, { clocks: stored && { 'x:0': stored }, levels: stat ? [stat] : [] }, 'x', 0).duration;
+const kept = clockAt({ duration: 480, target: 12, runs: 3 });
+if (kept !== 120) fail.push(`a 12-problem clock of 480s should rescale to 2 problems at the floor, got ${kept}`);
+const rescaled = clockFor({ parSeconds: 60 }, { clocks: { 'x:0': { duration: 480, target: 12, runs: 3 } } }, 'x', 0).duration;
+if (rescaled !== 200) fail.push(`a 12-problem clock of 480s should keep its pace over 5 problems, got ${rescaled}`);
+const seed = (medianSeconds) => clockAt(null, { skillId: 'x', level: 0, attempts: 8, medianSeconds });
+if (seed(1) !== 120) fail.push(`a blitzed practice should seed at two minutes, got ${seed(1)}`);
+if (seed(400) !== 600) fail.push(`a slow practice should seed at ten minutes, got ${seed(400)}`);
+
 // Generation belongs to tools/generators. A skill that still carries it would
 // ship generation logic to students and invite a silent second source of
 // problems alongside the reviewed library.

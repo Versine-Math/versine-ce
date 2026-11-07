@@ -18,56 +18,58 @@ def trial(student, *, duration, passed, time_left=None, target=10, level=0):
 
 @test("running out of time loosens the clock by 15%")
 def _():
-    reply = trial(group().add_student(), duration=100, passed=False, time_left=0)
-    equal(reply["clockWas"], 100, "clockWas")
-    equal(reply["clockNext"], 115, "clock after running out of time")
+    reply = trial(group().add_student(), duration=200, passed=False, time_left=0)
+    equal(reply["clockWas"], 200, "clockWas")
+    equal(reply["clockNext"], 230, "clock after running out of time")
 
 
 @test("finishing with more than 20% of the clock to spare tightens it by 10%")
 def _():
-    equal(trial(group().add_student(), duration=100, passed=True, time_left=30)["clockNext"],
-          90, "clock after finishing with 30% spare")
+    equal(trial(group().add_student(), duration=200, passed=True, time_left=60)["clockNext"],
+          180, "clock after finishing with 30% spare")
 
 
 @test("finishing with 20% or less to spare leaves the clock alone")
 def _():
-    equal(trial(group().add_student(), duration=100, passed=True, time_left=20)["clockNext"],
-          100, "clock after finishing with exactly 20% spare")
+    equal(trial(group().add_student(), duration=200, passed=True, time_left=40)["clockNext"],
+          200, "clock after finishing with exactly 20% spare")
 
 
 @test("the clock is rounded to a multiple of 5 seconds")
 def _():
-    # 47s * 1.15 = 54.05s, which shows as 55.
-    equal(trial(group().add_student(), duration=47, passed=False, time_left=0)["clockNext"],
-          55, "clock after loosening 47s")
+    # 207s * 1.15 = 238.05s, which shows as 240.
+    equal(trial(group().add_student(), duration=207, passed=False, time_left=0)["clockNext"],
+          240, "clock after loosening 207s")
 
 
-@test("the clock never demands faster than 3s a problem, and says when it is there")
+# requiem: play/clock/trial-two-to-ten-minutes
+@test("the clock never goes under two minutes, and says when it is there")
 def _():
-    # 30s for 10 problems is the floor; tightening would take it to 27 -> 25.
-    reply = trial(group().add_student(), duration=30, passed=True, time_left=20)
-    equal(reply["clockNext"], 30, "clock tightened at the floor")
+    # Tightening 120s would take it to 108, whatever the number of problems.
+    reply = trial(group().add_student(), duration=120, passed=True, time_left=80, target=2)
+    equal(reply["clockNext"], 120, "clock tightened at the floor")
     equal(reply["clockAtFloor"], True, "clockAtFloor at the floor")
-    equal(trial(group().add_student(), duration=100, passed=False, time_left=0)["clockAtFloor"],
+    equal(trial(group().add_student(), duration=200, passed=False, time_left=0)["clockAtFloor"],
           False, "clockAtFloor well above the floor")
 
 
-@test("the clock never allows slower than 40s a problem")
+# requiem: play/clock/trial-two-to-ten-minutes
+@test("the clock never goes over ten minutes")
 def _():
-    # 400s for 10 problems is the ceiling; loosening would take it to 460.
-    equal(trial(group().add_student(), duration=400, passed=False, time_left=0)["clockNext"],
-          400, "clock loosened at the ceiling")
+    # Loosening 600s would take it to 690, whatever the number of problems.
+    equal(trial(group().add_student(), duration=600, passed=False, time_left=0, target=12)["clockNext"],
+          600, "clock loosened at the ceiling")
 
 
-@test("each student's clock is kept per level and counts the trials behind it")
+@test("each student's clock is kept per level, with its problem count and the trials behind it")
 def _():
     student = group().add_student()
     skill, _ = a_skill(student)
-    trial(student, duration=100, passed=False, time_left=0)
-    equal(progress(student)["clocks"], {f"{skill}:0": {"duration": 115, "runs": 1}},
+    trial(student, duration=200, passed=False, time_left=0, target=4)
+    equal(progress(student)["clocks"], {f"{skill}:0": {"duration": 230, "target": 4, "runs": 1}},
           "clocks after one trial")
-    trial(student, duration=115, passed=True, time_left=50)
-    equal(progress(student)["clocks"][f"{skill}:0"], {"duration": 105, "runs": 2},
+    trial(student, duration=230, passed=True, time_left=100, target=4)
+    equal(progress(student)["clocks"][f"{skill}:0"], {"duration": 205, "target": 4, "runs": 2},
           "clock after a second trial")
 
 

@@ -70,4 +70,5 @@ export default {
   // Solve for x is ax + b = cx + d, or a sum of two such, set to 180.
   dependsOn: ['equations-both'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

@@ -65,4 +65,5 @@ export default {
   dependsOn: ['functions', 'sequences', 'percents'],
   longerBecause: 'The plan names seven levels, and e is an eighth: the logarithms skill takes ln as the log to base e, and e has to be met somewhere first. It belongs here, as what compound interest tends to when it is compounded ever more often, so it follows Compound Interest\'s own model rather than arriving as a bare constant, and All Together makes nine.',
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

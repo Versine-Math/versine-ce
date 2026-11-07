@@ -58,4 +58,5 @@ export default {
   answerInput: 'expr',
   dependsOn: ['polynomials'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

@@ -55,4 +55,5 @@ export default {
   // and parallel sides come from perpendicular and parallel slopes.
   dependsOn: ['pythagoras', 'line-forms'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

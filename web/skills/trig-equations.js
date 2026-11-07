@@ -67,4 +67,5 @@ export default {
   // factoring a quadratic to solve it.
   dependsOn: ['unit-circle', 'trig-graphs', 'identities', 'quadratic-eq'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

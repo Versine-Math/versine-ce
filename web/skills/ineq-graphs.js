@@ -50,4 +50,5 @@ export default {
   answerInput: 'halfplane',
   dependsOn: ['linear-eq', 'inequalities'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

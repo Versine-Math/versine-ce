@@ -52,4 +52,5 @@ export default {
   answerInput: 'expr',
   dependsOn: ['monomials'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

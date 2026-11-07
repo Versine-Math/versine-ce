@@ -54,4 +54,5 @@ export default {
   answerInput: 'frac',
   dependsOn: ['coords', 'frac-signed'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

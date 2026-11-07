@@ -53,4 +53,5 @@ export default {
   // exact values come from trig-ratios' special triangles.
   dependsOn: ['radians', 'trig-ratios'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

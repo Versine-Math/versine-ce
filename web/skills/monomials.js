@@ -51,4 +51,5 @@ export default {
   answerInput: 'expr',
   dependsOn: ['exponents', 'simplify'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

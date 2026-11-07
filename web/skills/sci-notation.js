@@ -72,6 +72,7 @@ export default {
   answerInput: 'int',
   dependsOn: ['exponents', 'decimals'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 
   /** One line of working per step, the same as the exponent rules. */
   lesson(problem) {

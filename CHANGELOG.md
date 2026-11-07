@@ -13,6 +13,16 @@ anyone who wants a known version, and these notes say what changed either way.
 
 ## Unreleased
 
+**Time Trials sized to the problems.** A trial now asks for as many problems
+as fit in about five minutes at the level's expected pace, from 12 down to 1,
+and a last level asks for 6 where 6 fit in seven minutes. The clock adapts as
+before but stays between 2 and 10 minutes for the whole trial, replacing the
+limits of 3 to 40 seconds per problem. Clocks already kept are rescaled to keep
+their pace per problem. Level and the teacher console measure speed against each
+level's par time, so most students' Levels rise once. `level_clocks` gains a
+`target` column and `clocks` in `/api/progress` reports it. A server that passed
+the previous contract suite fails this one, so this is a major release.
+
 **American English throughout.** Student-facing text, the app's labels and the
 docs now use American spelling and school wording: parentheses, least common
 multiple, same-side interior angles, combine like terms, the Pythagorean

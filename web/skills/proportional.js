@@ -62,4 +62,5 @@ export default {
   answerInput: 'decimal',
   dependsOn: ['ratio', 'coords', 'decimals'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

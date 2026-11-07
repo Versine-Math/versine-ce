@@ -71,6 +71,7 @@ export default {
   answerInput: 'int',
   dependsOn: ['int-muldiv'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 
   /**
    * One line of working per step, as the exponent rules do: breaking a pair

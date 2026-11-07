@@ -99,6 +99,7 @@ CREATE TABLE IF NOT EXISTS level_clocks (
     skill_id   TEXT    NOT NULL,
     level      INTEGER NOT NULL,
     duration   INTEGER NOT NULL,
+    target     INTEGER NOT NULL DEFAULT 12,
     runs       INTEGER NOT NULL DEFAULT 0,
     updated_at TEXT    NOT NULL,
     PRIMARY KEY (user_id, skill_id, level)
@@ -273,6 +274,8 @@ def init_db() -> None:
         ensure_column(conn, "skill_progress", "mastered_slugs", "TEXT NOT NULL DEFAULT '[]'")
         _backfill_mastered(conn)
         ensure_column(conn, "runs", "origin", "TEXT")
+        # Clocks kept before trials varied in size were all for 12 problems.
+        ensure_column(conn, "level_clocks", "target", "INTEGER NOT NULL DEFAULT 12")
 
         # Skills finished before review existed get a clock from today, after
         # the slugs above are in place, since finished is read from them.
@@ -329,9 +332,10 @@ def done_today(conn: sqlite3.Connection, user_id: int) -> set[str]:
 def get_clocks(conn: sqlite3.Connection, user_id: int) -> dict:
     """Personal Time Trial clocks, keyed "skill:level"."""
     return {
-        f"{r['skill_id']}:{r['level']}": {"duration": r["duration"], "runs": r["runs"]}
+        f"{r['skill_id']}:{r['level']}": {"duration": r["duration"], "target": r["target"],
+                                          "runs": r["runs"]}
         for r in conn.execute(
-            "SELECT skill_id, level, duration, runs FROM level_clocks WHERE user_id = ?",
+            "SELECT skill_id, level, duration, target, runs FROM level_clocks WHERE user_id = ?",
             (user_id,),
         )
     }

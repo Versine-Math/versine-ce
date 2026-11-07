@@ -59,4 +59,5 @@ export default {
   // requires the skill to be named here as well.
   dependsOn: ['ratio', 'congruence', 'roots'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

@@ -37,7 +37,7 @@ export const MODES = {
     glyph: '⏱',
     blurb: 'Solve enough before the clock runs out and the next level unlocks. '
       + 'Mistakes cost you time, not lives.',
-    duration: 120,
+    duration: 300,
     target: 12,
     scored: true,
     gate: true,
@@ -47,18 +47,39 @@ export const MODES = {
 export const MODE_ORDER = ['practice', 'trial'];
 
 /**
- * Time Trial settings for one level. The mode carries defaults; a level that is
- * genuinely harder per problem can override them, because a fixed clock across
- * levels quietly makes the late ones unpassable.
+ * How a Time Trial's size follows the work. A trial runs about five minutes at
+ * the level's expected pace, so a level of quick problems asks for twelve and a
+ * level where one problem takes minutes asks for one or two. The last level
+ * mixes every earlier one and counts as a review, so it asks for six where six
+ * fit in seven minutes.
+ */
+// requiem: play/clock/trial-fits-the-level
+export const TRIAL_SIZE = {
+  typicalSeconds: 300,
+  fewest: 1,
+  most: 12,
+  lastLevelFewest: 6,
+  lastLevelLongestSeconds: 420,
+};
+
+/** Correct answers to ask for, from the seconds one problem is expected to take. */
+export function trialTarget(parSeconds, isLastLevel = false) {
+  const { typicalSeconds, fewest, most, lastLevelFewest, lastLevelLongestSeconds } = TRIAL_SIZE;
+  const fit = Math.max(fewest, Math.min(most, Math.round(typicalSeconds / parSeconds)));
+  if (!isLastLevel) return fit;
+  return Math.max(fit, Math.min(lastLevelFewest, Math.floor(lastLevelLongestSeconds / parSeconds)));
+}
+
+/**
+ * Time Trial settings for one level. `pace` is the expected seconds per problem,
+ * the fixed standard a student's speed is measured against.
  *
- * @param {{trial?:{duration?:number, target?:number}}} [levelDef]
- * @returns {{duration:number, target:number}}
+ * @param {{parSeconds?:number, isLastLevel?:boolean}} [levelDef]
+ * @returns {{pace:number, target:number}}
  */
 export function trialSettings(levelDef) {
-  return {
-    duration: levelDef?.trial?.duration ?? MODES.trial.duration,
-    target: levelDef?.trial?.target ?? MODES.trial.target,
-  };
+  const pace = levelDef?.parSeconds ?? MODES.trial.duration / MODES.trial.target;
+  return { pace, target: trialTarget(pace, levelDef?.isLastLevel) };
 }
 
 /** "3 min", "2 min 30 s", "90 s" */

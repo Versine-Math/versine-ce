@@ -25,7 +25,6 @@ export const LEVELS = [
   {
     name: 'Chains', slug: 'chains',
     blurb: 'Three at a time — count the negatives.',
-    trial: { duration: 180 },
     // Evaluating three terms left to right is the same habit either way.
     dependsOn: [{ skill: 'int-addsub', level: 6 }],
   },
@@ -53,5 +52,6 @@ export default {
   dependsOn: ['int-addsub'],
   answerInput: 'int',
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 
 };

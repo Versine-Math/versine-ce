@@ -60,4 +60,5 @@ export default {
   // denominator allows x is inequalities' and quadratic equations'.
   dependsOn: ['functions', 'transformations-f', 'inequalities', 'quadratic-eq'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

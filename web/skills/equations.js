@@ -72,6 +72,7 @@ export default {
   answerInput: 'int',
   dependsOn: ['simplify', 'int-muldiv', 'order-ops'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 
   /** One line of working per move, naming what was done to both sides. */
   lesson(problem) {

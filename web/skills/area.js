@@ -59,4 +59,5 @@ export default {
   // Lengths like 4.5 and π as 3.14 make every level decimal arithmetic.
   dependsOn: ['decimals'],
   levels: LEVELS,
+  parSeconds: PAR_SECONDS,
 };

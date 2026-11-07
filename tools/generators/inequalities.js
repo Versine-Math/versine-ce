@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for inequalities.
+ * Catalog authoring tool: builds the problem library for inequalities.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to

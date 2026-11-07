@@ -19,7 +19,7 @@ import { nths } from '../math/frac.js';
  * student can read the answer off it without ever finding a common
  * denominator, which is the whole point of the level that has them. So a
  * second level asks the same question with the picture held back, and the
- * recut bars arrive afterwards as the explanation rather than as the method.
+ * recut bars arrive afterward as the explanation rather than as the method.
  *
  * @typedef {{n:number, d:number}} Frac
  * @typedef {{a:Frac, b:Frac, common?:number, left?:Frac, right?:Frac,

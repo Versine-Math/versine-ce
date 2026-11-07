@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring helper: a curve given by a parameter, (x(t), y(t)),
+ * Catalog authoring helper: a curve given by a parameter, (x(t), y(t)),
  * cut into the polylines that lie inside a window.
  *
  * Authoring-time only, like the generators beside it, so the build's

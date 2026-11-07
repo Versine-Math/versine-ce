@@ -2,7 +2,7 @@ import { api } from '../engine/api.js';
 import { SKILLS, getSkill } from '../engine/registry.js';
 import { trialSettings } from '../engine/modes.js';
 import { computeRating } from '../engine/rating.js';
-import { daysUntil } from '../engine/days.js';
+import { daysUntil, shortDay } from '../engine/days.js';
 import { el, mount } from './dom.js';
 import { ICONS, ACCENTS } from './icons.js';
 import { state, go } from './router.js';
@@ -49,19 +49,19 @@ function header() {
       el('div.eyebrow', {}, 'Teacher console'),
       el('div.row__title', {}, state.me.name)),
     el('div.row-flex', {},
-      practiseButton(),
+      practiceButton(),
       ...extensionLinks(),
       el('button.btn.btn--sm.btn--ghost', {
         onclick: async () => { await api.logout(); location.reload(); },
       }, 'Sign out')));
 }
 
-/** Practise on the map, unless an extension says otherwise (server/extensions/teacher-practise). */
-function practiseButton() {
+/** Practice on the map, unless an extension says otherwise (server/extensions/teacher-practise). */
+function practiceButton() {
   const action = teacherPractise();
   return action
     ? el('button.btn.btn--sm.btn--ghost', { onclick: () => action.run() }, action.label)
-    : el('button.btn.btn--sm.btn--ghost', { onclick: () => go({ name: 'map' }) }, 'Practise');
+    : el('button.btn.btn--sm.btn--ghost', { onclick: () => go({ name: 'map' }) }, 'Practice');
 }
 
 /** Everyone at a glance. */
@@ -258,7 +258,7 @@ function activityCard(daily) {
   const max = Math.max(1, ...daily.map((d) => d.attempts));
   const bars = daily.map((day) =>
     el('div.spark__bar', {
-      title: `${day.day}: ${day.attempts} answered, ${day.correct} correct`,
+      title: `${shortDay(day.day)}: ${day.attempts} answered, ${day.correct} correct`,
       style: {
         height: `${Math.max((day.attempts / max) * 100, 6)}%`,
         background: heat(1 - day.correct / day.attempts),
@@ -334,7 +334,7 @@ function levelRow(skill, lvl, clocks = {}) {
   return el('div.level-row', {},
     el('div.level-row__name', {},
       el('div.row__title', {}, levelDef?.name ?? `Level ${lvl.level + 1}`),
-      el('div.row__sub', {}, `${lvl.attempts} answered · last ${lvl.lastSeen}`)),
+      el('div.row__sub', {}, `${lvl.attempts} answered · last ${shortDay(lvl.lastSeen)}`)),
 
     el('div.level-row__metric', {},
       el('div.metric__label', {}, 'Median'),
@@ -372,7 +372,7 @@ function paceSpark(trend = [], standard) {
     el('div.pace-spark__line', { style: { bottom: `${(standard / max) * 100}%` } }),
     ...points.map((t) =>
       el('div.pace-spark__bar', {
-        title: `${t.day}: ${t.medianSeconds.toFixed(1)}s median, `
+        title: `${shortDay(t.day)}: ${t.medianSeconds.toFixed(1)}s median, `
           + `${Math.round(t.accuracy * 100)}% right over ${t.attempts}`,
         style: {
           height: `${(t.medianSeconds / max) * 100}%`,

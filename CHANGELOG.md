@@ -11,6 +11,15 @@ API contract (`contract/`), since that is what any other server depends on:
 Home installs keep following `main` through `scripts/update.sh`; a release is for
 anyone who wants a known version, and these notes say what changed either way.
 
+## Unreleased
+
+**American English throughout.** Student-facing text, the app's labels and the
+docs now use American spelling and school wording: parentheses, least common
+multiple, same-side interior angles, combine like terms, the Pythagorean
+theorem. Slugs, ids and API fields are unchanged, and so is every answer. The
+map's streak card no longer says a streak was broken and no longer shows a
+flame: with no current streak it shows the days practiced.
+
 ## 1.4.0 — 2026-10-30
 
 **Switch, and a socket for the console's Practise.** A student's way off

@@ -62,7 +62,7 @@ export default {
   glyph: 'sin x = ½',
   blurb: 'The inverse functions, solving in one turn in degrees and radians, every solution with + 2πk, multiple angles, and equations that factor.',
   answerInput: 'solutions',
-  // Exact values all the way round, the period of each graph, the
+  // Exact values all the way around, the period of each graph, the
   // Pythagorean identity for the equations that mix sine and cosine, and
   // factoring a quadratic to solve it.
   dependsOn: ['unit-circle', 'trig-graphs', 'identities', 'quadratic-eq'],

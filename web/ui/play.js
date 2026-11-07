@@ -338,7 +338,7 @@ export function playScreen(route) {
   function leave(dest) {
     if (session.over) { teardown(); go(dest); return; }
     if (session.answered > 0) {
-      // Save what they did, then honour where they asked to go.
+      // Save what they did, then honor where they asked to go.
       exitTo = dest;
       session.end('quit');
     } else {
@@ -565,8 +565,8 @@ export function summaryScreen(route) {
       banners.push(el('div.banner.banner--cool', {},
         el('span', {}, delta > 0 ? '⏱' : '⚡'),
         el('span', {}, delta > 0
-          ? `More time next go: ${fmt(outcome.clockNext)}. The clock follows you.`
-          : `Tighter next go: ${fmt(outcome.clockNext)}. You had time to spare.`)));
+          ? `More time on your next try: ${fmt(outcome.clockNext)}. The clock follows you.`
+          : `Less time on your next try: ${fmt(outcome.clockNext)}. You had time to spare.`)));
     } else {
       banners.push(el('div.banner.banner--cool', {},
         el('span', {}, '⏱'),

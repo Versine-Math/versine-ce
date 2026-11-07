@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for similar figures.
+ * Catalog authoring tool: builds the problem library for similar figures.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -40,7 +40,7 @@ function quotient(a, b) {
 const result = (at, label) => text(at, label, RESULT);
 const sideKey = (i, j) => sideName(ABC, i, j);
 
-/** Factors that end, both ways round: 2 and 0.5, 2.5 and 0.4, 1.25 and 0.8. */
+/** Factors that end, both ways around: 2 and 0.5, 2.5 and 0.4, 1.25 and 0.8. */
 const FACTORS = [0.4, 0.5, 0.8, 1.25, 1.5, 2, 2.5];
 const ENDS = (k) => [0.4, 0.5, 0.8, 1.25, 2, 2.5].includes(k);
 
@@ -222,7 +222,7 @@ function similarOrNot(rng) {
     if (how === 'angle') A2 = A + rng.pick([-1, 1]) * rng.int(6, 15);
     if (how === 'side') b2 += rng.pick([-2, -1, 1, 2]);
     if (!tidy(c2) || !tidy(b2) || A2 >= 150 || A2 === 90) continue;
-    // Paired the other way round, the sides might still be in one ratio: then it is similar after all.
+    // Paired the other way around, the sides might still be in one ratio: then it is similar after all.
     if (!yes && A2 === A && Math.abs(c2 * c - b2 * b) < 1e-9) continue;
     const tri = (cc, bb, ang, k) => {
       const s = (3.6 * k) / Math.max(cc, bb);
@@ -392,7 +392,7 @@ function scaleDrawing(rng) {
       answer: dec(perCm),
       visual: null,
       explain: `Share the real length among the ${paper.plural}: ${quotient(realLine, drawnLine)} ${unit} for each ${paper.one}. `
-        + `(${drawnLine} ÷ ${num(realLine)} would be ${paper.plural} per ${unit}, the other way round.) So 1 ${paper.one} stands for ${num(perCm)} ${unit}.`,
+        + `(${drawnLine} ÷ ${num(realLine)} would be ${paper.plural} per ${unit}, the other way around.) So 1 ${paper.one} stands for ${num(perCm)} ${unit}.`,
     };
   }
 }

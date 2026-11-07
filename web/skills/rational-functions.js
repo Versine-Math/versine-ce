@@ -22,14 +22,14 @@ export const LEVELS = [
     // was met on Vertical Asymptotes, so exponentials need not come first.
     dependsOn: [{ skill: 'polynomials', level: 0 }] },
   { name: 'Holes', slug: 'holes',
-    blurb: 'A factor on top and bottom cancels and leaves a single missing point. Its height comes from the cancelled form.',
+    blurb: 'A factor on top and bottom cancels and leaves a single missing point. Its height comes from the canceled form.',
     dependsOn: [{ skill: 'rational-expr', level: 0 }] },
   { name: 'Oblique', slug: 'oblique',
     blurb: 'Top one degree higher: divide, and the quotient is the slanted line the graph follows; the remainder fades away.',
     // The slant line is the quotient of a long division.
     dependsOn: [{ skill: 'poly-division', level: 0 }] },
   { name: 'End Behavior', slug: 'end-behavior',
-    blurb: 'Far out, only the leading terms matter: f behaves like (a/b)x^(n − d), towards 0, a number, or off to ±∞.' },
+    blurb: 'Far out, only the leading terms matter: f behaves like (a/b)x^(n − d), toward 0, a number, or off to ±∞.' },
   { name: 'Intercepts', slug: 'intercepts',
     blurb: 'x-intercepts are where the top is 0 and the bottom is not: a shared zero is a hole. The y-intercept is f(0).' },
   { name: 'Match the Graph', slug: 'match-the-graph',

@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for equations.
+ * Catalog authoring tool: builds the problem library for equations.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -105,7 +105,7 @@ function undoMultiply(rng) {
 function twoSteps(rng) {
   const v = rng.pick(VARS);
   // Zero is allowed to be the answer. It was excluded, and a student who has
-  // never seen a solution of nought reads one as having failed to solve it.
+  // never seen a solution of zero reads one as having failed to solve it.
   const x = rng.int(0, 12);
   const k = rng.int(2, 9);
   const b = rng.int(1, 20);
@@ -122,7 +122,7 @@ function twoSteps(rng) {
       hint: 'Which was done to the letter last?',
     },
     explain: `${v} was multiplied by ${k} first and ${b} added after, `
-      + 'so undo them the other way round: '
+      + 'so undo them the other way around: '
       + `${undo} to get ${k}${v} = ${rhs - b}, then divide by ${k} to get ${v} = ${x}.`,
   };
 }
@@ -251,7 +251,7 @@ function belowZero(rng) {
  *
  * 3x + 4 = 19 and 3(x + 4) = 19 look almost identical and want opposite first
  * moves. In the first the 4 is outside the multiplication, so it comes off
- * first; in the second the bracket makes the multiplication outermost, so the
+ * first; in the second the parentheses make the multiplication outermost, so the
  * division comes first. A student drilled only on "do the opposite" gets the
  * second one wrong every time.
  */
@@ -260,7 +260,7 @@ function whichFirst(rng) {
   const k = rng.int(2, 9);
   const bracketed = rng.chance(0.5);
   // requiem: catalogue/content/which-form-one-right-answer
-  // Without the bracket, dividing first is a legal move too, and when k goes
+  // Without the parentheses, dividing first is a legal move too, and when k goes
   // into the added number it is just as clean: 2a + 10 = 14 becomes
   // a + 5 = 7. So the added number is never a multiple of k there, and the
   // explanation says what dividing first would cost.
@@ -281,9 +281,9 @@ function whichFirst(rng) {
     },
     visual: null,
     explain: bracketed
-      ? `The bracket makes the multiplication the outermost thing done to ${v}, `
+      ? `The parentheses make the multiplication the outermost thing done to ${v}, `
         + `so it comes off first: dividing by ${k} gives ${v} + ${b} = ${rhs / k}. `
-        + `Subtracting ${b} from both sides would not reach the ${b} inside the bracket: `
+        + `Subtracting ${b} from both sides would not reach the ${b} inside the parentheses: `
         + `it would leave ${k}(${v} + ${b}) − ${b} = ${rhs - b}.`
       : `Here ${b} was added after the multiplication, so it comes off first: `
         + `subtracting gives ${k}${v} = ${rhs - b}, then ${v} = ${x}. Dividing first is allowed, but `

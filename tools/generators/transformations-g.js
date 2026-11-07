@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for transformations
+ * Catalog authoring tool: builds the problem library for transformations
  * of the plane.
  *
  * NOT part of the running application. Nothing here is served to a browser
@@ -12,7 +12,7 @@
  * `reflect x-axis`, `rotate 90 ccw`, `dilate 3/2 about (1, -2)` -- so
  * scripts/check-answers.py can apply the move again from its own rules. A
  * figure question gives both triangles, and the checker names the move from
- * the coordinates alone: same size, same way round, same direction.
+ * the coordinates alone: same size, same way around, same direction.
  *
  * Each question is drawn: the triangle, its letters, the mirror or the
  * center, and on reveal the image, primed.
@@ -338,7 +338,7 @@ function sequence(rng) {
 
 const vec = (p, q) => pt([q[0] - p[0], q[1] - p[1]]);
 const way = (P) => (turn(P) > 0 ? 'counterclockwise' : 'clockwise');
-/** Why the picture is the move it is: size from a side, way round from the corners, direction from the side again. */
+/** Why the picture is the move it is: size from a side, way around from the corners, direction from the side again. */
 function reason(P, image, want, how) {
   const side = `AB goes ${vec(P[0], P[1])} and A′B′ goes ${vec(image[0], image[1])}`;
   if (want === 'dilation') {

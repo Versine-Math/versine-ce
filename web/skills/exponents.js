@@ -13,7 +13,7 @@
  */
 
 export const LEVELS = [
-  { name: 'What a Power Is', slug: 'what-a-power-is', blurb: 'Repeated multiplication, written short. Work out the value.' },
+  { name: 'What a Power Is', slug: 'what-a-power-is', blurb: 'Repeated multiplication, written short. Calculate the value.' },
   { name: 'Multiplying Powers', slug: 'multiplying-powers', blurb: 'Same base, so the factors pile up: the exponents add.' },
   { name: 'Dividing Powers', slug: 'dividing-powers', blurb: 'Factors cancel in pairs, so the exponents subtract.' },
   { name: 'Power of a Power', slug: 'power-of-a-power', blurb: 'A power raised to a power. The exponents multiply.' },
@@ -61,7 +61,7 @@ export default {
    */
   lesson(problem) {
     // The strategy level carries no visual, so it falls back to the
-    // sentences of `explain` -- which for a judgement question is the
+    // sentences of `explain` -- which for a judgment question is the
     // whole of the argument anyway.
     if (problem.visual?.kind !== 'evalmodel') return null;
     const { lines, rules } = problem.visual;

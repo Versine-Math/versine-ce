@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for complex.
+ * Catalog authoring tool: builds the problem library for complex.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -24,7 +24,7 @@ const Q = (n, d = 1) => { if (d < 0) { n = -n; d = -d; } const g = gcd(n, d) || 
 const Z = (a, b) => ({ re: Q(a), im: Q(b) });
 const show = (z) => formatComplex(z);
 const ascii = (z) => formatComplex(z, true);
-/** a + bi bracketed for a product or a sum: (3 - 2i). */
+/** a + bi in parentheses for a product or a sum: (3 - 2i). */
 const br = (a, b) => `(${ascii(Z(a, b))})`;
 const brF = (a, b) => `(${show(Z(a, b))})`;
 const answer = (z) => ({ type: 'complex', value: z, requireSimplest: true });
@@ -42,9 +42,9 @@ const worked = (src, z, explain, ask = 'Simplify:') => ({
   explain: `${explain} So the answer is ${show(z)}.`,
 });
 const nz = (rng, lo, hi) => rng.nonZero(lo, hi);
-/** v² in prose, a negative bracketed: 3², (−3)². */
+/** v² in prose, a negative in parentheses: 3², (−3)². */
 const sq = (v) => (v < 0 ? `(${minus(v)})²` : `${v}²`);
-/** A term after a plus sign, bracketed when negative: 2, (−1). */
+/** A term after a plus sign, in parentheses when negative: 2, (−1). */
 const after = (t) => (t.startsWith('−') ? `(${t})` : t);
 /** 37 as ³⁷, −5 as ⁻⁵, for powers in prose. */
 const sup = (k) => String(k).replace(/./g, (c) => '⁻⁰¹²³⁴⁵⁶⁷⁸⁹'['-0123456789'.indexOf(c)]);
@@ -171,7 +171,7 @@ function powers(rng) {
   }
   const z = { re: Q(cyc(a).re.n + cyc(b).re.n), im: Q(cyc(a).im.n + cyc(b).im.n) };
   return worked(`i^${a} + i^${b}`, z,
-    `Work out each power: i${sup(a)} = ${powWord(a)} (${a} leaves ${a % 4} after fours) and i${sup(b)} = ${powWord(b)} (${b} leaves ${b % 4}). Adding: ${powWord(a)} + ${after(powWord(b))}${z.re.n === 0 && z.im.n === 0 ? ' = 0' : ''}.`);
+    `Calculate each power: i${sup(a)} = ${powWord(a)} (${a} leaves ${a % 4} after fours) and i${sup(b)} = ${powWord(b)} (${b} leaves ${b % 4}). Adding: ${powWord(a)} + ${after(powWord(b))}${z.re.n === 0 && z.im.n === 0 ? ' = 0' : ''}.`);
 }
 
 // --- Add & Subtract --------------------------------------------------------
@@ -190,7 +190,7 @@ function addSub(rng) {
     const k = rng.pick([2, 3, 4, -2, -3]);
     const z = Z(k * a - c, k * b - d);
     return worked(`${k}${br(a, b)} - ${br(c, d)}`, z,
-      `Multiply out first: ${minus(k)}${brF(a, b)} = ${show(Z(k * a, k * b))}. Then subtract by parts: real ${minus(k * a)} − ${c < 0 ? `(${minus(c)})` : c} = ${minus(k * a - c)}, imaginary ${minus(k * b)} − ${d < 0 ? `(${minus(d)})` : d} = ${minus(k * b - d)}.`);
+      `Expand first: ${minus(k)}${brF(a, b)} = ${show(Z(k * a, k * b))}. Then subtract by parts: real ${minus(k * a)} − ${c < 0 ? `(${minus(c)})` : c} = ${minus(k * a - c)}, imaginary ${minus(k * b)} − ${d < 0 ? `(${minus(d)})` : d} = ${minus(k * b - d)}.`);
   }
   const e = rng.int(-9, 9), f = nz(rng, -9, 9);
   const z = Z(a - c + e, b - d + f);
@@ -212,7 +212,7 @@ function multiply(rng) {
     const z = timesZ(0, k, a, b);
     const ki = show(Z(0, k));
     return worked(`${ki === 'i' ? 'i' : ascii(Z(0, k))}${br(a, b)}`, z,
-      `Multiply each part by ${ki}: ${ki} × ${after(minus(a))} = ${show(Z(0, k * a))}, and ${ki} × ${after(show(Z(0, b)))} = ${minus(k * b)}i² = ${minus(-k * b)}, since i² = −1. Collect, real part first.`);
+      `Multiply each part by ${ki}: ${ki} × ${after(minus(a))} = ${show(Z(0, k * a))}, and ${ki} × ${after(show(Z(0, b)))} = ${minus(k * b)}i² = ${minus(-k * b)}, since i² = −1. Combine like terms, real part first.`);
   }
   if (kind === 'square') {
     const z = timesZ(a, b, a, b);
@@ -222,8 +222,8 @@ function multiply(rng) {
   const c = nz(rng, -7, 7), d = nz(rng, -7, 7);
   const z = timesZ(a, b, c, d);
   return worked(`${br(a, b)}${br(c, d)}`, z,
-    `Multiply out as binomials: ${minus(a * c)} ${a * d < 0 ? '−' : '+'} ${Math.abs(a * d)}i ${b * c < 0 ? '−' : '+'} ${Math.abs(b * c)}i ${b * d < 0 ? '−' : '+'} ${Math.abs(b * d)}i². `
-    + `Replace i² by −1, so the last term is ${minus(-b * d)}, and collect: real ${minus(a * c)} ${-b * d < 0 ? '−' : '+'} ${Math.abs(b * d)} = ${minus(a * c - b * d)}, imaginary ${minus(a * d)} + ${b * c < 0 ? `(${minus(b * c)})` : b * c} = ${minus(a * d + b * c)}.`);
+    `Expand as binomials: ${minus(a * c)} ${a * d < 0 ? '−' : '+'} ${Math.abs(a * d)}i ${b * c < 0 ? '−' : '+'} ${Math.abs(b * c)}i ${b * d < 0 ? '−' : '+'} ${Math.abs(b * d)}i². `
+    + `Replace i² by −1, so the last term is ${minus(-b * d)}, and combine like terms: real ${minus(a * c)} ${-b * d < 0 ? '−' : '+'} ${Math.abs(b * d)} = ${minus(a * c - b * d)}, imaginary ${minus(a * d)} + ${b * c < 0 ? `(${minus(b * c)})` : b * c} = ${minus(a * d + b * c)}.`);
 }
 
 // --- Conjugates & Divide ---------------------------------------------------
@@ -273,7 +273,7 @@ function divide(rng) {
     if (rng.chance(0.6) && (top.re.n % m !== 0 || top.im.n % m !== 0)) continue;
     return worked(`${br(a, b)}/${br(c, d)}`, z,
       `Multiply top and bottom by the bottom's conjugate ${brF(c, -d)}. Bottom: ${sq(c)} + ${sq(d)} = ${m}. `
-      + `Top: ${brF(a, b)}${brF(c, -d)} = ${show(top)}, multiplying out with i² = −1. ${m === 1 ? 'The bottom is 1, so that top is the answer.' : `Divide each part by ${m}.`}`);
+      + `Top: ${brF(a, b)}${brF(c, -d)} = ${show(top)}, expanding with i² = −1. ${m === 1 ? 'The bottom is 1, so that top is the answer.' : `Divide each part by ${m}.`}`);
   }
 }
 

@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for trig-equations.
+ * Catalog authoring tool: builds the problem library for trig-equations.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -105,7 +105,7 @@ function solveWords(fn, v, radians, arg = 'x') {
     + `${arg} = ${RULE(qs[0], ref, radians)} and ${arg} = ${RULE(qs[1], ref, radians)}.`;
 }
 
-/** The trap for fn x = v, in brackets. */
+/** The trap for fn x = v, in parentheses. */
 function trapWords(fn, v, radians) {
   const A = (d) => (radians ? radText(d) : degText(d));
   if (!inRange(fn, v)) return `(A calculator's sin⁻¹ or cos⁻¹ of ${valText(v)} gives an error for the same reason; it is not a mistake to fix.)`;
@@ -155,7 +155,7 @@ function linear(rng, fn, v, arg = 'x') {
     const B = !none && rng.chance(0.6) ? rng.pick([-5, -4, -3, -2, -1, 1, 2, 3, 4, 5]) : 0;
     if (A === 1 && B === 0) return linear(rng, fn, v, arg);
     tail = tailShow(B); tailA = tailAscii(B); rhs = minus(R + B); rhsA = String(R + B);
-    if (B) steps.push(`${B > 0 ? 'Take away' : 'Add'} ${Math.abs(B)}: ${coef(A)}${F} = ${minus(R)}.`);
+    if (B) steps.push(`${B > 0 ? 'Subtract' : 'Add'} ${Math.abs(B)}: ${coef(A)}${F} = ${minus(R)}.`);
     if (A !== 1) steps.push(`Divide by ${A}: ${F} = ${valText(v)}.`);
   } else {
     const rad = `√${v.r}`, radA = `sqrt(${v.r})`;
@@ -175,14 +175,14 @@ function linear(rng, fn, v, arg = 'x') {
     if (form === 'plain') { rhs = `${s ? '−' : ''}${R}`; rhsA = `${s ? '-' : ''}${RA}`; }
     else {
       tail = ` ${s ? '+' : '−'} ${R}`; tailA = ` ${s ? '+' : '-'} ${RA}`; rhs = '0'; rhsA = '0';
-      steps.push(`${s ? 'Take away' : 'Add'} ${R}: ${coef(A)}${F} = ${s ? '−' : ''}${R}.`);
+      steps.push(`${s ? 'Subtract' : 'Add'} ${R}: ${coef(A)}${F} = ${s ? '−' : ''}${R}.`);
     }
     if (A !== 1) steps.push(`Divide by ${A}: ${F} = ${valText(v)}.`);
   }
   // Now and then F is on both sides, and gathering it comes first.
   if (rng.chance(0.3)) {
     const c = rng.pick([1, 2, 3]);
-    steps.unshift(`Take away ${coef(c)}${F} from both sides: ${coef(A)}${F}${tail} = ${rhs}.`);
+    steps.unshift(`Subtract ${coef(c)}${F} from both sides: ${coef(A)}${F}${tail} = ${rhs}.`);
     return { show: `${coef(A + c)}${F}${tail} = ${coef(c)}${F}${signed(rhs)}`,
       ascii: `${A + c}*${Fa}${tailA} = ${c}*${Fa}${signedA(rhsA)}`, steps: steps.join(' ') };
   }
@@ -598,7 +598,7 @@ function quadratic(rng) {
     const ascii = `${A2}*${Oa}${B2 === 0 ? '' : ` ${B2 < 0 ? '-' : '+'} ${Math.abs(B2)}*${Ga}`}${tailAscii(C2)} = 0`;
     const q = quadShow(a, b, c, G, Ga);
     return { conds, show, ascii,
-      work: `Write it all in ${NAMES[fn]}: ${other}²x = 1 − ${fn}²x, and collecting terms gives ${q.show} = 0, which factors as ${factored}, so ${roots}.`,
+      work: `Write it all in ${NAMES[fn]}: ${other}²x = 1 − ${fn}²x, and combining terms gives ${q.show} = 0, which factors as ${factored}, so ${roots}.`,
       trap: `(Two functions cannot be factored together: the identity first turns ${other}²x into 1 − ${fn}²x.)` };
   }
   if (kind === 'square') {

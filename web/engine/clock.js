@@ -6,7 +6,7 @@ import { trialSettings } from './modes.js';
  * Nobody sets this by hand. It arrives one of three ways, in order:
  *
  *   1. an adapted clock the server has stored, from previous trials;
- *   2. a seed derived from how fast the student actually practised;
+ *   2. a seed derived from how fast the student actually practiced;
  *   3. nothing — the level is not ready for a trial yet.
  *
  * The authored `trial: { duration }` on a level is *not* used as the clock.
@@ -75,7 +75,7 @@ export function clockExplanation(clock) {
     case 'seeded':
       return 'Set from the pace you practiced at. It adjusts after your first trial.';
     default:
-      return `Practise this level first — ${clock.need - (clock.have ?? 0)} more answers `
+      return `Practice this level first — ${clock.need - (clock.have ?? 0)} more answers `
         + 'and the clock can be set from your own pace.';
   }
 }

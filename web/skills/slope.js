@@ -1,7 +1,7 @@
 /**
  * Slope.
  *
- * Coordinates ends on Steepness: a whole-number gradient between two points,
+ * Coordinates ends on Steepness: a whole-number slope between two points,
  * read as a unit rate. This is the full idea. A slope is usually a fraction,
  * it is negative when the line falls, and it is a rate with units when the
  * axes measure something -- which is the version a student will meet in

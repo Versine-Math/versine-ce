@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for radians.
+ * Catalog authoring tool: builds the problem library for radians.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -92,9 +92,9 @@ function coterminal(rng) {
       text: `coterminal deg: ${deg}`,
       answer: { type: 'int', value: base },
       visual: null,
-      explain: `${turns > 0 ? `Take away ${turns === 1 ? 'one full turn' : `${turns} full turns`}` : `Add ${-turns === 1 ? 'one full turn' : `${-turns} full turns`}`}: `
+      explain: `${turns > 0 ? `Subtract ${turns === 1 ? 'one full turn' : `${turns} full turns`}` : `Add ${-turns === 1 ? 'one full turn' : `${-turns} full turns`}`}: `
         + `${String(deg).replace('-', '−')}° ${turns > 0 ? '−' : '+'} ${Math.abs(turns) * 360}° = ${base}°. `
-        + `(${turns < 0 ? `Dropping the minus sign does not land on the same side; ${-deg}° turns the other way.` : 'One turn is 360°, so take turns off until the angle is under 360°.'}) So ${base}°.`,
+        + `(${turns < 0 ? `Dropping the minus sign does not land on the same side; ${-deg}° turns the other way.` : 'One turn is 360°, so subtract turns until the angle is under 360°.'}) So ${base}°.`,
     };
   }
   const d = rng.pick([2, 3, 4, 6]);
@@ -107,9 +107,9 @@ function coterminal(rng) {
     text: `coterminal rad: ${N}/${d}`,
     answer: fracAnswer(n, d),
     visual: null,
-    explain: `One turn is 2π = ${2 * d}π/${d}. ${turns > 0 ? 'Take away' : 'Add'} ${Math.abs(turns) === 1 ? 'one turn' : `${Math.abs(turns)} turns`}: `
+    explain: `One turn is 2π = ${2 * d}π/${d}. ${turns > 0 ? 'Subtract' : 'Add'} ${Math.abs(turns) === 1 ? 'one turn' : `${Math.abs(turns)} turns`}: `
       + `${String(N).replace('-', '−')}π/${d} ${turns > 0 ? '−' : '+'} ${Math.abs(turns) * 2 * d}π/${d} = ${n}π/${d}${reduce(n, d).d !== d ? ` = ${piText(n, d)}` : ''}. `
-      + `(A turn is 2π, not π: taking off π lands on the opposite side.) So ${piText(n, d)}.`,
+      + `(A turn is 2π, not π: subtracting π lands on the opposite side.) So ${piText(n, d)}.`,
   };
 }
 
@@ -160,11 +160,11 @@ function reference(rng) {
     const rule = quad === 1 ? `${t}°` : quad === 2 ? `180° − ${t}°` : quad === 3 ? `${t}° − 180°` : `360° − ${t}°`;
     const roman = ['I', 'II', 'III', 'IV'][quad - 1];
     const D = (x) => `${String(x).replace('-', '−')}°`;
-    const first = t === deg ? '' : `${D(deg)} is coterminal with ${D(t)} (${deg < 0 ? 'add' : 'take away'} 360°), and `;
+    const first = t === deg ? '' : `${D(deg)} is coterminal with ${D(t)} (${deg < 0 ? 'add' : 'subtract'} 360°), and `;
     if (deg % 15 === 0 && rng.chance(0.5)) {
       const q = reduce(deg, 180), r = reduce(ref, 180), tq = reduce(t, 180);
       const ruleR = quad === 1 ? piText(tq.n, tq.d) : quad === 2 ? `π − ${piText(tq.n, tq.d)}` : quad === 3 ? `${piText(tq.n, tq.d)} − π` : `2π − ${piText(tq.n, tq.d)}`;
-      const firstR = t === deg ? '' : `${piText(q.n, q.d)} is coterminal with ${piText(tq.n, tq.d)} (${deg < 0 ? 'add' : 'take away'} 2π), and `;
+      const firstR = t === deg ? '' : `${piText(q.n, q.d)} is coterminal with ${piText(tq.n, tq.d)} (${deg < 0 ? 'add' : 'subtract'} 2π), and `;
       return {
         prompt: [T.prose(`What is the reference angle of ${piText(q.n, q.d)}, as a multiple of π?`), ...piBlank('θ′')],
         text: `reference rad: ${q.n}/${q.d}`,

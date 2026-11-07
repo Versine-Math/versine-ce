@@ -5,7 +5,7 @@
  * to the other, and you undo the operations in the reverse of the order they
  * were applied. That reversal is the part worth drilling — a student who has
  * only been told "do the opposite" will subtract before dividing on 3(x+4)=19
- * and be wrong, because the bracket makes the multiplication outermost.
+ * and be wrong, because the parentheses make the multiplication outermost.
  *
  * Every solution here is a whole number. Not to be gentle: the widget follows
  * the answer's type, so a level mixing whole and fractional answers would show
@@ -22,7 +22,7 @@
  * not taught. That costs this skill the numeric keypad on two levels, since
  * no iPhone pad carries a minus, and it is worth it.
  *
- * The harder half — unknowns on both sides, brackets, non-whole answers —
+ * The harder half — unknowns on both sides, parentheses, non-whole answers —
  * lives in `equations-both`, which depends on this.
  */
 
@@ -45,7 +45,7 @@ export const LEVELS = [
   },
   {
     name: 'Which Step First?', slug: 'which-step-first', kind: 'strategy',
-    blurb: 'Subtract or divide first? What the brackets are doing decides.',
+    blurb: 'Subtract or divide first? What the parentheses are doing decides.',
     // After both moves are available, which is the first point at which
     // choosing the wrong one costs anything.
     dependsOn: [{ skill: 'order-ops', level: 2 }],
@@ -76,7 +76,7 @@ export default {
   /** One line of working per move, naming what was done to both sides. */
   lesson(problem) {
     // The strategy level carries no visual, so it falls back to the
-    // sentences of `explain` -- which for a judgement question is the
+    // sentences of `explain` -- which for a judgment question is the
     // whole of the argument anyway.
     if (problem.visual?.kind !== 'evalmodel') return null;
     const { lines, rules } = problem.visual;

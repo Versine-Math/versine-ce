@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for the quadratic formula.
+ * Catalog authoring tool: builds the problem library for the quadratic formula.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -33,7 +33,7 @@ function quad(a, b, c, v, { pretty = false } = {}) {
   }).join('');
 }
 const said = (a, b, c, v) => quad(a, b, c, v, { pretty: true });
-/** A number squared, bracketed only when negative: 7², (−7)². */
+/** A number squared, in parentheses only when negative: 7², (−7)². */
 const sq = (h) => (h < 0 ? `(${minus(h)})²` : `${h}²`);
 
 /** The largest square dividing n, and what is left: 32 → [4, 2]. */
@@ -172,7 +172,7 @@ function discriminant(rng, again = null) {
     visual: null,
     explain: `b² − 4ac = ${b * b} − 4 × ${signed(a)} × ${signed(c)} = ${minus(D)}. `
       + (want === 2 ? 'Positive: the ± gives two different solutions.'
-        : want === 1 ? 'Zero: the ± adds and takes away nothing, so one solution.'
+        : want === 1 ? 'Zero: the ± adds and subtracts nothing, so one solution.'
           : 'Negative: no real number is its square root, so no real solutions.'),
   };
 }
@@ -193,7 +193,7 @@ function exact(rng) {
     if (c % a !== 0) return exact(rng);
     const n = -c / a;
     const [p, q] = squarePart(n);
-    // Square roots straight away leave nothing to simplify in √11: the
+    // Square roots right away leave nothing to simplify in √11: the
     // level is the simplifying, so only roots that have some are kept.
     if (p === 1) return exact(rng);
     return {

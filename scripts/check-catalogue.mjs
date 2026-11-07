@@ -1,14 +1,14 @@
 /**
- * Validate the catalogue's structure: the learning graph, and the rules that
+ * Validate the catalog's structure: the learning graph, and the rules that
  * govern where a strategy level may sit.
  *
- * Most of what follows is law -- a catalogue that breaks it is broken. A
+ * Most of what follows is law -- a catalog that breaks it is broken. A
  * couple of rules are guidance instead, and those may be broken by a skill
  * that declares its reason; they are reported on success rather than
  * enforced, so the exception is visible in the deploy log.
  *
  * Complements scripts/check-library.py, which validates the problems
- * themselves. This one checks the shape of the catalogue around them, and
+ * themselves. This one checks the shape of the catalog around them, and
  * deliberately loads only what the browser loads -- if this passes but the app
  * breaks, the difference is a clue.
  */
@@ -28,13 +28,18 @@ const { SKILLS, CATEGORIES, SUBJECTS, validateGraph, lockedBy, skillCompleted, m
 
 const fail = [];
 // Rules that are guidance rather than law: a skill may break one, but it has
-// to say so in the catalogue rather than in someone's memory. Reported on
+// to say so in the catalog rather than in someone's memory. Reported on
 // success so a deliberate exception stays visible instead of going quiet.
 const note = [];
 
 // Plain, not JSON.stringify'd: these read as sentences that say how to fix
 // the fault, and quoting them turns the advice into escaped noise.
 for (const p of validateGraph()) fail.push(`graph: ${p}`);
+
+const { shortDay } = await import(join(ROOT, 'web/engine/days.js'));
+const thisYear = new Date().getFullYear();
+if (shortDay(`${thisYear}-11-06`) !== 'Nov 6') fail.push(`shortDay gave ${shortDay(`${thisYear}-11-06`)}`);
+if (shortDay('2020-01-09') !== 'Jan 9, 2020') fail.push(`shortDay gave ${shortDay('2020-01-09')}`);
 
 // Generation belongs to tools/generators. A skill that still carries it would
 // ship generation logic to students and invite a silent second source of
@@ -118,7 +123,7 @@ let edgeInfo = '';
   const left = new Set(out.keys());
   for (;;) {
     // A level is ready when everything it waits on has already been peeled.
-    // An edge pointing outside the catalogue is a dangling reference, which
+    // An edge pointing outside the catalog is a dangling reference, which
     // validateGraph reports by name; it must not also read as a cycle here.
     const ready = [...left].filter((n) =>
       out.get(n).every((d) => !left.has(d)));
@@ -143,7 +148,7 @@ let edgeInfo = '';
 {
   const order = mapOrder();
   if (order.length !== SKILLS.length) {
-    fail.push(`the map lays out ${order.length} skills but the catalogue holds ${SKILLS.length}`);
+    fail.push(`the map lays out ${order.length} skills but the catalog holds ${SKILLS.length}`);
   }
   const at = new Map(order.map((e, i) => [e.skill.id, i]));
   for (const { skill } of order) {
@@ -248,5 +253,5 @@ if (fail.length) {
 }
 console.log(`${SKILLS.length} skills, ${levels} levels (${strategy} strategy), `
   + `${filled}/${CATEGORIES.length} categories in ${subjectsUsed}/${SUBJECTS.length} subjects, `
-  + `all reachable in ${gateInfo}, ${edgeInfo} — catalogue valid`);
+  + `all reachable in ${gateInfo}, ${edgeInfo} — catalog valid`);
 for (const n of note) console.log(`  by exception: ${n}`);

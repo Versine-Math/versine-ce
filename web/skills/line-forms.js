@@ -15,7 +15,7 @@
  *
  * Parallel and perpendicular are slope facts -- same slope; slopes that
  * multiply to −1 -- and are asked first as lines to write and then as a
- * judgement between two given lines, since recognizing a negative
+ * judgment between two given lines, since recognizing a negative
  * reciprocal is the half students find hardest.
  *
  * Which Form is the strategy level: given what is known, which form gets to
@@ -40,7 +40,7 @@ export const LEVELS = [
     name: 'Which Form?', slug: 'which-form', kind: 'strategy',
     blurb: 'What you know decides which form is quickest to write.',
     // The choice is between writing y = mx + b at once and working from a
-    // point, which is what Slope and a Point and Two Points practise.
+    // point, which is what Slope and a Point and Two Points practice.
     dependsOn: [{ skill: 'linear-eq', level: 3 }],
   },
   { name: 'All Together', slug: 'all-together',

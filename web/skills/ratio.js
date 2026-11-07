@@ -11,7 +11,7 @@
  * putting one in simplest form is dividing both parts by their greatest
  * common factor, and taking a share of a total is multiplying by a fraction.
  * All three edges are declared rather than left implied, because meeting a
- * move a second time under a new name is where it either generalises or
+ * move a second time under a new name is where it either generalizes or
  * becomes a second thing to remember.
  *
  * The confusion the skill is built around is part-to-part against
@@ -60,7 +60,7 @@ export const LEVELS = [
   {
     name: 'Scale, or Find One?', slug: 'scale-or-find-one', kind: 'strategy',
     blurb: 'Sometimes one multiplication does it. Sometimes it cannot, and pretending costs you.',
-    // The judgement is entirely "is the target a whole number of lots of what
+    // The judgment is entirely "is the target a whole number of groups of what
     // I have?", which is the factor-pair question wearing a rate's clothes.
     dependsOn: [{ skill: 'factors', level: 0 }],
   },
@@ -94,7 +94,7 @@ export default {
    *
    * The ratio levels and the strategy level fall through to the derived steps
    * instead: the ratio bar reveals in one move rather than progressively, and
-   * a judgement question's `explain` is the whole of its argument.
+   * a judgment question's `explain` is the whole of its argument.
    */
   lesson(problem) {
     if (problem.visual?.kind !== 'evalmodel') return null;

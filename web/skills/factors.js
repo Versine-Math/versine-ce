@@ -3,16 +3,16 @@
  *
  * This is the foundation the fraction skills were quietly standing on. A
  * student simplifies to lowest terms by dividing out the greatest common
- * factor and finds a common denominator by taking a lowest common multiple,
- * and until now the catalogue asked for both without ever having drilled
+ * factor and finds a common denominator by taking a least common multiple,
+ * and until now the catalog asked for both without ever having drilled
  * either. `frac-equiv` and `frac-addsub` now declare the edge, which is why
  * this skill sits early: it is arithmetic that algebra spends years cashing
  * in, first on fractions and later on factoring.
  *
  * The levels ask for the *structure* rather than the arithmetic wherever
  * there is a choice. "How many 2s are in 168?" is a question about
- * factorisation; "what is 168 ÷ 24?" is a question about division wearing a
- * factorisation's clothes, and only the first transfers to x² − 5x + 6.
+ * factorization; "what is 168 ÷ 24?" is a question about division wearing a
+ * factorization's clothes, and only the first transfers to x² − 5x + 6.
  *
  * The strategy level is the one this skill exists for. Computing a GCF and
  * computing an LCM are both mechanical; knowing which of the two a situation
@@ -30,15 +30,15 @@ export const LEVELS = [
     // repeatedly and in your head.
     dependsOn: [{ skill: 'int-muldiv', level: 2 }],
   },
-  { name: 'Prime Factorisation', slug: 'prime-factorisation',
+  { name: 'Prime Factorization', slug: 'prime-factorisation',
     blurb: 'Every number is one pile of primes, and only one. Which piece is missing?' },
   { name: 'Greatest Common Factor', slug: 'greatest-common-factor',
     blurb: 'The biggest number that divides both — what the two have in common.' },
-  { name: 'Lowest Common Multiple', slug: 'lowest-common-multiple',
+  { name: 'Least Common Multiple', slug: 'lowest-common-multiple',
     blurb: 'Count up in each until they land together. The first place they meet.' },
   {
     name: 'GCF or LCM?', slug: 'gcf-or-lcm', kind: 'strategy',
-    blurb: 'Both are easy to work out. Which one the question wants is the question.',
+    blurb: 'Both are easy to calculate. Which one the question wants is the question.',
     // Sits after both can be computed, which is the first point at which
     // picking the wrong one costs anything -- and the arithmetic that
     // follows the choice is squarely int-muldiv's Bigger Facts.
@@ -66,8 +66,8 @@ export default {
   // Names both things outright, because they are what a student scanning
   // the map is looking for. "Taking numbers apart, and finding what two of
   // them share" was true, in voice, and matched nothing anybody searches
-  // for -- the skill read as absent from a catalogue it is the floor of.
-  blurb: 'Primes, greatest common factor, lowest common multiple — what fractions run on.',
+  // for -- the skill read as absent from a catalog it is the floor of.
+  blurb: 'Primes, greatest common factor, least common multiple — what fractions run on.',
   answerInput: 'int',
   dependsOn: ['int-muldiv'],
   levels: LEVELS,
@@ -78,7 +78,7 @@ export default {
    * and a single derived sentence would lose the middle of it.
    *
    * Strategy levels carry no visual, so they fall back to the sentences of
-   * `explain` — which for a judgement question is the whole of the argument.
+   * `explain` — which for a judgment question is the whole of the argument.
    */
   lesson(problem) {
     if (problem.visual?.kind !== 'evalmodel') return null;

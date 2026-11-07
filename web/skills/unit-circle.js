@@ -47,7 +47,7 @@ export default {
   name: 'The Unit Circle',
   category: 'unit-circle',
   glyph: '(x, y)',
-  blurb: 'Sine and cosine as coordinates: exact values all the way round, their signs, tangent and the reciprocals, and the rest from one ratio.',
+  blurb: 'Sine and cosine as coordinates: exact values all the way around, their signs, tangent and the reciprocals, and the rest from one ratio.',
   answerInput: 'roots',
   // Angles in radians and their reference angles are radians' work; the
   // exact values come from trig-ratios' special triangles.

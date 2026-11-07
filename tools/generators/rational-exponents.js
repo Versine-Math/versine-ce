@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for rational exponents.
+ * Catalog authoring tool: builds the problem library for rational exponents.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -20,7 +20,7 @@ const SUP = { '-': '⁻', 0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴', 5: '⁵
 const sup = (n) => String(n).replace(/[-\d]/g, (c) => SUP[c]);
 const ROOT = { 2: '√', 3: '∛', 4: '∜' };
 const rootOf = (n, x) => `${ROOT[n] ?? `${sup(n)}√`}${String(x).startsWith('−') ? `(${x})` : x}`;
-/** A number about to be raised, bracketed if negative: 3⁵, (−2)⁵. */
+/** A number about to be raised, in parentheses if negative: 3⁵, (−2)⁵. */
 const raised = (x) => (x < 0 ? `(${minus(x)})` : String(x));
 const NTH = { 2: 'square', 3: 'cube', 4: 'fourth', 5: 'fifth', 6: 'sixth' };
 
@@ -204,7 +204,7 @@ function rules(rng) {
   const shape = rng.pick(['times', 'times', 'over', 'power', 'root']);
   const a = rng.pick(EXPS), b = rng.pick(EXPS);
   let src, e, how;
-  // Over the lowest common denominator, then reduced, so every step is shown:
+  // Over the least common denominator, then reduced, so every step is shown:
   // 1/2 + 5/2 = 6/2 = 3.
   const common = (op) => {
     const l = a.d * b.d / gcd(a.d, b.d);
@@ -234,7 +234,7 @@ function rules(rng) {
     e = add(b, r, times ? 1 : -1);
     const l = b.d * n / gcd(b.d, n);
     const top = b.n * l / b.d + (times ? 1 : -1) * (l / n);
-    how = `${rootOf(n, v)} is ${v} to the 1/${n}. ${times ? 'Multiplying: add' : 'Dividing: take away'} the powers. `
+    how = `${rootOf(n, v)} is ${v} to the 1/${n}. ${times ? 'Multiplying: add' : 'Dividing: subtract'} the powers. `
       + `${plain(b)} ${times ? '+' : '−'} 1/${n}${l === n && b.d === n ? '' : ` = ${b.n * l / b.d}/${l} ${times ? '+' : '−'} ${l / n}/${l}`}`
       + ` = ${reducing(top, l)}`;
   }

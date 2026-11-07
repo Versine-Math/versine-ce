@@ -1,5 +1,5 @@
 /**
- * The skill catalogue. Add a module here and it appears on the map --
+ * The skill catalog. Add a module here and it appears on the map --
  * nothing else in the engine needs to know it exists.
  */
 import intAddSub from '../skills/int-addsub.js';
@@ -120,7 +120,7 @@ export const getSkill = (id) => SKILLS.find((s) => s.id === id);
  * equation is a claim you test.
  *
  * Categories and subjects with no skills yet are declared anyway. They cost a
- * line, they say what the catalogue is for, and they stop the next skill being
+ * line, they say what the catalog is for, and they stop the next skill being
  * filed under whichever existing name is least wrong. Empty ones do not render.
  */
 export const SUBJECTS = [
@@ -191,7 +191,7 @@ export const subjectOf = (categoryId) => {
  *
  * Nodes are exactly what a student sees: Skills, and the Levels inside them.
  * There is no separate vocabulary to maintain — the relationships are plain
- * many-to-many links between artefacts that already exist in the UI.
+ * many-to-many links between artifacts that already exist in the UI.
  *
  * `dependsOn` is deliberately soft. It says "this builds on that", not "this
  * is forbidden until that is finished". Level unlocking inside a Skill is a
@@ -220,17 +220,17 @@ export const dependentsOf = (skillId) =>
  *
  * Grouping alone got this wrong, and quietly. The Map walks subjects, then
  * categories, then the skills in each -- which put Factors & Multiples, where
- * lowest common multiple and greatest common factor are actually taught,
+ * least common multiple and greatest common factor are actually taught,
  * *after* the eight fraction skills that stand on it, and Ratio & Rate after
  * the Percents level that needs it. A student scrolling for the thing they
  * are missing passed everything that needs it first and reasonably concluded
- * it was not in the catalogue.
+ * it was not in the catalog.
  *
  * So the walk is the same, with one rule added: a skill's dependencies are
  * laid out before it, recursively, and then the category it interrupted
  * carries on. Nothing is pushed back -- a skill only ever moves earlier, to
  * the first point where something needs it -- so the curated order survives
- * everywhere it was not actually wrong. In this catalogue two skills move.
+ * everywhere it was not actually wrong. In this catalog two skills move.
  *
  * The cost is that a category is no longer guaranteed to be contiguous:
  * pulling Ratio & Rate forward to sit before Percents splits Decimals &
@@ -363,7 +363,7 @@ export function validateGraph() {
   }
 
   // Something has to be playable on day one. With dependencies gating access,
-  // a catalogue where every skill depends on another is one nobody can start
+  // a catalog where every skill depends on another is one nobody can start
   // -- and a cycle check alone would not notice, because the graph could be
   // perfectly acyclic and still have no root.
   if (!SKILLS.some((s) => !dependenciesOf(s).length)) {
@@ -383,7 +383,7 @@ export function validateGraph() {
   // skill, which a loop makes meaningless.
   //
   // The fix is never to delete whichever edge happened to close the loop --
-  // that edge is usually true, and deleting it leaves the catalogue lying
+  // that edge is usually true, and deleting it leaves the catalog lying
   // about what rests on what. The fix is to split. A cycle says two skills
   // each need the whole of the other, and that is almost always a sign that
   // one of them is two skills: the part needed early becomes its own skill,
@@ -393,16 +393,16 @@ export function validateGraph() {
   // than the eight-level guide, and it is a feature rather than an obstacle
   // to route around.
   //
-  // A proper three-colour walk: grey is on the current path, black is
+  // A proper three-color walk: gray is on the current path, black is
   // finished. Marking a node finished only once its own dependencies are
   // explored is what keeps a cycle reachable by two routes from being
   // skipped on the second.
-  const GREY = 1, BLACK = 2;
+  const GRAY = 1, BLACK = 2;
   const mark = new Map();
   const reported = new Set();
   const walk = (id, path) => {
     if (mark.get(id) === BLACK) return;
-    if (mark.get(id) === GREY) {
+    if (mark.get(id) === GRAY) {
       const loop = [...path.slice(path.indexOf(id)), id];
       // A skill depending on itself is reported above, precisely and by that
       // name. Saying "split one of them" about a loop of one would be advice
@@ -419,7 +419,7 @@ export function validateGraph() {
       }
       return;
     }
-    mark.set(id, GREY);
+    mark.set(id, GRAY);
     for (const dep of dependenciesOf(byId.get(id) ?? {})) walk(dep, [...path, id]);
     mark.set(id, BLACK);
   };

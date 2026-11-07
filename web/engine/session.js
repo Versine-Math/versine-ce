@@ -104,7 +104,7 @@ export class Session {
     const spec = this.problem.answer;
     const type = getType(spec.type);
     const parsed = type.parse(raw);
-    // The parser's own reason ("a bracket is left open") says more than the
+    // The parser's own reason ("a parenthesis is left open") says more than the
     // type's general example does.
     const why = parsed.why && `${parsed.why[0].toUpperCase()}${parsed.why.slice(1)}.`;
     if (!parsed.ok) return { status: 'invalid', hint: parsed.hint ?? why ?? type.hint };
@@ -116,7 +116,7 @@ export class Session {
 
     // requiem: play/answers/accepted-forms-judged
     // The stored value, or any other form the level lists as accepted:
-    // (x + 3)² and (x + 3)(x + 3) are both a finished factorisation, and
+    // (x + 3)² and (x + 3)(x + 3) are both a finished factorization, and
     // comparing canonical forms alone cannot see that a power is a product.
     const forms = [spec.value, ...(spec.accept ?? []).map((a) => type.parse(a)).filter((r) => r.ok).map((r) => r.value)];
     if (!forms.some((v) => type.equals(parsed.value, v))) {

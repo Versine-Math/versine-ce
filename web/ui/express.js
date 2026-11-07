@@ -3,12 +3,12 @@ import { parseExpression } from '../math/parse.js';
 /**
  * Turning a parsed expression into terms the prompt renderer can draw.
  *
- * The brackets it draws are *derived from precedence*, not copied from what
+ * The parentheses it draws are *derived from precedence*, not copied from what
  * was typed. That is deliberate and is the whole value of the preview: typing
  * `2^1/2` shows `2¹⁄2` with the exponent bound tightly, which is how it was
- * read, whether or not the student expected it. Redundant brackets they typed
- * disappear, and brackets they omitted appear. The one exception is factors
- * set side by side, where a bracket is never redundant: without it (2a)(3b)
+ * read, whether or not the student expected it. Redundant parentheses they typed
+ * disappear, and parentheses they omitted appear. The one exception is factors
+ * set side by side, where parentheses are never redundant: without it (2a)(3b)
  * would draw as one term, 2a3b.
  *
  * Nothing here evaluates. `4/8` draws as `4/8` and `2+3` as `2+3`. A preview
@@ -17,7 +17,7 @@ import { parseExpression } from '../math/parse.js';
  * number is more natural to write than one that returns a faithful picture.
  */
 
-/** Binding strength, for deciding when a child needs brackets around it. */
+/** Binding strength, for deciding when a child needs parentheses around it. */
 const PREC = { '+': 1, '-': 1, '*': 2, '/': 2, '^': 4 };
 const precOf = (n) => (n.t === 'bin' ? PREC[n.op] : n.t === 'neg' ? 3 : 9);
 
@@ -28,7 +28,7 @@ function child(node, need, { rightOf = null } = {}) {
   const terms = termsFor(node);
   const mine = precOf(node);
   // Same strength on the right of a left-associative operator still needs
-  // brackets: a − (b − c) is not (a − b) − c.
+  // parentheses: a − (b − c) is not (a − b) − c.
   const tight = rightOf && mine === need && (rightOf === '-' || rightOf === '/');
   return mine < need || tight ? wrap(terms) : terms;
 }
@@ -45,7 +45,7 @@ export function termsFor(node) {
       // drawn apart, a line can break between them.
       if (node.a.t === 'num') return [{ t: 'num', v: `−${node.a.v}` }];
       // And a minus on a letter or a power is set against it, −n² and not
-      // − n², which in a bracket or at the start reads as a stray sign.
+      // − n², which in parentheses or at the start reads as a stray sign.
       if (node.a.t === 'var' || (node.a.t === 'bin' && node.a.op === '^')) {
         return [{ t: 'juxt', terms: [{ t: 'op', v: '−' }, ...child(node.a, 3)] }];
       }
@@ -62,7 +62,7 @@ export function termsFor(node) {
     case 'bin': {
       if (node.op === '/') {
         // Division is drawn as a fraction, which is why its parts never need
-        // brackets: the bar does the grouping that brackets would have to.
+        // parentheses: the bar does the grouping that parentheses would have to.
         return [{ t: 'frac', n: termsFor(node.a), d: termsFor(node.b) }];
       }
       if (node.op === '^') {
@@ -75,12 +75,12 @@ export function termsFor(node) {
       // sign, so it gains neither a sign nor the gap that separates the parts
       // of a sum.
       // requiem: play/answers/side-by-side-keeps-brackets
-      // A bracket typed around a factor is kept, though: −2a³ and 3b⁶ side
+      // Parentheses typed around a factor is kept, though: −2a³ and 3b⁶ side
       // by side with nothing between would read as one term.
       if (node.op === '*' && node.implicit) {
         // And so is one round a number that follows something: 2(3) is not 23.
         // requiem: play/answers/power-bracket-on-base
-        // A power of a number keeps its bracket on the base, where it was
+        // A power of a number keeps its parentheses on the base, where it was
         // typed: 500(1.04)ˣ, not 500(1.04ˣ).
         const kept = (side, terms) => (side.paren && terms.length && terms[0].t !== 'group' ? wrap(terms) : terms);
         const digitFirst = (terms) => terms[0]?.t === 'num'

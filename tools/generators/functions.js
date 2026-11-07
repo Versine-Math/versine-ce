@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for functions.
+ * Catalog authoring tool: builds the problem library for functions.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -21,7 +21,7 @@ const PLANE = { xRange: [-SPAN, SPAN], yRange: [-SPAN, SPAN], grid: 1 };
 const LINE = 'var(--vec-1)';
 /**
  * f(x) = rule, in one piece. Built by hand because the expression parser
- * reads f(x) as f times x and drops the brackets, which is right for 2(x)
+ * reads f(x) as f times x and drops the parentheses, which is right for 2(x)
  * and exactly wrong here.
  */
 const defn = (name, arg, src) => T.math([T.letter(name), T.group([arg]), T.op('='), ...previewOf(src).terms]);
@@ -303,7 +303,7 @@ function meaning(rng) {
     text: `means: ${c.f}(${a}) = ${b} | ${c.inUnit} | ${c.outUnit}`,
     answer: { type: 'choice', value: right, options },
     visual: null,
-    explain: `The number in the brackets is the input, ${c.in} = ${count(a, c.inUnit)}. The number after the equals `
+    explain: `The number in the parentheses is the input, ${c.in} = ${count(a, c.inUnit)}. The number after the equals `
       + `is the output, the ${c.out}: ${unit(c.outUnit, b)}. So: ${right[0].toLowerCase()}${right.slice(1)}.`,
   };
 }

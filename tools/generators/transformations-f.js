@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for transforming functions.
+ * Catalog authoring tool: builds the problem library for transforming functions.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -95,7 +95,7 @@ function eq(src) {
 /**
  * Two graphs by their equations, and what took one to the other. The prompt
  * names which is the start -- "compared with" left it open, and read the
- * other way round every answer flips. The one it started from is drawn faint
+ * other way around every answer flips. The one it started from is drawn faint
  * once it is answered, the moved one bold.
  */
 function compare(base, g, ask, options, value, why, prefix) {
@@ -153,7 +153,7 @@ function start(rng, { shift = true, lift = true } = {}) {
 function upDown(rng) {
   const dv = rng.nonZero(-6, 6);
   if (rng.chance(0.5)) {
-    return image(rng, { v: dv }, (p, q, X, Y) => `${dv > 0 ? `Adding ${dv}` : `Taking away ${-dv}`} outside moves every height `
+    return image(rng, { v: dv }, (p, q, X, Y) => `${dv > 0 ? `Adding ${dv}` : `Subtracting ${-dv}`} outside moves every height `
       + `${dv > 0 ? 'up' : 'down'} ${Math.abs(dv)}, and leaves x as it is: y → ${minus(q)} ${dv > 0 ? '+' : '−'} ${Math.abs(dv)} = ${minus(Y)}.`);
   }
   return vertical(rng, dv, false);
@@ -237,8 +237,8 @@ function stretch(rng) {
 }
 
 const FLIPS = [
-  { id: 'x-axis', label: 'Reflected in the x-axis' },
-  { id: 'y-axis', label: 'Reflected in the y-axis' },
+  { id: 'x-axis', label: 'Reflected over the x-axis' },
+  { id: 'y-axis', label: 'Reflected over the y-axis' },
   { id: 'same', label: 'The same graph' },
 ];
 
@@ -265,9 +265,9 @@ function reflect(rng, again = null) {
   const base = moved(s.family, s);
   const g = kind === 'x-axis' ? moved(s.family, { ...s, a: -1, v: -s.v }) : moved(s.family, { ...s, k: -1 });
   const why = kind === 'x-axis'
-    ? 'Everything is multiplied by −1, outside: every height turns to its opposite, reflected in the x-axis.'
+    ? 'Everything is multiplied by −1, outside: every height turns to its opposite, reflected over the x-axis.'
     : kind === 'y-axis'
-      ? 'x is replaced by −x, inside: each height now comes at the opposite x, reflected in the y-axis.'
+      ? 'x is replaced by −x, inside: each height now comes at the opposite x, reflected over the y-axis.'
       : 'x is replaced by −x, which reflects it in the y-axis, but this graph is the same on both sides of the y-axis: the same graph.';
   return compare(base, g, 'how is the graph changed', FLIPS, kind, why, 'reflected');
 }
@@ -295,8 +295,8 @@ const LOOKS = {
   cubic: (up) => `It runs from the ${up ? 'bottom left to the top right' : 'top left to the bottom right'}, flattening as it passes `
     + `through its middle point: y = x³ ${up ? '' : 'flipped and '}moved.`,
 };
-const CORE = { quadratic: 'a bracket squared', abs: 'absolute value bars', sqrt: 'a square root', cubic: 'a bracket cubed' };
-/** What there is to take away from a·P(x − c) + v, naming only what is there. */
+const CORE = { quadratic: 'a quantity in parentheses squared', abs: 'absolute value bars', sqrt: 'a square root', cubic: 'a quantity in parentheses cubed' };
+/** What there is to subtract from a·P(x − c) + v, naming only what is there. */
 function strip({ a, c, v }) {
   const parts = [];
   if (a !== 1) parts.push(a === -1 ? 'the minus in front' : `the ${a < 0 ? '−' : ''}${fracText(Math.abs(a))} in front`);

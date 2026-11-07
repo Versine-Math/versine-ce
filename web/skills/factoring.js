@@ -1,5 +1,5 @@
 /**
- * Factoring: multiplying out, run backwards.
+ * Factoring: expanding, run backwards.
  *
  * Polynomials took (x + 3)(x + 4) to x² + 7x + 12. This skill starts from
  * x² + 7x + 12 and asks where it came from, and the answer is in how it was
@@ -19,7 +19,7 @@
 
 export const LEVELS = [
   { name: 'Common Factor Out', slug: 'common-factor-out',
-    blurb: 'The biggest number and the lowest power in every term, outside a bracket.' },
+    blurb: 'The biggest number and the lowest power in every term, outside parentheses.' },
   { name: 'x² + bx + c', slug: 'x2-bx-c',
     blurb: 'Two numbers that multiply to c and add to b.' },
   { name: 'Negatives Inside', slug: 'negatives-inside',
@@ -33,7 +33,7 @@ export const LEVELS = [
     kind: 'strategy',
     blurb: 'Common factor first, then the shape. And some do not factor at all.',
     // The patterns are the special products read backwards, so they are met
-    // multiplied out before they are looked for.
+    // expanded before they are looked for.
     dependsOn: [{ skill: 'polynomials', level: 5 }],
   },
   { name: 'All Together', slug: 'all-together',

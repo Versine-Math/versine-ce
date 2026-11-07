@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for equations-both.
+ * Catalog authoring tool: builds the problem library for equations-both.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. Run via: node scripts/build-library.mjs
@@ -50,10 +50,10 @@ function bothSides(rng) {
     visual: {
       kind: 'evalmodel',
       lines: [src, `${term(a, v)} - ${term(b, v)} = ${c}`, `${term(a - b, v)} = ${c}`, `${v} = ${x}`],
-      rules: [`take ${term(b, v)} off both sides`, 'gather the letters', `divide both sides by ${a - b}`],
+      rules: [`subtract ${term(b, v)} from both sides`, 'gather the letters', `divide both sides by ${a - b}`],
       hint: 'The letter is on both sides. What has to happen first?',
     },
-    explain: `${v} is on both sides. Taking ${term(b, v)} off both leaves `
+    explain: `${v} is on both sides. Subtracting ${term(b, v)} from both leaves `
       + `${term(a - b, v)} = ${c}, so ${v} = ${x}.`,
   };
 }
@@ -73,7 +73,7 @@ function gatherThenUndo(rng) {
     visual: {
       kind: 'evalmodel',
       lines: [src, `${term(a - b, v)}${tail(p)} = ${q}`, `${term(a - b, v)} = ${q - p}`, `${v} = ${x}`],
-      rules: [`take ${term(b, v)} off both sides`, `take ${p} off both sides`,
+      rules: [`subtract ${term(b, v)} from both sides`, `subtract ${p} from both sides`,
               `divide both sides by ${a - b}`],
       hint: 'Two kinds of thing on both sides. Gather each in turn.',
     },
@@ -84,11 +84,11 @@ function gatherThenUndo(rng) {
 }
 
 /**
- * k(x + b) = mx + q: a bracket on one side and the letter on the other too.
+ * k(x + b) = mx + q: parentheses on one side and the letter on the other too.
  *
  * Dividing by k first, the way Solving Equations taught, now runs into the
- * letter on the right: m/k of it, usually a fraction. Opening the bracket
- * turns it into Gather Then Undo, which is the point -- a bracket in a
+ * letter on the right: m/k of it, usually a fraction. Distributing
+ * turns it into Gather Then Undo, which is the point -- parentheses in a
  * both-sides equation is opened first, and the earlier levels finish it.
  */
 function brackets(rng) {
@@ -107,12 +107,12 @@ function brackets(rng) {
     visual: {
       kind: 'evalmodel',
       lines: [src, opened, `${term(k - m, v)} + ${k * b} = ${q}`, `${term(k - m, v)} = ${q - k * b}`, `${v} = ${x}`],
-      rules: ['open the bracket', `take ${term(m, v)} off both sides`, `take ${k * b} off both sides`,
+      rules: ['distribute', `subtract ${term(m, v)} from both sides`, `subtract ${k * b} from both sides`,
               `divide both sides by ${k - m}`],
-      hint: 'The bracket is in the way of gathering. Open it first.',
+      hint: 'The parentheses are in the way of gathering. Distribute first.',
     },
-    explain: `Open the bracket first: ${opened}. Now it is gather then undo: taking `
-      + `${term(m, v)} off both sides leaves ${term(k - m, v)} + ${k * b} = ${q}, taking ${k * b} off `
+    explain: `Distribute first: ${opened}. Now it is gather then undo: subtracting `
+      + `${term(m, v)} from both sides leaves ${term(k - m, v)} + ${k * b} = ${q}, subtracting ${k * b} from `
       + `leaves ${term(k - m, v)} = ${q - k * b}`
       + `${k - m === 1 ? '' : `, and dividing by ${k - m} gives ${v} = ${x}`}. `
       + `Dividing by ${k} first would leave ${m === k ? v : `${m}/${k} of ${v}`} on the right.`,
@@ -145,7 +145,7 @@ function notWhole(rng) {
       kind: 'evalmodel',
       lines: [src, `${term(d, v)}${tail(p)} = ${q}`, `${term(d, v)} = ${top}`,
               value.d === d ? `${v} = ${top}/${d}` : `${v} = ${top}/${d} = ${shown}`],
-      rules: [`take ${term(b, v)} off both sides`, `take ${p} off both sides`,
+      rules: [`subtract ${term(b, v)} from both sides`, `subtract ${p} from both sides`,
               `divide both sides by ${d}, in lowest terms`],
       hint: 'It will not divide evenly at the end. That is allowed.',
     },
@@ -200,7 +200,7 @@ function whichSide(rng) {
 /**
  * One answer, none, or every number.
  *
- * Each equation is built to look like the other two: a bracket on one side
+ * Each equation is built to look like the other two: parentheses on one side
  * and a matching-looking expression on the other, differing only where it
  * decides the outcome. When the letters cancel, what is left is a statement
  * about numbers alone, and whether it is true is the whole answer.
@@ -228,7 +228,7 @@ function noneOrEvery(rng) {
     rhsConst = constant + (a - coeff) * solution; // so av + ab = cv + k at v = solution
   }
   // Half the time the right side has to be collected first, so the
-  // cancelling is not visible until the work is done.
+  // canceling is not visible until the work is done.
   const split = rng.chance(0.5) && coeff > 2;
   const part = split ? rng.int(1, coeff - 1) : 0;
   const rhs = split
@@ -237,18 +237,18 @@ function noneOrEvery(rng) {
   const src = `${a}(${inside}) = ${rhs}`;
   const expanded = `${term(a, v)}${tail(constant)} = ${term(coeff, v)}${tail(rhsConst)}`;
   const lines = [src, expanded];
-  const rules = [split ? `open the bracket and collect the ${v}s` : 'open the bracket'];
+  const rules = [split ? `distribute and combine the ${v}s` : 'distribute'];
   let explain;
   if (kind === 'one') {
     lines.push(`${term(a - coeff, v)} = ${rhsConst - constant}`, `${v} = ${solution}`);
-    rules.push(`take ${term(coeff, v)} and ${constant} off both sides`, 'one value');
-    explain = `Opening the bracket gives ${expanded}. The ${v}s do not match, so they do not `
+    rules.push(`subtract ${term(coeff, v)} and ${constant} from both sides`, 'one value');
+    explain = `Distributing gives ${expanded}. The ${v}s do not match, so they do not `
       + `cancel: gathering them leaves ${term(a - coeff, v)} = ${rhsConst - constant}, `
       + `and ${v} = ${solution} is the one number that works.`;
   } else {
     lines.push(`${constant} = ${rhsConst}`, kind === 'every' ? 'always true' : 'never true');
-    rules.push(`take ${term(a, v)} off both sides`, 'no letter left to solve for');
-    explain = `Opening the bracket gives ${expanded}. Taking ${term(a, v)} off both sides `
+    rules.push(`subtract ${term(a, v)} from both sides`, 'no letter left to solve for');
+    explain = `Distributing gives ${expanded}. Subtracting ${term(a, v)} from both sides `
       + `removes every ${v}, leaving ${constant} = ${rhsConst}`
       + (kind === 'every'
         ? `, which is true whatever ${v} was. Every number works.`
@@ -258,7 +258,7 @@ function noneOrEvery(rng) {
     prompt: [...ask(src, v).slice(0, -4), T.prose(' How many numbers make it true?')],
     text: `how many solutions: ${src}`,
     answer: { type: 'choice', value: kind, options: KINDS },
-    // Working is written with a true minus, as the rest of the catalogue's is.
+    // Working is written with a true minus, as the rest of the catalog's is.
     visual: {
       kind: 'evalmodel', lines: lines.map(trueMinus), rules,
       hint: 'Open it up and gather. What is left?',

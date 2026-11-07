@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for angle relationships.
+ * Catalog authoring tool: builds the problem library for angle relationships.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -125,7 +125,7 @@ function crossing(rng) {
   const dirs = [base, base + theta, base + 180, base + theta + 180, base + 360];
   const size = (i) => (i % 2 ? 180 - theta : theta);
   const given = rng.int(0, 3);
-  // Opposite and beside equally often: equal, or 180 take away.
+  // Opposite and beside equally often: equal, or 180 subtract.
   const asked = (given + rng.pick([2, 1, 3, 2])) % 4;
   const letter = rng.pick(LETTERS);
   const want = size(asked);
@@ -319,7 +319,7 @@ function solving(rule, [a1, b1], [a2, b2], x) {
     return steps.join('. ');
   }
   const k = a1 + a2, c = b1 + b2, S = Number(rule);
-  return `(${e1}) + (${e2}) = ${S}. Collect: ${linear(k, c)} = ${S}`
+  return `(${e1}) + (${e2}) = ${S}. Combine like terms: ${linear(k, c)} = ${S}`
     + `${c === 0 ? '' : `, so ${linear(k, 0)} = ${S - c}`}${k === 1 ? '' : `, and x = ${S - c} ÷ ${k} = ${x}`}`;
 }
 

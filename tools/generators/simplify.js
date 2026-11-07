@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for simplify.
+ * Catalog authoring tool: builds the problem library for simplify.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -40,7 +40,7 @@ function linear(m, c, v) {
 
 /** Typed text uses a hyphen; the sentences explaining it use a real minus sign. */
 const shown = (s) => String(s).replace(/-/g, '−');
-/** A number as a factor in a sentence: −4 in brackets after ×. */
+/** A number as a factor in a sentence: −4 in parentheses after ×. */
 const factor = (n) => (n < 0 ? `(−${-n})` : String(n));
 
 /** Same letter, so the numbers in front add. */
@@ -50,12 +50,12 @@ function collect(rng) {
   const b = rng.int(2, 12);
   const src = `${a}${v} + ${b}${v}`;
   return {
-    prompt: ask('Collect like terms:', src),
+    prompt: ask('Combine like terms:', src),
     text: src,
     answer: { type: 'expr', value: linear(a + b, 0, v) },
     visual: {
       kind: 'evalmodel',
-      lines: [src, `${a} lots of ${v} and ${b} more`, `${a} + ${b} = ${a + b}`, linear(a + b, 0, v)],
+      lines: [src, `${a} groups of ${v} and ${b} more`, `${a} + ${b} = ${a + b}`, linear(a + b, 0, v)],
       rules: ['both count the same thing', 'so the numbers in front add', 'giving'],
       hint: 'What is each term counting?',
     },
@@ -72,7 +72,7 @@ function partial(rng) {
   const c = rng.int(2, 15);
   const src = `${a}${v} + ${c} + ${b}${v}`;
   return {
-    prompt: ask('Collect like terms:', src),
+    prompt: ask('Combine like terms:', src),
     text: src,
     answer: { type: 'expr', value: linear(a + b, c, v) },
     visual: {
@@ -88,7 +88,7 @@ function partial(rng) {
 }
 
 /**
- * A bracket multiplied hits everything inside it.
+ * A number times parentheses hits everything inside them.
  *
  * The multiplier is sometimes negative: −3(x − 4) is where "everything inside"
  * is actually tested, since the classic slip is −3x − 12.
@@ -104,7 +104,7 @@ function distribute(rng, andCollect) {
   if (m === 0) return distribute(rng, andCollect);
   const c = a * b;
   return {
-    prompt: ask(andCollect ? 'Expand and collect like terms:' : 'Expand:', src),
+    prompt: ask(andCollect ? 'Expand and combine like terms:' : 'Expand:', src),
     text: src,
     answer: { type: 'expr', value: linear(m, c, v) },
     visual: {
@@ -115,7 +115,7 @@ function distribute(rng, andCollect) {
               linear(m, c, v)],
       rules: ['the multiplier reaches both terms',
               andCollect ? 'which gives' : 'so',
-              andCollect ? `${a} + ${extra} = ${m} lots of ${v}` : 'and that is it'],
+              andCollect ? `${a} + ${extra} = ${m} groups of ${v}` : 'and that is it'],
       hint: 'What does the number outside multiply?',
     },
     explain: shown(`${a} multiplies both terms inside: ${factor(a)} × ${v} = ${linear(a, 0, v)} and `
@@ -130,7 +130,7 @@ function distribute(rng, andCollect) {
 /**
  * The strategic layer, and the reason this skill exists.
  *
- * Brackets are kept when the next step divides by them, cancels them or sets
+ * Parentheses are kept when the next step divides by them, cancels them or sets
  * them to zero, and opened when the next step needs the terms laid out. Neither
  * form is simpler in the abstract -- what is about to happen decides.
  *
@@ -145,24 +145,24 @@ const SITUATIONS = {
       const r = a * (b + rng.int(1, 6));
       return {
         text: `You need to solve ${f} = ${r} for ${v}.`,
-        why: `Either way reaches ${v} = ${r / a - b}, but kept as a bracket, dividing both sides by ${a} `
-          + `undoes it in one step: ${v} + ${b} = ${r / a}. Multiplying out first adds a step.`,
+        why: `Either way reaches ${v} = ${r / a - b}, but kept in parentheses, dividing both sides by ${a} `
+          + `undoes it in one step: ${v} + ${b} = ${r / a}. Expanding first adds a step.`,
       };
     },
     ({ f, v, a, b }) => ({
       text: `You need to cancel a factor of ${a} from ${f} over ${a}.`,
-      why: `With the bracket kept, ${a} is plainly a factor of the whole top and cancels at once, leaving `
-        + `${v} + ${b}. Multiplied out as ${a}${v} + ${a * b}, it would have to be taken out again first.`,
+      why: `With the parentheses kept, ${a} is plainly a factor of the whole top and cancels at once, leaving `
+        + `${v} + ${b}. Expanded as ${a}${v} + ${a * b}, it would have to be taken out again first.`,
     }),
     ({ f, v, a, b }) => ({
       text: `You need to divide ${f} by ${a} exactly.`,
-      why: `${f} is ${a} lots of (${v} + ${b}), so dividing by ${a} leaves ${v} + ${b} in one step. `
-        + `Multiplied out, each term has to be divided separately.`,
+      why: `${f} is ${a} groups of (${v} + ${b}), so dividing by ${a} leaves ${v} + ${b} in one step. `
+        + `Expanded, each term has to be divided separately.`,
     }),
     ({ f, v, a, b }) => ({
       text: `You need to find the value of ${v} that makes ${f} equal to zero.`,
       why: `${a} times something is zero only when the something is zero, so ${v} + ${b} = 0 and `
-        + `${v} = −${b}. The bracket shows that at once; ${a}${v} + ${a * b} hides it.`,
+        + `${v} = −${b}. The parentheses show that at once; ${a}${v} + ${a * b} hides it.`,
     }),
   ],
   open: [
@@ -170,7 +170,7 @@ const SITUATIONS = {
       const e = rng.int(2, 9);
       return {
         text: `You need to add ${f} to ${e}${v}.`,
-        why: `Inside the bracket, ${v} is not a term you can collect. Multiplied out, ${f} is `
+        why: `Inside the parentheses, ${v} is not a term you can combine. Expanded, ${f} is `
           + `${a}${v} + ${a * b}, and ${a}${v} + ${e}${v} = ${a + e}${v}: the sum is ${a + e}${v} + ${a * b}.`,
       };
     },
@@ -178,7 +178,7 @@ const SITUATIONS = {
       const e = rng.int(1, a - 1);
       return {
         text: `You need to take ${e === 1 ? '' : e}${v} away from ${f}.`,
-        why: `Multiplied out, ${f} is ${a}${v} + ${a * b}, and taking ${e === 1 ? '' : e}${v} from `
+        why: `Expanded, ${f} is ${a}${v} + ${a * b}, and subtracting ${e === 1 ? '' : e}${v} from `
           + `${a}${v} leaves ${linear(a - e, a * b, v)}.`,
       };
     },
@@ -186,7 +186,7 @@ const SITUATIONS = {
       const c = rng.chance(0.5) ? a * b : a * b + rng.pick([-1, 1]);
       return {
         text: `You need to check whether ${f} matches another expression written as ${a}${v} + ${c}.`,
-        why: `The other one is already multiplied out, so multiply ${f} out too and compare term by term: `
+        why: `The other one is already expanded, so expand ${f} too and compare term by term: `
           + `${a}${v} + ${a * b} ${c === a * b ? 'is' : 'is not'} ${a}${v} + ${c}.`,
       };
     },
@@ -194,7 +194,7 @@ const SITUATIONS = {
       const k = rng.int(2, 5), d = rng.int(1, 9);
       return {
         text: `You need to add ${f} to ${k}(${v} + ${d}).`,
-        why: `The brackets hold different things, so neither can be kept whole. Multiplied out: `
+        why: `The parentheses hold different things, so neither can be kept whole. Expanded: `
           + `${a}${v} + ${a * b} + ${k}${v} + ${k * d} = ${a + k}${v} + ${a * b + k * d}.`,
       };
     },
@@ -204,10 +204,10 @@ const SITUATIONS = {
 /**
  * Distributing backwards: 6x + 15 becomes 3(2x + 5).
  *
- * The strategy level after this one asks whether to keep a bracket or open
- * it, and until now only one of those two was ever practised -- a judgement
+ * The strategy level after this one asks whether to keep parentheses or open
+ * it, and until now only one of those two was ever practiced -- a judgment
  * between a skill the student has and one they have only been told about.
- * Factorising is also the move that makes an equation solvable rather than
+ * Factorizing is also the move that makes an equation solvable rather than
  * merely tidy, which is the sentence the skill's own header has been making
  * since before there was a level to back it.
  *
@@ -216,13 +216,13 @@ const SITUATIONS = {
  * no factor, or the job is half done -- the same stopping point that "lowest
  * terms" names for a fraction.
  */
-function factorise(rng) {
+function factorize(rng) {
   const v = rng.pick(VARS);
   const k = rng.int(2, 9);                       // the factor to come out
   let m = rng.int(2, 9);                         // what is left in front of the letter
   let c = rng.int(1, 12);                        // and the number left inside
   // Nothing shared inside, or the greatest common factor was not taken.
-  if (gcd(m, c) !== 1) return factorise(rng);
+  if (gcd(m, c) !== 1) return factorize(rng);
   const src = `${k * m}${v} + ${k * c}`;
 
   return {
@@ -256,7 +256,7 @@ function whichForm(rng) {
     answer: {
       type: 'choice', value: want,
       options: rng.shuffle([
-        { id: 'keep', label: 'Keep the brackets', note: 'a number times a bracket, like 3(x + 2)' },
+        { id: 'keep', label: 'Keep the parentheses', note: 'a number times a group in parentheses, like 3(x + 2)' },
         { id: 'open', label: 'Multiply them out', note: 'terms side by side, like 3x + 6' },
       ]),
     },
@@ -273,10 +273,10 @@ export function generate(rng, level) {
       case 1: return partial(rng);
       case 2: return distribute(rng, false);
       case 3: return distribute(rng, true);
-      case 4: return factorise(rng);
+      case 4: return factorize(rng);
       case 5: return whichForm(rng);
       default: return rng.pick([collect, partial,
-        (r) => distribute(r, false), (r) => distribute(r, true), factorise])(rng);
+        (r) => distribute(r, false), (r) => distribute(r, true), factorize])(rng);
     }
   };
   const p = build(level >= LAST_LEVEL ? rng.int(0, LAST_LEVEL - 2) : level);

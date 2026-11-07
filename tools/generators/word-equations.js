@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for writing equations.
+ * Catalog authoring tool: builds the problem library for writing equations.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -26,7 +26,7 @@ const an = (n) => (/^(8|11|18|8\d)$/.test(String(n)) ? 'an' : 'a');
  * of a number" never promised a positive one, and a puzzle is the cleanest
  * place to find that out.
  *
- * A third of them add first and multiply second, which needs a bracket:
+ * A third of them add first and multiply second, which needs parentheses:
  * the order things were done in is the order the equation has to keep.
  */
 function puzzle(rng) {
@@ -43,7 +43,7 @@ function puzzle(rng) {
       answer: { type: 'int', value: n },
       visual: null,
       explain: `Call the number n. Adding ${b} gives n + ${b}, and it is all of that which is multiplied by ${a}, `
-        + `so it needs a bracket: ${tm(eq)}. Divide both sides by ${a}: n + ${b} = ${minus(n + b)}. `
+        + `so it needs parentheses: ${tm(eq)}. Divide both sides by ${a}: n + ${b} = ${minus(n + b)}. `
         + `Subtract ${b}: n = ${minus(n)}.`,
     };
   }
@@ -66,7 +66,7 @@ function puzzle(rng) {
 
 /**
  * Which equation. Each situation comes with the misreadings that matter:
- * the rate and the fixed charge swapped, the bracket in the wrong place,
+ * the rate and the fixed charge swapped, the parentheses in the wrong place,
  * the "more than" reversed.
  */
 const STORIES = [
@@ -95,24 +95,24 @@ const STORIES = [
     const k = rng.int(2, 6), add = rng.int(2, 12), n = rng.int(1, 12);
     const times = ['Twice', 'Three times', 'Four times', 'Five times', 'Six times'][k - 2];
     // requiem: catalogue/content/fixed-menu-key-moves
-    // Asked both ways, with the bracket and without, so the right equation
-    // is the one with the bracket only half the time and its length says
+    // Asked both ways, with the parentheses and without, so the right equation
+    // is the one with the parentheses only half the time and its length says
     // nothing.
     if (add !== k && rng.chance(0.5)) {
       const t = k * n + add;
       return { story: `${add} more than ${times.toLowerCase().replace('twice', 'two times')} a number is ${t}. Which equation says that?`,
         right: `${k}n + ${add} = ${t}`,
-        // Crossed: a bracket put in, and the two numbers in each other's places.
+        // Crossed: parentheses put in, and the two numbers in each other's places.
         wrong: [`${k}(n + ${add}) = ${t}`, `${add}n + ${k} = ${t}`, `${add}(n + ${k}) = ${t}`],
-        why: `"${add} more than ${k} times a number" multiplies the number alone, then adds ${add}: no bracket. `
+        why: `"${add} more than ${k} times a number" multiplies the number alone, then adds ${add}: no parentheses. `
           + `${k}n + ${add} = ${t}.` };
     }
     return { story: `${times} the sum of a number and ${add} is ${k * (n + add)}. Which equation says that?`,
       right: `${k}(n + ${add}) = ${k * (n + add)}`,
-      // Crossed: the bracket dropped, and the two numbers in each other's places.
+      // Crossed: the parentheses dropped, and the two numbers in each other's places.
       wrong: [`${k}n + ${add} = ${k * (n + add)}`, `${add}(n + ${k}) = ${k * (n + add)}`, `${add}n + ${k} = ${k * (n + add)}`],
       why: `"The sum of a number and ${add}" is n + ${add}, and the whole sum is multiplied, so it needs a `
-        + `bracket: ${k}(n + ${add}) = ${k * (n + add)}.` };
+        + `parentheses: ${k}(n + ${add}) = ${k * (n + add)}.` };
   },
   (rng) => {
     let w = rng.int(2, 12);
@@ -142,7 +142,7 @@ const STORIES = [
       + 'equation gives the width, w?', right: `2w + 2(w + ${more}) = ${p}`,
     // Crossed: the area for the perimeter, and "longer" read as shorter.
     wrong: [`w(w + ${more}) = ${p}`, `2w + 2(w - ${more}) = ${p}`, `w(w - ${more}) = ${p}`],
-    why: `The length is w + ${more}. A perimeter goes round all four sides, two widths and two lengths: `
+    why: `The length is w + ${more}. A perimeter goes around all four sides, two widths and two lengths: `
       + `2w + 2(w + ${more}) = ${p}. w(w + ${more}) would be its area.` };
   },
   (rng) => {
@@ -159,8 +159,8 @@ const STORIES = [
     return { story: `${less} less than ${k} times a number is ${k * n - less}. Which equation says that?`,
       right: `${k}n - ${less} = ${k * n - less}`,
       // requiem: catalogue/content/identity-decoys-are-misconceptions
-      // Crossed: the subtraction turned round, and the two numbers in each
-      // other's places. A bracket crossed with the turn gave k(L − n), which
+      // Crossed: the subtraction turned around, and the two numbers in each
+      // other's places. Parentheses crossed with the turn gave k(L − n), which
       // no one reading the sentence writes.
       wrong: [`${less} - ${k}n = ${k * n - less}`, `${less}n - ${k} = ${k * n - less}`, `${k} - ${less}n = ${k * n - less}`],
       why: `"${less} less than ${k} times a number" starts from ${k}n and takes ${less} away: `
@@ -245,7 +245,7 @@ function fixedPlusRate(rng) {
     visual: null,
     explain: `Call the number of ${s.unit} ${v}. ${s.falling ? 'Losing' : 'Adding'} ${R} for each one is `
       + `${R}${v}, ${s.falling ? 'taken from' : 'on top of'} the ${F}: ${tm(eq)}. `
-      + `${s.falling ? `Take ${total} from ${F}` : `Take ${F} off both sides`}: ${R}${v} = ${Math.abs(total - F)}. `
+      + `${s.falling ? `Subtract ${total} from ${F}` : `Subtract ${F} from both sides`}: ${R}${v} = ${Math.abs(total - F)}. `
       + `Divide by ${R}: ${v} = ${count}.`,
   };
 }
@@ -262,7 +262,7 @@ function parts(rng) {
     return {
       prompt: [T.prose(`A rectangle is ${more} ${more === 1 && u === 'inches' ? 'inch' : u} longer than it is wide. Its perimeter is ${p} ${u}. How wide is it?`)],
       text: eq, answer: { type: 'int', value: w }, visual: null,
-      explain: `Call the width x, so the length is x + ${more}. Round all four sides: ${tm(eq)}. `
+      explain: `Call the width x, so the length is x + ${more}. Around all four sides: ${tm(eq)}. `
         + `That is 4x + ${2 * more} = ${p}, so 4x = ${p - 2 * more} and x = ${w}.`,
     };
   }
@@ -318,7 +318,7 @@ function twoEqual(rng) {
         + `${money(rateB)} an hour and nothing up front. After how many hours do they cost the same?`)],
       text: eq, answer: { type: 'int', value: when }, visual: null,
       explain: `After t hours Plan A costs ${fee} + ${rateA}t and Plan B costs ${rateB}t. The same means equal: `
-        + `${eq}. Take ${rateA}t off both sides: ${fee} = ${rateB - rateA}t, so t = ${when}.`,
+        + `${eq}. Subtract ${rateA}t from both sides: ${fee} = ${rateB - rateA}t, so t = ${when}.`,
     };
   }
   if (shape === 'savers') {

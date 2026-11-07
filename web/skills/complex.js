@@ -5,7 +5,7 @@
  * each root of a negative is made an i before anything else is done with it:
  * √−4 · √−9 is 2i · 3i = −6, where √(−4 · −9) would wrongly give 6.
  *
- * The powers of i go round in fours. Add and subtract by parts, multiply as
+ * The powers of i go around in fours. Add and subtract by parts, multiply as
  * binomials and replace i² by −1. The conjugate a − bi turns a + bi into the
  * real a² + b², which is how a division is cleared. A real quadratic whose
  * discriminant is negative has two complex roots, a conjugate pair.
@@ -24,7 +24,7 @@ export const LEVELS = [
     blurb: 'Real parts with real parts, i parts with i parts, as with like terms.',
     dependsOn: [{ skill: 'polynomials', level: 1 }] },
   { name: 'Multiply', slug: 'multiply',
-    blurb: 'Multiply out as two binomials, then replace i² by −1 and collect.',
+    blurb: 'Expand as two binomials, then replace i² by −1 and combine like terms.',
     dependsOn: [{ skill: 'polynomials', level: 4 }] },
   { name: 'Conjugates & Divide', slug: 'conjugates-and-divide',
     blurb: '(a + bi)(a − bi) = a² + b², a real number. Multiply top and bottom by the bottom\'s conjugate to divide.',

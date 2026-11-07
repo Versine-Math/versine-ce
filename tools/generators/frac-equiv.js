@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for frac-equiv.
+ * Catalog authoring tool: builds the problem library for frac-equiv.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -174,7 +174,7 @@ function throughSimplest(rng) {
 }
 
 /**
- * The judgement: does one bottom divide the other, or not?
+ * The judgment: does one bottom divide the other, or not?
  *
  * Multiplying top and bottom is faster and is what a confident student
  * reaches for, and it works exactly when the target bottom is a whole number
@@ -222,10 +222,10 @@ function straightUpOrSimplify(rng) {
       // problem. Naming the numbers here -- "6 goes into 12 a whole number of
       // times" against "nothing whole takes 6 to 12" -- would put both the
       // claim and its negation on screen, and the option carrying the true
-      // one is the answer. The judgement has to be made about the fractions,
+      // one is the answer. The judgment has to be made about the fractions,
       // not read off the buttons.
       options: rng.shuffle([
-        { id: 'scale', label: 'Multiply top and bottom straight away',
+        { id: 'scale', label: 'Multiply top and bottom right away',
           note: 'one step, when the bottom divides into the new one' },
         { id: 'simplify', label: 'Simplify first, then multiply up',
           note: 'down to lowest terms, then out again' },

@@ -1,4 +1,4 @@
-/** Profile icons and colours. Mirrored as an allowlist in server/app.py. */
+/** Profile icons and colors. Mirrored as an allowlist in server/app.py. */
 
 export const ICONS = [
   '🦊', '🐺', '🦉', '🐙', '🦅', '🐝',

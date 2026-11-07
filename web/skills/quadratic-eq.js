@@ -10,7 +10,7 @@
  * mistake.
  *
  * Square Roots handles the equations with no x term, where factoring is the
- * long way round, and is where the second answer stops being forgotten:
+ * long way around, and is where the second answer stops being forgotten:
  * x² = 49 is x = 7 or x = −7. Which Method is the strategy level, choosing
  * between the two -- and noticing when neither works yet, which is what the
  * quadratic formula is for.

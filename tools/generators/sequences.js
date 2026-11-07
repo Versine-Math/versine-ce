@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for sequences.
+ * Catalog authoring tool: builds the problem library for sequences.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -118,7 +118,7 @@ function writeRule(rng) {
     answer: { type: 'rule', value: { m: { n: d, d: 1 }, b: { n: b, d: 1 } } },
     visual: table(terms, { working: adds(terms) }),
     explain: `The difference is ${minus(d)}, so aₙ = ${minus(first)} + ${signed(d)}(n − 1). `
-      + `Multiplying out gives ${ruleText(d, b)}. Check: n = 1 gives `
+      + `Expanding gives ${ruleText(d, b)}. Check: n = 1 gives `
       + `${b === 0 ? minus(d) : `${minus(d)} ${b < 0 ? '−' : '+'} ${Math.abs(b)}`} = ${minus(first)}.`,
   };
 }

@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for volume and
+ * Catalog authoring tool: builds the problem library for volume and
  * surface area.
  *
  * NOT part of the running application. Nothing here is served to a browser
@@ -93,7 +93,7 @@ function triPrismMarks(a, b, c, depth, u) {
     seg(F[1], v(a, 0, depth)), seg(F[2], v(0, b, depth)), seg(v(a, 0, depth), v(0, b, depth)),
     dashed(F[0], v(0, 0, depth)), dashed(v(0, 0, depth), v(a, 0, depth)), dashed(v(0, 0, depth), v(0, b, depth)),
     sideLabel(F[0], F[1], `${f(a)} ${u}`, mid), sideLabel(F[0], F[2], `${f(b)} ${u}`, mid),
-    // The longest side is labelled on the far end, where nothing crosses it:
+    // The longest side is labeled on the far end, where nothing crosses it:
     // across the near one run the hidden edges.
     sideLabel(v(a, 0, depth), v(0, b, depth), `${f(c)} ${u}`, F[0]),
     sideLabel(F[1], v(a, 0, depth), `${f(depth)} ${u}`, F[2]),
@@ -359,7 +359,7 @@ function sphere(rng) {
   const name = hemi ? 'hemisphere' : 'sphere';
   if (rng.chance(0.2)) {
     // Backwards from the volume only up to 21: a cube root of a five-figure
-    // number is not what this is practising.
+    // number is not what this is practicing.
     const r = rng.pick(BALL.slice(0, 14)), coef = ((hemi ? 2 : 4) * r ** 3) / 3;
     return {
       prompt: [T.prose(`A ${name} has a volume of ${piTimes(coef)} ${cu(u)}. What is its radius, in ${unitWord(u)}?`)],

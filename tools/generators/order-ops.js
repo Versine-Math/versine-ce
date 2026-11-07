@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for order-ops.
+ * Catalog authoring tool: builds the problem library for order-ops.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -42,8 +42,8 @@ function shape(rng, level) {
   }
 }
 /**
- * Brackets inside brackets, where the inner one changes the answer: dropping
- * either pair of brackets in 3 × (10 − (2 + 4)) gives a different number, so
+ * Parentheses inside parentheses, where the inner one changes the answer: dropping
+ * either pair of parentheses in 3 × (10 − (2 + 4)) gives a different number, so
  * working from the inside out is the only way to get it right.
  */
 function nested(rng) {
@@ -69,7 +69,7 @@ function nested(rng) {
  * A worked line as it is written by hand. evaluate() writes a negative
  * intermediate bare, so (2 − 4)² + 15 becomes −2² + 15 -- which, read by the
  * rule this skill teaches, is −4 + 15. A negative number raised to a power,
- * or following an operator, is bracketed: (−2)² + 15, 6 × (−2).
+ * or following an operator, is in parentheses: (−2)² + 15, 6 × (−2).
  */
 const written = (line) => line
   .replace(/(^|[(\s])−(\d+)(?=[²³])/g, '$1(−$2)')

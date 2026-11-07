@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for monomials.
+ * Catalog authoring tool: builds the problem library for monomials.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -143,7 +143,7 @@ function zeroNegative(rng) {
     const lead = /[a-z]/.test(rest) || Math.abs(m.c) !== 1 ? rest : rest.replace('1', '');
     src = rng.chance(0.5) ? `${lead}${v}^0` : `(${write(m)})^0`;
     out = src.includes(')^0') ? { c: 1, pow: {} } : zeroed;
-    why = src.includes(')^0') ? 'Anything (but 0) to the power 0 is 1, and the bracket makes the whole thing the base.'
+    why = src.includes(')^0') ? 'Anything (but 0) to the power of 0 is 1, and the parentheses make the whole thing the base.'
       : `${v}⁰ = 1, so the ${v} goes and nothing else changes.`;
   } else if (shape === 'below') {
     const v = letters[0], p = rng.int(1, 6);
@@ -194,7 +194,7 @@ function simplest(rng) {
       pow: Object.fromEntries(letters.map((v) => [v, rng.int(0, top.pow[v])])) };
     // Dividing by 1 is not a step: (−a)²/(1) asked nothing.
     if (div.c === 1 && Object.values(div.pow).every((p) => p === 0)) return simplest(rng);
-    // The top in its own bracket, so it is drawn as one fraction and not a term times one.
+    // The top in its own parentheses, so it is drawn as one fraction and not a term times one.
     src = shape === 'power-over' ? `(${write(base)})^${n}/(${write(div)})` : `(${term(base)}${term(other)})/(${write(div)})`;
     out = { c: top.c / div.c, pow: Object.fromEntries(letters.map((v) => [v, top.pow[v] - div.pow[v]])) };
     steps = `${shape === 'power-over' ? `The power first: ${write(raised, { pretty: true })}` : `Multiply the top: ${write(top, { pretty: true })}`}. `

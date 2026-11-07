@@ -5,7 +5,7 @@ import { blockersFor, linksFor, lockNoteFor } from '../engine/extensions.js';
 import { MODES, MODE_ORDER, trialSettings, formatDuration } from '../engine/modes.js';
 import { computeRating, biggestGain, skillValues } from '../engine/rating.js';
 import { clockFor, clockExplanation } from '../engine/clock.js';
-import { localDay } from '../engine/days.js';
+import { localDay, shortDay } from '../engine/days.js';
 import { soundEnabled, setSoundEnabled } from '../engine/audio.js';
 import { openWalkthrough } from './walkthrough.js';
 import { el, mount } from './dom.js';
@@ -84,7 +84,7 @@ export function extensionLinks() {
 /**
  * Breadcrumb trail. Every screen inside a skill shows where it sits and how to
  * get back out -- previously the only route back to a skill was a button
- * labelled "Change mode", which nobody reads as "return to Integer Add &
+ * labeled "Change mode", which nobody reads as "return to Integer Add &
  * Subtract".
  *
  * @param {Array<{label:string, go?:Function}>} items  last item is the current page
@@ -136,11 +136,11 @@ function levelBreakdown() {
     return el('div.card.stack--sm', {},
       el('div.eyebrow', {}, 'Your level'),
       el('p.tiny.muted', {},
-        'Clear a level in a Time Trial and it starts counting towards your Level.'));
+        'Clear a level in a Time Trial and it starts counting toward your Level.'));
   }
 
   // Only the handful that matter by default. Every cleared level appears here
-  // otherwise, which is 24 rows already and grows with the catalogue -- long
+  // otherwise, which is 24 rows already and grows with the catalog -- long
   // enough to bury the skills it is meant to support.
   const SHOWN = 5;
   const worthShowing = result.rows.filter((r) => r.contribution > 0);
@@ -234,7 +234,7 @@ export function mapScreen() {
   // together and its categories in order -- it just travels on the card
   // instead of above it.
   //
-  // The order is the catalogue's, and it is a dependency order rather than a
+  // The order is the catalog's, and it is a dependency order rather than a
   // filing order: see mapOrder(). Reading down the grid never reaches a skill
   // before the skills it builds on.
   const ordered = mapOrder();
@@ -369,11 +369,11 @@ function streakCard(skillId) {
       const done = hit?.completed;
       cells.push(el('div.day', {
         class: `${hit ? 'is-on' : ''} ${done ? 'is-done' : ''}`,
-        title: !hit ? `${key}: nothing`
+        title: !hit ? `${shortDay(key)}: nothing`
           : hit.attempts
-            ? `${key}: ${hit.attempts} answered, ${Math.round(accuracy * 100)}% right`
+            ? `${shortDay(key)}: ${hit.attempts} answered, ${Math.round(accuracy * 100)}% right`
               + (done ? ' — finished' : ' — practiced, not finished')
-            : `${key}: finished`,
+            : `${shortDay(key)}: finished`,
         style: hit && !done
           ? { background: heatColor(accuracy), opacity: 0.3 + Math.min(hit.attempts / 30, 1) * 0.35 }
           : null,
@@ -382,14 +382,16 @@ function streakCard(skillId) {
 
     const headline = a.currentStreak > 0
       ? `${a.currentStreak} day${a.currentStreak === 1 ? '' : 's'} in a row`
-      : a.completedDays > 0 ? 'Streak broken — start a new one' : 'No finished days yet';
+      : a.completedDays > 0
+        ? `${a.practiceDays} day${a.practiceDays === 1 ? '' : 's'} practiced`
+        : 'No finished days yet';
 
     mount(card,
       el('div.between', {},
         el('div.eyebrow', {}, 'Finishing streak'),
         el('span.tiny.muted', {},
           `best ${a.bestStreak} · finished ${a.completedDays} of ${a.practiceDays} days practiced`)),
-      el('div.streak-headline', {}, el('span.streak-flame', {}, '🔥'), headline),
+      el('div.streak-headline', {}, headline),
       el('div.days', {}, cells),
       el('p.tiny.muted', {},
         'A day only counts once you clear the last level against the clock. '
@@ -399,7 +401,7 @@ function streakCard(skillId) {
             el('div.eyebrow', {}, 'Levels cleared'),
             el('div.chips', {}, a.levelsCleared.map((t) =>
               el('span.chip', { style: { cursor: 'default' } },
-                `T${t.level + 1} · ${t.day}`))))
+                `T${t.level + 1} · ${shortDay(t.day)}`))))
         : null);
   }).catch(() => mount(card,
     el('div.eyebrow', {}, 'Your streak'),
@@ -490,7 +492,7 @@ export function skillScreen(skillId) {
         el('div.row__n', {}, locked ? '🔒' : i + 1),
         el('div.row__main', {},
           el('div.row__title', {}, t.name,
-            isStrategy ? el('span.row__kind', {}, 'judgement') : null),
+            isStrategy ? el('span.row__kind', {}, 'judgment') : null),
           el('div.row__sub', {},
             locked ? 'Clear the Time Trial on the level above to unlock' : t.blurb),
           leansOn(skill, i)),
@@ -568,8 +570,8 @@ function startReview(skill, origin) {
 /**
  * A way in for someone who hasn't met this yet. Deliberately a banner rather
  * than a third mode card: the choice between Practice and Time Trial was cut
- * to two on purpose, and this is not a third way to practise — it is the thing
- * you do before you practise at all.
+ * to two on purpose, and this is not a third way to practice — it is the thing
+ * you do before you practice at all.
  */
 function lessonPrompt(skill, level) {
   return el('div.banner.banner--cool.lesson-prompt', {},
@@ -580,7 +582,7 @@ function lessonPrompt(skill, level) {
     }, 'Show me'));
 }
 
-/** Step two: pick how to practise it. Choosing here starts the run. */
+/** Step two: pick how to practice it. Choosing here starts the run. */
 export function modeScreen(skillId, level) {
   const skill = SKILLS.find((s) => s.id === skillId);
   const rec = recordFor(skillId);
@@ -594,7 +596,7 @@ export function modeScreen(skillId, level) {
       ? 'Solve enough before the clock runs out to finish this skill for the '
         + 'day. Mistakes cost you time, not lives.'
       : mode.blurb;
-    // A trial needs a clock, and a clock is earned by practising first.
+    // A trial needs a clock, and a clock is earned by practicing first.
     const locked = mode.gate && clock.source === 'unready';
 
     return el('button.tile.tile--mode', {

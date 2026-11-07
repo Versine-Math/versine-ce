@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for triangles and polygons.
+ * Catalog authoring tool: builds the problem library for triangles and polygons.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -25,7 +25,7 @@ const deg = (n) => `${n}°`;
 const sumOf = (xs) => xs.reduce((s, v) => s + v, 0);
 const dirTo = (from, to) => (Math.atan2(to[1] - from[1], to[0] - from[0]) * 180) / Math.PI;
 
-/** The interior angle at V of a figure going on to U and W, as [from, to] directions anticlockwise. */
+/** The interior angle at V of a figure going on to U and W, as [from, to] directions counterclockwise. */
 function cornerAt(V, U, W) {
   let a = dirTo(V, U), b = dirTo(V, W);
   let span = (((b - a) % 360) + 360) % 360;
@@ -117,7 +117,7 @@ function sumInX(rng) {
       answer: { type: 'int', value: x },
       visual: triangleFigure(P, [A, B, C].map((v, i) => [names[i], false, deg(v)])),
       explain: `The three add to 180°: ${es.map((e) => `(${linear(...e)})`).join(' + ')} = 180. `
-        + `Collect: ${linear(k, c)} = 180${c === 0 ? '' : `, so ${linear(k, 0)} = ${180 - c}`}, and x = ${180 - c} ÷ ${k} = ${x}. `
+        + `Combine like terms: ${linear(k, c)} = 180${c === 0 ? '' : `, so ${linear(k, 0)} = ${180 - c}`}, and x = ${180 - c} ÷ ${k} = ${x}. `
         + `Check: ${es.map((e) => putIn(...e, x)).join(', ')} make ${A}, ${B} and ${C}, which add to 180. So x = ${x}.`,
     };
   }
@@ -134,7 +134,7 @@ function exterior(rng) {
   const extMarks = angleMarks(from, to, askExt
     ? { label: letter, asked: true, answer: deg(ext), c: P[1] } : { label: deg(ext), c: P[1] });
   const remote = askExt ? null : rng.int(0, 1);
-  // The two far angles are at corners 0 and 2; the near one, at 1, is never labelled.
+  // The two far angles are at corners 0 and 2; the near one, at 1, is never labeled.
   const labels = [
     remote === 0 ? [letter, true, deg(A)] : [deg(A), false],
     null,
@@ -185,7 +185,7 @@ function isoscelesInX(rng) {
           : `Take ${linear(a1, 0)} from both sides: ${e1[1] < 0 ? `−${-e1[1]}` : e1[1]} = ${linear(a2 - a1, e2[1])}`}, so x = ${x}. `
         + `Check: both come to ${base}.`
       : `There are two base angles, so 2(${linear(...e1)}) + (${linear(...e2)}) = 180. `
-        + `Collect: ${linear(2 * a1 + a2, 2 * e1[1] + e2[1])} = 180, so x = ${180 - 2 * e1[1] - e2[1]} ÷ ${2 * a1 + a2} = ${x}. `
+        + `Combine like terms: ${linear(2 * a1 + a2, 2 * e1[1] + e2[1])} = 180, so x = ${180 - 2 * e1[1] - e2[1]} ÷ ${2 * a1 + a2} = ${x}. `
         + `Check: ${base} + ${base} + ${apex} = 180.`;
     return {
       prompt: [T.prose(pair
@@ -228,7 +228,7 @@ function isosceles(rng) {
     explain: (fromApex
       ? `The two base angles are equal and the three angles add to 180°: the base angles share 180 − ${apex} = ${180 - apex}, so each is ${180 - apex} ÷ 2 = ${base}.`
       : `The base angles are equal, so both are ${base}°: together ${2 * base}. The third is 180 − ${2 * base} = ${apex}.`
-        + ` (Not 180 − ${base}: there are two base angles to take away.)`)
+        + ` (Not 180 − ${base}: there are two base angles to subtract.)`)
       + (equilateral ? ' Every angle is 60°, so it is equilateral too.' : '')
       + ` So ${letter} = ${deg(fromApex ? base : apex)}.`,
   };

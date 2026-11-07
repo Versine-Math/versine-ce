@@ -22,7 +22,7 @@ export const LEVELS = [
   { name: 'Radians to Degrees', slug: 'radians-to-degrees',
     blurb: 'Multiply by 180/π: π/6 is 30°, and 1 radian is about 57.3°.' },
   { name: 'Coterminal Angles', slug: 'coterminal-angles',
-    blurb: 'Add or take away whole turns, 360° or 2π, until the angle lands in one turn.' },
+    blurb: 'Add or subtract whole turns, 360° or 2π, until the angle lands in one turn.' },
   { name: 'Reference Angles', slug: 'reference-angles', libraryCap: 400,
     blurb: 'The acute angle to the x-axis: 180° − θ in quadrant II, θ − 180° in III, 360° − θ in IV, once whole turns are off.' },
   { name: 'Arc Length s = rθ', slug: 'arc-length',

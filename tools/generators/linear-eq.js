@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for linear equations.
+ * Catalog authoring tool: builds the problem library for linear equations.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -22,10 +22,10 @@ const PLANE = { xRange: [-SPAN, SPAN], yRange: [-SPAN, SPAN], grid: 1 };
 const LINE = 'var(--vec-1)';
 const pt = ([x, y]) => `(${minus(x)}, ${minus(y)})`;
 const ptPlain = ([x, y]) => `(${x}, ${y})`;
-/** An equation for a sentence: one unbroken piece of maths among the words. */
+/** An equation for a sentence: one unbroken piece of math among the words. */
 const terms = (src) => [T.math(previewOf(src).terms)];
 const whole = (n) => ({ n, d: 1 });
-/** How the slope is written in front of x: nothing for 1, a bracket round a fraction. */
+/** How the slope is written in front of x: nothing for 1, parentheses around a fraction. */
 const coef = (m) => (m.d === 1 ? (m.n === 1 ? '' : m.n === -1 ? '−' : minus(m.n)) : `(${show(m)})`);
 // requiem: play/answers/line-form-asked-is-checked
 // Every line here is asked for as y = mx + b (or y = …), so the same line

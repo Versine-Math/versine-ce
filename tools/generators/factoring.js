@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for factoring.
+ * Catalog authoring tool: builds the problem library for factoring.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -20,7 +20,7 @@ const sup = (n) => String(n).replace(/\d/g, (c) => SUP[c]);
 const LETTERS = ['x', 'x', 'x', 'a', 'y', 'n'];
 const gcd = (a, b) => (b ? gcd(b, a % b) : Math.abs(a));
 const isSquare = (n) => n >= 0 && Number.isInteger(Math.sqrt(n));
-/** A term squared, bracketed only when it is more than a letter: x², (3x)². */
+/** A term squared, in parentheses only when it is more than a letter: x², (3x)². */
 const squared = (A) => (A.length === 1 ? `${A}²` : `(${A})²`);
 
 /** A polynomial as [[coefficient, power], ...], highest power first. */
@@ -162,7 +162,7 @@ function perfect(rng) {
     visual: null,
     explain: `The first term is ${squared(A)} and the last is ${b * b} = ${Math.abs(b)}². The middle is twice their product, `
       + `2 × ${A} × ${Math.abs(b)} = ${pretty([[2 * a * Math.abs(b), 1]], v)}, `
-      + `${b < 0 ? 'with a minus, so the bracket has a minus' : 'with a plus'}. `
+      + `${b < 0 ? 'with a minus, so the parentheses have a minus' : 'with a plus'}. `
       + `So (${pretty(linear(a, b), v)})².`,
   };
 }

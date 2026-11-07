@@ -3,7 +3,7 @@
  *
  * Every level is one of three facts, or a pair of them. Angles that make a
  * right angle add to 90°, angles that make a straight line add to 180°, and
- * angles all the way round a point add to 360°; vertical angles, opposite
+ * angles all the way around a point add to 360°; vertical angles, opposite
  * each other where two lines cross, are equal because each makes a straight
  * line with the same neighbor. The slip each level names is the one people
  * make: 180 used for a complement, 180 for a full turn.

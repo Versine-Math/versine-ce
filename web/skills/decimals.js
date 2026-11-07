@@ -25,7 +25,7 @@ export const LEVELS = [
     blurb: 'What each place is worth. A decimal is a fraction with a hidden bottom.' },
   { name: 'Which Is Bigger', slug: 'which-is-bigger',
     blurb: 'Compare by place, not by how many digits there are.' },
-  { name: 'Adding and Taking Away', slug: 'adding-and-taking-away',
+  { name: 'Adding and Subtracting', slug: 'adding-and-taking-away',
     blurb: 'Line up the point, then it is ordinary arithmetic.' },
   { name: 'Multiplying', slug: 'multiplying',
     blurb: 'Multiply the digits, then count the places. Answers get smaller.' },

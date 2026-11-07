@@ -3,7 +3,7 @@
  * or touches the DOM, it only decides how a run starts, ends, and is judged.
  *
  * Two modes, on purpose: one to learn in, one to prove it in. Every extra mode
- * is another decision between a kid and the maths.
+ * is another decision between a kid and the math.
  *
  * @typedef {object} Mode
  * @property {string} id

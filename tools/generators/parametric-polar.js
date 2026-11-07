@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for parametric-polar.
+ * Catalog authoring tool: builds the problem library for parametric-polar.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -203,18 +203,18 @@ function orientation(rng) {
   const cross = (P0[0] - h) * (P1[1] - k) - (P0[1] - k) * (P1[0] - h);
   const ccw = cross > 0;
   return {
-    prompt: [T.prose(`A curve is traced by x = ${pretty(xs)} and y = ${pretty(ys)}, with t in degrees. As t increases from 0° to 360°, which way does it go round?`)],
+    prompt: [T.prose(`A curve is traced by x = ${pretty(xs)} and y = ${pretty(ys)}, with t in degrees. As t increases from 0° to 360°, which way does it go around?`)],
     text: `param orientation: x = ${xs}; y = ${ys}`,
     answer: choice(ccw ? 'ccw' : 'cw', [['cw', 'Clockwise'], ['ccw', 'Counterclockwise']]),
     visual: null,
-    explain: `It goes round the center (${minus(h)}, ${minus(k)}). At t = 0° it is at ${pt(...P0)}, ${sideOf(P0, h, k)} the center; at t = 90° it is at ${pt(...P1)}, ${sideOf(P1, h, k)} it. `
-      + `A quarter turn from the ${PLACE[sideOf(P0, h, k)]} to the ${PLACE[sideOf(P1, h, k)]} is ${ccw ? 'counterclockwise' : 'clockwise'}. So it goes round ${ccw ? 'counterclockwise' : 'clockwise'}.`,
+    explain: `It goes around the center (${minus(h)}, ${minus(k)}). At t = 0° it is at ${pt(...P0)}, ${sideOf(P0, h, k)} the center; at t = 90° it is at ${pt(...P1)}, ${sideOf(P1, h, k)} it. `
+      + `A quarter turn from the ${PLACE[sideOf(P0, h, k)]} to the ${PLACE[sideOf(P1, h, k)]} is ${ccw ? 'counterclockwise' : 'clockwise'}. So it goes around ${ccw ? 'counterclockwise' : 'clockwise'}.`,
   };
 }
 
 // --- Eliminate the Parameter ----------------------------------------------------------------
 
-/** A coefficient in front of a bracket: (2/9), −(1/4), −, nothing. */
+/** A coefficient in front of parentheses: (2/9), −(1/4), −, nothing. */
 function lead(q) {
   if (q.n === q.d) return '';
   if (q.n === -q.d) return '-';
@@ -262,7 +262,7 @@ function eliminate(rng) {
       answer: choice(key, labels),
       visual: null,
       explain: `From x = ${pretty(xs)}, t = ${pretty(shifted('x', h))}/${c}. Square it and put it into y: y = ${a === 1 ? '' : a === -1 ? '−' : minus(a)}${pretty(shifted('x', h))}²/${c * c}${pretty(plusK(k))}, which is ${pretty(opts[0])}. `
-        + `The others: ${pretty(opts[1])} turns the sign in the bracket; ${pretty(opts[2])} divides by ${c} instead of ${c}² = ${c * c}; ${pretty(opts[3])} does both.`,
+        + `The others: ${pretty(opts[1])} turns the sign in the parentheses; ${pretty(opts[2])} divides by ${c} instead of ${c}² = ${c * c}; ${pretty(opts[3])} does both.`,
     };
   }
   for (;;) {
@@ -382,7 +382,7 @@ function motionModel(rng) {
     answer: choice(key, labels.map(([id, label]) => [id, label.replace(/(\d)(cos|sin)/g, '$1 $2')])),
     visual: null,
     explain: `Across, it keeps the horizontal part of its velocity, ${v} cos ${th}° ft/s; up, it starts with the vertical part, ${v} sin ${th}° ft/s${h ? `, from ${h} ft` : ''}, and gravity's 32 ft/s² takes ½ × 32t² = 16t² off its height. So ${show(opts[0])}. `
-      + `The others: ${show(opts[1])} trades cos and sin; ${show(opts[2])} takes off 32t², the whole of gravity's 32 where half belongs; ${show(opts[3])} does both.`,
+      + `The others: ${show(opts[1])} trades cos and sin; ${show(opts[2])} subtracts 32t², all of gravity's 32 where half belongs; ${show(opts[3])} does both.`,
   };
 }
 
@@ -542,7 +542,7 @@ function polarNames(rng) {
   const listing = order.map((j, i) => `${IDS[i]}: (${opts[j][0]}, ${opts[j][1]})`).join(' | ');
   const half = form.startsWith('neg');
   const turn = radians ? (half ? 'π' : '2π') : (half ? '180°' : '360°');
-  const adding = form.endsWith('+') ? 'adding' : 'taking away';
+  const adding = form.endsWith('+') ? 'adding' : 'subtracting';
   const why = half
     ? `A negative r goes the opposite way along θ, so turning θ half a turn (${adding} ${turn}) and making r negative lands on the same point`
     : `A whole turn points the same way, so ${adding} ${turn} and keeping r names the same point`;
@@ -551,7 +551,7 @@ function polarNames(rng) {
     text: `polar same point: (${r}, ${deg}) ${radians ? 'radians' : 'degrees'}; options ${listing}`,
     answer: choice(key, order.map((j, i) => [IDS[i], name(opts[j])])),
     visual: null,
-    explain: `${why}: ${name(opts[0])}. The others: ${name(opts[1])} is the point opposite it, through the origin; ${name(opts[2])} measures the angle clockwise, the point reflected in the x-axis; ${name(opts[3])} does both. So it is ${name(opts[0])}.`,
+    explain: `${why}: ${name(opts[0])}. The others: ${name(opts[1])} is the point opposite it, through the origin; ${name(opts[2])} measures the angle clockwise, the point reflected over the x-axis; ${name(opts[3])} does both. So it is ${name(opts[0])}.`,
   };
 }
 
@@ -746,7 +746,7 @@ function polarGraphs(rng) {
     points.push([+(r * cosD(t)).toFixed(3), +(r * sinD(t)).toFixed(3)]);
   }
   const at = [0, 30, 45, 60, 90].map((t) => `(${+C.r(t).toFixed(3)}, ${t})`).join(', ');
-  // The farthest point, labelled once answered.
+  // The farthest point, labeled once answered.
   // Where |r| is greatest: a rose's petal along nθ = 0° or 90°, a circle's
   // far side, a limaçon's where ± b cos θ (or sin θ) is +b.
   const far = kind === 'rose' ? (C.fn === 'cos' ? 0 : 90 / C.n) : kind === 'circle' ? (C.fn === 'cos' ? 0 : 90)

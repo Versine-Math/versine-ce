@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for poly-functions.
+ * Catalog authoring tool: builds the problem library for poly-functions.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -9,7 +9,7 @@
  *
  * A formula's `text` is P in the ASCII the expression box reads. A drawn
  * graph's `text` lists its heights at the whole numbers in view, which the
- * student reads off the labelled zeros and the grid, so
+ * student reads off the labeled zeros and the grid, so
  * scripts/check-answers.py can rebuild P from those readings alone and ask
  * which option it is, or how often it turns.
  */
@@ -111,7 +111,7 @@ function zeros(rng) {
   for (;;) {
     const kind = rng.pick(['list', 'list', 'expanded', 'mult', 'touch', 'touch']);
     if (kind === 'expanded') {
-      // x times a quadratic, multiplied out: take out the x first.
+      // x times a quadratic, expanded: take out the x first.
       const a = rng.nonZero(-6, 6), b = rng.nonZero(-6, 6), k = rng.pick([1, 1, 2, -1]);
       if (a === b && rng.chance(0.7)) continue;
       const P = { k, fs: a === b ? [{ r: 0, m: 1 }, { r: a, m: 2 }] : [{ r: 0, m: 1 }, { r: a, m: 1 }, { r: b, m: 1 }] };
@@ -123,7 +123,7 @@ function zeros(rng) {
         answer: setOf(xs),
         visual: null,
         explain: `Every term has an x, so take it out: P(x) = ${k === 1 ? '' : k === -1 ? '−' : k}x(${write(coeffs({ k: 1, fs: P.fs.filter(({ r }) => r !== 0) }), true)}). `
-          + `The bracket factors, so P(x) = ${factored(P, true)}. Each factor is 0 at one x. So ${formatSet(setOf(xs).value)}.`,
+          + `The expression in parentheses factors, so P(x) = ${factored(P, true)}. Each factor is 0 at one x. So ${formatSet(setOf(xs).value)}.`,
       };
     }
     const P = randomP(rng);
@@ -193,7 +193,7 @@ function ends(rng) {
     const lead = `${P.k === 1 ? '' : P.k === -1 ? '−' : minus(P.k)}x${SUP[n]}`;
     const make = choice([T.prose('P(x) ='), ...drawn(src), T.prose('. Which way do the ends of its graph go?')],
       `poly ends: ${src}`, [want, ...ENDS.filter((e) => e !== want)],
-      `${asF ? `Multiplying out, the x's in the factors give degree ${powers(P)}, and the leading coefficient is ${minus(P.k)}: the leading term is ${lead}. ` : `The leading term is ${lead}. `}`
+      `${asF ? `Expanding, the x's in the factors give degree ${powers(P)}, and the leading coefficient is ${minus(P.k)}: the leading term is ${lead}. ` : `The leading term is ${lead}. `}`
       + `${n} is ${even ? 'even, so both ends go the same way' : 'odd, so the ends go opposite ways'}, and ${P.k > 0 ? 'a positive' : 'a negative'} leading coefficient sends the right end ${up ? 'up' : 'down'}. So: ${want[1].toLowerCase()}.`);
     if (make) return make(rng);
   }
@@ -204,7 +204,7 @@ function ends(rng) {
 /**
  * P drawn on a plane: x across the zeros and one to two beyond, y wide
  * enough for every bump between them, the curve cut where it leaves the
- * frame, and each zero a labelled dot. Returns the visual and the heights at
+ * frame, and each zero a labeled dot. Returns the visual and the heights at
  * the whole numbers in view, which the text carries.
  */
 function graph(P) {

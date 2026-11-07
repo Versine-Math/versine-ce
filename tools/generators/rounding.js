@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for rounding.
+ * Catalog authoring tool: builds the problem library for rounding.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -164,11 +164,11 @@ function estimate(rng) {
 // The words used to give it away: "exactly" was always exact, and "roughly"
 // and "about" always an estimate. They are gone, and two situations are
 // settled by their numbers instead -- whether rounding can decide a
-// comparison depends on how close the comparison is, which is the judgement
+// comparison depends on how close the comparison is, which is the judgment
 // this level is for.
 const SITUATIONS = [
   { text: 'You are checking that a bill of ${big} looks right before paying it.', want: 'estimate' },
-  { text: 'You are working out the change from ${big} and handing it over.', want: 'exact' },
+  { text: 'You are figuring out the change from ${big} and handing it over.', want: 'exact' },
   { text: 'You are cutting a shelf to fit a gap of {a} meters.', want: 'exact' },
   // requiem: catalogue/content/units-both-systems
   { text: 'You are cutting a board to fit a gap of {a} feet.', want: 'exact' },
@@ -236,7 +236,7 @@ function settles(rng, kind, near) {
   const why = near
     ? `Rounded, ${est}, but rounding could have moved it anywhere ${range}, and `
       + `${line} is inside that range. An estimate cannot settle it, so it has to be `
-      + `worked out in full: ${money ? `${qs} × ${price}` : `${ps} × ${qs}`} = ${amount(p * q)}.`
+      + `calculated in full: ${money ? `${qs} × ${price}` : `${ps} × ${qs}`} = ${amount(p * q)}.`
     : `Rounded, ${est}, and even allowing for the rounding it is ${range}. `
       + `${line} is nowhere near that, so the estimate settles it in one step.`;
   return { text, want: near ? 'exact' : 'estimate', why };

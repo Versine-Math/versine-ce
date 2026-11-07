@@ -2,7 +2,7 @@
 """
 Validate the problem libraries before they are allowed to serve students.
 
-The libraries are the catalogue. Their rows are meant to be edited by hand --
+The libraries are the catalog. Their rows are meant to be edited by hand --
 finding a bad problem and correcting it in place is far better than debugging
 the generator that produced it -- so this deliberately does NOT check that a
 library still matches its generator. A hand-fixed library is *supposed* to
@@ -29,7 +29,7 @@ LIB = ROOT / "web" / "library"
 KNOWN_TYPES = {"int", "frac", "mixed", "choice"}
 
 # The presentation vocabulary, exported from the renderers by
-# scripts/build-library.mjs. A catalogue item may only ask for a picture the
+# scripts/build-library.mjs. A catalog item may only ask for a picture the
 # system knows how to draw, with parameters that renderer can actually use.
 SCHEMAS = {}
 TERM_KINDS = set()
@@ -283,11 +283,15 @@ def too_wide(ans):
 # requiem: catalogue/content/us-notation
 # What a student reads is written for a US classroom: dollars and cents, and
 # US spelling. A pound sign or a "metre" is a second thing to decode on top
-# of the maths, and one generator slipping back would otherwise go unseen.
+# of the math, and one generator slipping back would otherwise go unseen.
 NOT_US = re.compile(
     r"£|€|\bpence\b|\b(?:centi|milli|kilo)?metres?\b|\b(?:milli)?litres?\b|\bcolours?\b"
     r"|\bcentres?\b|\bneighbours?\b|\bfavourites?\b|\bgrey\b|\bsweets\b|\btrolley\b"
-    r"|\bthe lift\b|\ba lift\b|\brecognis(?:e|ed|es|ing)\b|\bmaths\b",
+    r"|\bthe lift\b|\ba lift\b|\brecognis(?:e|ed|es|ing)\b|\bmaths\b"
+    # Words that are spelled the same but say it the British way.
+    r"|\bpupils?\b|\btakings\b|\blots of\b|\btop-heavy\b|\bco-interior\b|\bright-angled\b"
+    r"|\bcollect(?:ing)? like terms\b|\bmultiply(?:ing)? out\b|(?<!square )(?<!angle )\bbrackets?\b"
+    r"|\bbooking fee\b|\bcourier\b|\banglers?\b",
     re.I)
 
 
@@ -334,7 +338,7 @@ for entry in levels:
     if len(rows) != entry.get("count"):
         fail(f"{name}: manifest says {entry.get('count')} problems, file holds {len(rows)}")
     if len(rows) < floor:
-        fail(f"{name}: only {len(rows)} problems — a student would memorise it")
+        fail(f"{name}: only {len(rows)} problems — a student would memorize it")
 
     seen: set[str] = set()
     for i, row in enumerate(rows):

@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for rational-eq.
+ * Catalog authoring tool: builds the problem library for rational-eq.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -8,7 +8,7 @@
  * Run via: node scripts/build-library.mjs
  *
  * Every equation's `text` is the equation in the ASCII the expression box
- * reads, with every numerator and denominator bracketed where it is more
+ * reads, with every numerator and denominator in parentheses where it is more
  * than one token, so scripts/check-answers.py can put it over one
  * denominator and find every solution itself. Variation and work questions
  * carry their numbers, from which the checker writes its own equation.
@@ -28,7 +28,7 @@ function lin(a, b, fancy = false) {
   return b === 0 ? lead : `${lead}${pm(b, fancy)}`;
 }
 const fancy = (s) => s.replace(/-/g, '−');
-/** x + c as a factor: bracketed, or bare x. */
+/** x + c as a factor: in parentheses, or bare x. */
 const fac = (c, f = false) => (c === 0 ? 'x' : `(${lin(1, c, f)})`);
 /** A quadratic x² + bx + c, written out. */
 const quad = (b, c) => `x²${b === 0 ? '' : b === 1 ? ' + x' : b === -1 ? ' − x' : `${pm(b)}x`}${c === 0 ? '' : pm(c)}`;
@@ -36,8 +36,8 @@ const quad = (b, c) => `x²${b === 0 ? '' : b === 1 ? ' + x' : b === -1 ? ' − 
 const factors = (r, s) => (s === 0 ? `${fac(-s, true)}${fac(-r, true)}` : `${fac(-r, true)}${fac(-s, true)}`);
 const gcd = (a, b) => (b === 0 ? Math.abs(a) : gcd(b, a % b));
 const lcm = (a, b) => (a / gcd(a, b)) * b;
-/** A coefficient in front of a bracket or x: nothing for 1, − for −1. */
-/** A number in a product, bracketed when negative. */
+/** A coefficient in front of parentheses or x: nothing for 1, − for −1. */
+/** A number in a product, in parentheses when negative. */
 const br = (n) => (n < 0 ? `(${minus(n)})` : String(n));
 const coefF = (a) => (a === 1 ? '' : a === -1 ? '−' : minus(a));
 
@@ -95,7 +95,7 @@ function clear(rng) {
       const c = x / a + (sub ? -x / b : x / b);
       return equation(`x/${a} ${sub ? '-' : '+'} x/${b}`, String(c), [x],
         `The least common denominator of ${a} and ${b} is ${L}. Multiply every term by ${L}: ${A === 1 ? '' : A}x ${sub ? '−' : '+'} ${Math.abs(B) === 1 ? '' : Math.abs(B)}x = ${minus(c * L)}. `
-        + `Collect: ${lin(A + B, 0, true)} = ${minus(c * L)}.`);
+        + `Combine like terms: ${lin(A + B, 0, true)} = ${minus(c * L)}.`);
     }
     if (kind === 'shifted') {
       const [a, b] = rng.shuffle([2, 3, 4, 5]).slice(0, 2);
@@ -109,7 +109,7 @@ function clear(rng) {
       const k = A * p + B * q;
       return equation(`(${lin(1, p)})/${a} ${sub ? '-' : '+'} (${lin(1, q)})/${b}`, String(c), [x],
         `The least common denominator of ${a} and ${b} is ${L}. Multiply every term by ${L}: ${coefF(A)}(${lin(1, p, true)}) ${sub ? '−' : '+'} ${coefF(Math.abs(B))}(${lin(1, q, true)}) = ${minus(c * L)}. `
-        + `Expand and collect: ${lin(A + B, k, true)} = ${minus(c * L)}${k === 0 ? '' : `, so ${lin(A + B, 0, true)} = ${minus(c * L - k)}`}.`);
+        + `Expand and combine like terms: ${lin(A + B, k, true)} = ${minus(c * L)}${k === 0 ? '' : `, so ${lin(A + B, 0, true)} = ${minus(c * L - k)}`}.`);
     }
     if (kind === 'overX') {
       const x = rng.nonZero(-12, 12), t = rng.nonZero(-6, 6), m = rng.nonZero(-9, 9);
@@ -149,7 +149,7 @@ function extraneous(rng) {
       const top = a === 1 ? 'x' : `(${lin(a, 0)})`;
       return equation(`${top}/(${lin(1, -r)})`, plus(`${a * r}/(${lin(1, -r)})`, String(k)), [],
         `x cannot be ${minus(r)}, since that makes x ${r < 0 ? '+' : '−'} ${Math.abs(r)} zero. Multiply every term by (${lin(1, -r, true)}): ${lin(a, 0, true)} = ${minus(a * r)} ${k < 0 ? '−' : '+'} ${Math.abs(k)}(${lin(1, -r, true)}). `
-        + `Collect: ${lin(a - k, 0, true)} = ${minus((a - k) * r)}, so x = ${minus(r)}. But that is the excluded value: it makes a denominator 0 in the original, so it is extraneous.`);
+        + `Combine like terms: ${lin(a - k, 0, true)} = ${minus((a - k) * r)}, so x = ${minus(r)}. But that is the excluded value: it makes a denominator 0 in the original, so it is extraneous.`);
     }
   }
   for (;;) {
@@ -179,7 +179,7 @@ function extraneous(rng) {
     return equation(lhs, `${M}/(${den})`, xs,
       `First the excluded values: x cannot be ${minus(r)} or ${minus(-t)}, where a denominator is 0. Multiply every term by ${denF}: `
       + `x(${lin(1, t, true)}) ${k > 0 ? '−' : '+'} ${Math.abs(k)}(${lin(1, -r, true)}) = ${minus(M)}. `
-      + `Expand and collect: ${quad(t - k, k * r - M)} = 0, which factors as ${factors(s1, s2)} = 0, so x = ${minus(s1)} or x = ${minus(s2)}. `
+      + `Expand and combine like terms: ${quad(t - k, k * r - M)} = 0, which factors as ${factors(s1, s2)} = 0, so x = ${minus(s1)} or x = ${minus(s2)}. `
       + `${verdict(s1)}; ${verdict(s2)}.`);
   }
 }
@@ -324,7 +324,7 @@ function work(rng) {
       const t = fracText(a * b, b - a);
       return worded(`A pipe fills a tank in ${a} hours. A drain empties the full tank in ${b} hours. With both open, how many hours does the empty tank take to fill?`,
         `fill drain: ${a}, ${b}`, a * b, b - a,
-        `The pipe fills 1/${a} of the tank each hour and the drain takes away 1/${b}. Together: 1/${a} − 1/${b} = ${fracText(b - a, a * b)} each hour, `
+        `The pipe fills 1/${a} of the tank each hour and the drain removes 1/${b}. Together: 1/${a} − 1/${b} = ${fracText(b - a, a * b)} each hour, `
         + `so the tank takes 1 ÷ (${fracText(b - a, a * b)}) = ${t} hours.`);
     }
     // A boat 10 to 24 mph in still water, on a river running 1 to 6 mph and

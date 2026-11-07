@@ -11,12 +11,12 @@
  *
  * None or Infinitely Many is the system version of the level of the same
  * name in Equations Both Sides: parallel lines never meet, and the same line
- * written twice meets itself everywhere. The answer is a judgement, so it is
+ * written twice meets itself everywhere. The answer is a judgment, so it is
  * a choice, and it is asked of equations rather than pictures so that the
  * algebra has to say it.
  *
  * Which Method is the strategy level, and comes after every method has been
- * practised: a letter already on its own says substitute; matching numbers
+ * practiced: a letter already on its own says substitute; matching numbers
  * say eliminate; neither says multiply first. The answer is always a pair
  * (x, y), typed into two boxes in that order.
  */

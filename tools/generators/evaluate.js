@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for using expressions.
+ * Catalog authoring tool: builds the problem library for using expressions.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -22,7 +22,7 @@ function terms(src) {
   return [T.math(r.terms)];
 }
 
-/** A value as it goes into an expression: negatives always in brackets. */
+/** A value as it goes into an expression: negatives always in parentheses. */
 const put = (v) => (v < 0 ? `(−${-v})` : String(v));
 /** "an $8 fee", "a $9 fee": the article goes by how the number is said. */
 const an = (n) => (/^(8|11|18|8\d)$/.test(String(n)) ? 'an' : 'a');
@@ -69,7 +69,7 @@ function substitute(rng, negative) {
   const value = shape.value(a, b, x);
   const squared = src.includes('^2');
   return {
-    prompt: [T.prose('Work out'), ...terms(src), T.prose(`when ${v} = ${minus(x)}.`)],
+    prompt: [T.prose('Evaluate'), ...terms(src), T.prose(`when ${v} = ${minus(x)}.`)],
     text: `${src} at ${v} = ${x}`,
     answer: { type: 'int', value },
     visual: {
@@ -132,7 +132,7 @@ function formula(rng) {
   const value = f.value(vals);
   const given = Object.entries(vals).map(([k, v]) => `${k} = ${minus(v)}`);
   const list = given.length === 2 ? given.join(' and ') : given.join(', ');
-  const head = f.out ? [T.prose(`${f.name}:`), T.letter(f.out), T.op('=')] : [T.prose('Work out')];
+  const head = f.out ? [T.prose(`${f.name}:`), T.letter(f.out), T.op('=')] : [T.prose('Evaluate')];
   const [line, mid] = f.work(vals);
   return {
     prompt: [...head, ...terms(f.src), T.prose(f.out ? `Find ${f.out} when ${list}.` : `when ${list}.`)],
@@ -204,8 +204,8 @@ function wordsIntoSymbols(rng) {
 /**
  * A situation and four expressions. The wrong three are two readings
  * students actually produce, crossed: each alone and both together -- the
- * numbers swapped, the bracket put round the wrong thing, the area for the
- * perimeter, an operation turned round. One slip three ways would leave the
+ * numbers swapped, the parentheses put round the wrong thing, the area for the
+ * perimeter, an operation turned around. One slip three ways would leave the
  * right expression the one nearest all the others.
  *
  * requiem: catalogue/content/decoys-cross-two-slips
@@ -219,7 +219,7 @@ const SITUATIONS = [
     const each = rng.int(3, 15);
     let fee = rng.int(2, 9);
     while (fee === each) fee = rng.int(2, 9);   // equal, the swapped reading is the right one
-    return { story: `Tickets cost $${each} each, plus ${an(fee)} $${fee} booking fee for the whole order. `
+    return { story: `Tickets cost $${each} each, plus ${an(fee)} $${fee} service fee for the whole order. `
       + 'What do t tickets cost?', right: `${each}t + ${fee}`,
     wrong: [`${fee}t + ${each}`, `${each}(t + ${fee})`, `${fee}(t + ${each})`],
     why: `Each ticket adds $${each}, so t of them is ${each}t, and the fee is paid once: ${each}t + ${fee}.` };
@@ -234,7 +234,7 @@ const SITUATIONS = [
     const k = rng.int(2, 6), tip = rng.int(5, 24);
     // requiem: catalogue/content/fixed-menu-key-moves
     // Sometimes the tip is each person's own, so the right expression is
-    // the shorter b/k + tip as often as the bracketed (b + tip)/k: asked
+    // the shorter b/k + tip as often as the parenthesized (b + tip)/k: asked
     // only the one way, with the next two stories, the key was the longest
     // option in 48% of the level.
     if (rng.chance(0.5)) {
@@ -246,7 +246,7 @@ const SITUATIONS = [
     return { story: `${['Two', 'Three', 'Four', 'Five', 'Six'][k - 2]} friends split a bill of b dollars `
       + `and ${an(tip)} $${tip} tip equally. What does each pay?`, right: `(b + ${tip})/${k}`,
     wrong: [`b/${k} + ${tip}`, `${k}(b + ${tip})`, `${k}b + ${tip}`],
-    why: `The tip is shared too, so the whole of b + ${tip} is divided by ${k}: (b + ${tip})/${k}.` };
+    why: `The tip is shared too, so all of b + ${tip} is divided by ${k}: (b + ${tip})/${k}.` };
   },
   (rng) => {
     const boxes = rng.int(3, 12);
@@ -265,11 +265,11 @@ const SITUATIONS = [
     if (rng.chance(0.5)) {
       return { story: `Which expression is ${add} more than ${times} n?`, right: `${k}n + ${add}`,
         wrong: [`${k}(n + ${add})`, `${add}n + ${k}`, `${add}(n + ${k})`],
-        why: `Only n is multiplied, and ${add} is added after: no bracket. ${k}n + ${add}.` };
+        why: `Only n is multiplied, and ${add} is added after: no parentheses. ${k}n + ${add}.` };
     }
     return { story: `Which expression is ${times} the sum of n and ${add}?`, right: `${k}(n + ${add})`,
     wrong: [`${k}n + ${add}`, `${add}(n + ${k})`, `${add}n + ${k}`],
-    why: `The adding happens first and the whole sum is multiplied, so it needs a bracket: ${k}(n + ${add}).` };
+    why: `The adding happens first and the whole sum is multiplied, so it needs parentheses: ${k}(n + ${add}).` };
   },
   (rng) => {
     const longer = rng.int(2, 20);
@@ -283,7 +283,7 @@ const SITUATIONS = [
     }
     return { story: `A rectangle is w ${u} wide and ${longer} ${u} longer than it is wide. What is its perimeter?`,
       right: `2w + 2(w + ${longer})`, wrong: [`w(w + ${longer})`, `2w + 2(w − ${longer})`, `w(w − ${longer})`],
-      why: `The length is w + ${longer}. A perimeter goes round all four sides, two of each: `
+      why: `The length is w + ${longer}. A perimeter goes around all four sides, two of each: `
         + `2w + 2(w + ${longer}). w(w + ${longer}) is the area.` };
   },
   (rng) => {
@@ -322,12 +322,12 @@ function whichFits(rng) {
  */
 const PAIRS = [
   (a, b, v) => ({ left: `${a}(${v} + ${b})`, right: `${a}${v} + ${a * b}`, same: true,
-    why: `Multiplying out the bracket gives ${a} × ${v} + ${a} × ${b} = ${a}${v} + ${a * b}. Always equal.` }),
+    why: `Expanding the parentheses gives ${a} × ${v} + ${a} × ${b} = ${a}${v} + ${a * b}. Always equal.` }),
   (a, b, v) => ({ left: `${a}(${v} + ${b})`, right: `${a}${v} + ${b}`, same: false, at: 1,
     why: (x) => `Try ${v} = ${x}: ${a}(${x} + ${b}) = ${a * (x + b)} but ${a} × ${x} + ${b} = ${a * x + b}. `
       + `The ${a} has to multiply the ${b} as well. Not always equal.` }),
   (a, b, v) => ({ left: `${a}${v} + ${b}${v}`, right: `${a + b}${v}`, same: true,
-    why: `${a} lots of ${v} and ${b} more lots of ${v} are ${a + b} lots of ${v}. Always equal.` }),
+    why: `${a} groups of ${v} and ${b} more groups of ${v} are ${a + b} groups of ${v}. Always equal.` }),
   (a, b, v) => ({ left: `${a}${v} + ${b}${v}`, right: `${a + b}${v}^2`, same: false, at: 2,
     why: (x) => `Try ${v} = ${x}: ${a} × ${x} + ${b} × ${x} = ${(a + b) * x} but ${a + b} × ${x}² = `
       + `${(a + b) * x * x}. Adding like terms never changes the power. Not always equal.` }),
@@ -336,10 +336,10 @@ const PAIRS = [
   (a, b, v) => ({ left: `${v}*${v}`, right: `${v}^2`, same: true,
     why: `${v}² means ${v} × ${v}, by definition. Always equal.` }),
   (a, b, v) => ({ left: `${a + b + 5} - (${v} + ${b})`, right: `${a + 5} - ${v}`, same: true,
-    why: `Taking away a bracket takes away everything in it: ${a + b + 5} − ${v} − ${b} = ${a + 5} − ${v}. Always equal.` }),
+    why: `Subtracting a group in parentheses subtracts everything in it: ${a + b + 5} − ${v} − ${b} = ${a + 5} − ${v}. Always equal.` }),
   (a, b, v) => ({ left: `${a + b + 5} - (${v} + ${b})`, right: `${a + b + 5} - ${v} + ${b}`, same: false, at: 1,
     why: (x) => `Try ${v} = ${x}: ${a + b + 5} − (${x} + ${b}) = ${a + 5 - x} but ${a + b + 5} − ${x} + ${b} = `
-      + `${a + 2 * b + 5 - x}. The minus in front of a bracket applies to all of it. Not always equal.` }),
+      + `${a + 2 * b + 5 - x}. The minus in front of parentheses applies to all of it. Not always equal.` }),
   (a, b, v) => ({ left: `(${v} + ${b})^2`, right: `${v}^2 + ${b * b}`, same: false, at: 1,
     why: (x) => `Try ${v} = ${x}: (${x} + ${b})² = ${(x + b) ** 2} but ${x}² + ${b * b} = ${x * x + b * b}. `
       + `Squaring a sum is not squaring each part. Not always equal.` }),

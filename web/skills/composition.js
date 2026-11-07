@@ -1,7 +1,7 @@
 /**
  * Combining Functions: adding, multiplying and composing them.
  *
- * (f + g)(x) is f(x) + g(x), worked term by term; (f − g)(x) takes away
+ * (f + g)(x) is f(x) + g(x), worked term by term; (f − g)(x) subtracts
  * every term of g, not just the first; (f · g)(x) multiplies them out. A
  * composition f(g(x)) feeds g's output into f: work from the inside out,
  * so f(g(2)) is g(2) first, then f of that. Written as a formula, f(g(x))
@@ -12,15 +12,15 @@
 
 export const LEVELS = [
   { name: '(f + g)(x)', slug: 'f-plus-g',
-    blurb: 'Add, subtract or multiply the two rules: (f − g)(x) takes away every term of g, so brackets first.',
+    blurb: 'Add, subtract or multiply the two rules: (f − g)(x) subtracts every term of g, so parentheses first.',
     // f(x) read as a rule is functions' Function Notation; (f · g)(x) of a
     // line and a quadratic, (4x − 9)(2x² − 2x − 9), is polynomials' Trinomial
     // Times Binomial, after the Binomial Times Binomial that f(g(x)) needs too.
     dependsOn: [{ skill: 'functions', level: 2 }, { skill: 'polynomials', level: 6 }] },
   { name: 'f(g(2))', slug: 'f-of-g-of-2',
-    blurb: 'Inside out: work out g(2) first, then put that number into f. From formulas or from a table.' },
+    blurb: 'Inside out: calculate g(2) first, then put that number into f. From formulas or from a table.' },
   { name: 'f(g(x))', slug: 'f-of-g-of-x',
-    blurb: 'Replace every x in f with the whole of g(x), in brackets, then multiply out and collect.' },
+    blurb: 'Replace every x in f with all of g(x), in parentheses, then expand and combine like terms.' },
   { name: 'Not Commutative', slug: 'not-commutative', libraryCap: 600,
     blurb: 'f(g(x)) and g(f(x)) are usually different: the inside function is the one applied first.' },
   { name: 'Decompose', slug: 'decompose',
@@ -50,7 +50,7 @@ export default {
   glyph: 'f∘g',
   blurb: 'Sums, differences and products of functions, f(g(2)) and f(g(x)), why the order matters, taking a function apart, and its domain.',
   answerInput: 'expr',
-  // Function notation from functions; multiplying out from polynomials;
+  // Function notation from functions; expanding from polynomials;
   // where a root or a fraction is defined from domain and range.
   dependsOn: ['functions', 'polynomials', 'domain-range'],
   levels: LEVELS,

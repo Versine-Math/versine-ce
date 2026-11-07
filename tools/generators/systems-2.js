@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for systems-2.
+ * Catalog authoring tool: builds the problem library for systems-2.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -233,7 +233,7 @@ const circleSrc = (h, k, R) => `${h ? `(x ${h < 0 ? '+' : '-'} ${Math.abs(h)})^2
 const lin = (p, q, v) => pretty(poly([q, p], v));
 /** (p·v + q)², or v² alone. */
 const sqText = (p, q, v) => (p === 0 ? sqNum(q) : p === 1 && q === 0 ? `${v}²` : `(${lin(p, q, v)})²`);
-/** (p·v + q)² multiplied out, times m, constant first. */
+/** (p·v + q)² expanded, times m, constant first. */
 const sqOut = (p, q, m = 1) => [m * q * q, 2 * m * p * q, m * p * p];
 /** n², in parentheses when n is negative. */
 const sqNum = (n) => (n < 0 ? `(${minus(n)})²` : `${n}²`);
@@ -242,7 +242,7 @@ const sqNum = (n) => (n < 0 ? `(${minus(n)})²` : `${n}²`);
  * The line Ax + By = C put into (x − h)² + (y − k)² = R, every step shown:
  * the line solved for the letter with coefficient ±1 if there is one, that
  * put into the circle as it stands, the fraction cleared, the squares
- * multiplied out, and the quadratic left, which `finish` solves or counts.
+ * expanded, and the quadratic left, which `finish` solves or counts.
  */
 // requiem: catalogue/content/substitution-shown-before-simplified
 function circleWork(line, h, k, R, finish, given = false) {
@@ -251,7 +251,7 @@ function circleWork(line, h, k, R, finish, given = false) {
     const quad = [k * k + dx * dx - R, -2 * k, 1];
     const lit = `${h ? `(${minus(x0)} ${h < 0 ? '+' : '−'} ${Math.abs(h)})²` : sqNum(x0)} + ${sqText(1, -k, 'y')} = ${R}`;
     const out = `${dx * dx} + ${pretty(poly(sqOut(1, -k), 'y'))} = ${R}`;
-    return { v: 'y', quad, work: `Put x = ${minus(x0)} into the circle: ${lit}. Multiplied out, ${out}; brought to one side, ${finish(1, quad[1], quad[0], 'y')}` };
+    return { v: 'y', quad, work: `Put x = ${minus(x0)} into the circle: ${lit}. Expanded, ${out}; brought to one side, ${finish(1, quad[1], quad[0], 'y')}` };
   }
   const useY = Math.abs(line.b) === 1 || Math.abs(line.a) !== 1;
   // y = 6 is already solved for y.
@@ -274,7 +274,7 @@ function circleWork(line, h, k, R, finish, given = false) {
   if (e > 1) steps.push(` Multiply both sides by ${e * e} to clear the fraction: ${order(sqText(pn, r0, v), `${e * e}${vTerm}`)} = ${e * e * R}.`);
   const A = sqOut(1, -hv, e * e), B = sqOut(pn, r0);
   const expanded = (useY ? [A, B] : [B, A]).filter((t) => t.some((c) => c)).map((t) => pretty(poly(t, v))).join(' + ');
-  steps.push(` Multiplied out, ${expanded} = ${e * e * R}; brought to one side, `);
+  steps.push(` Expanded, ${expanded} = ${e * e * R}; brought to one side, `);
   const raw = [A[0] + B[0] - e * e * R, A[1] + B[1], A[2] + B[2]];
   const g = Math.abs(gcd(gcd(raw[0], raw[1]), raw[2])) || 1;
   const quad = raw.map((c) => c / g);
@@ -318,7 +318,7 @@ function parabolaAndLine(rng, outcome, maxY = 40) {
 function lineParabola(rng) {
   const outcome = rng.pick(['two', 'two', 'two', 'two', 'two', 'two', 'one', 'one', 'none', 'none']);
   // The line as y = mx + k, or as mx − y = −k for a student to solve first,
-  // or the parabola in vertex form, to be multiplied out first.
+  // or the parabola in vertex form, to be expanded first.
   const form = rng.pick(['slope', 'slope', 'slope', 'slope', 'std', 'std', 'std', 'vertex', 'vertex', 'vertex']);
   let made;
   // Every meeting point inside the level's window, so the picture holds it.
@@ -336,7 +336,7 @@ function lineParabola(rng) {
   const lineSrc = asStd ? line.src : `y = ${poly([k, m])}`;
   const da = a, db = b - m, dc = c - k;
   const first = asStd ? `Solve the line for y: y = ${pretty(poly([k, m]))}. `
-    : form === 'vertex' && h ? `Multiplied out, the parabola is y = ${pretty(poly([c, b, a]))}. ` : '';
+    : form === 'vertex' && h ? `Expanded, the parabola is y = ${pretty(poly([c, b, a]))}. ` : '';
   const ys = pts.length ? ` On the line, ${pts.map(([x, y]) => `x = ${qs(x)} gives y = ${qs(y)}`).join(', and ')}.` : '';
   return {
     prompt: [T.prose('Where do'), eq(par), T.prose('and'), eq(lineSrc), T.prose('meet?'),
@@ -571,7 +571,7 @@ function twoCurves(rng) {
         answer: pointsAnswer(pts),
         visual: meetPicture(circleWindow([0, k0, R]), [circleMark(0, k0, R, LINE), ...graphY((x) => s * x * x + c, circleWindow([0, k0, R]), SECOND)], pts),
         explain: `The parabola gives x² = ${pretty(s > 0 ? poly([-c, 1], 'y') : poly([c, -1], 'y'))}. Put that into the circle: ${pretty(s > 0 ? poly([-c, 1], 'y') : poly([c, -1], 'y'))} + ${k0 ? `(y ${k0 < 0 ? '+' : '−'} ${Math.abs(k0)})²` : 'y²'} = ${R}`
-          + `${k0 ? `, which multiplied out is ${pretty(s > 0 ? poly([-c, 1], 'y') : poly([c, -1], 'y'))} + ${pretty(poly(sqOut(1, -k0), 'y'))} = ${R}` : ''}; brought to one side, ${solved(1, s - 2 * k0, k0 * k0 - s * c - R, 'y')}. `
+          + `${k0 ? `, which expanded is ${pretty(s > 0 ? poly([-c, 1], 'y') : poly([c, -1], 'y'))} + ${pretty(poly(sqOut(1, -k0), 'y'))} = ${R}` : ''}; brought to one side, ${solved(1, s - 2 * k0, k0 * k0 - s * c - R, 'y')}. `
           + `${kept.join('; ')}. So they meet at ${meetText(pts.sort((p, q) => p[0] - q[0] || p[1] - q[1]))}.`,
       };
     }
@@ -661,7 +661,7 @@ function squares(rng) {
   }
   for (;;) {
     // x² + y² = R1 and x² + (y − k)² = R2 meet where y = y0, x² = X; the
-    // other way round, (x − k)² + y² = R2 meets x² + y² = R1 where x = y0.
+    // other way around, (x − k)² + y² = R2 meets x² + y² = R1 where x = y0.
     const k = rng.nonZero(-6, 6), y0 = rng.int(-8, 8);
     const outcome = rng.pick(['two', 'two', 'two', 'two', 'one', 'none']);
     const x0 = outcome === 'two' ? rng.int(1, 8) : 0;
@@ -684,7 +684,7 @@ function squares(rng) {
       text: `meet: ${first}; ${second}`,
       answer: pointsAnswer(pts),
       visual: meetPicture(win, [circleMark(0, 0, R1, LINE), circleMark(across ? k : 0, across ? 0 : k, R2, SECOND)], pts),
-      explain: `Multiplied out, the second is ${opened} = ${R2}. Subtract it from the first: x² and y² go, leaving ${pretty(poly([-k * k, 2 * k], s))} = ${minus(R1 - R2)}, `
+      explain: `Expanded, the second is ${opened} = ${R2}. Subtract it from the first: x² and y² go, leaving ${pretty(poly([-k * k, 2 * k], s))} = ${minus(R1 - R2)}, `
         + `so ${pretty(poly([0, 2 * k], s))} = ${minus(R1 - R2 + k * k)} and ${s} = ${minus(y0)}. Put that into the first: ${rest}`,
     };
   }
@@ -927,7 +927,7 @@ function pairs(rng) {
       visual: null,
       explain: `In dollars: ${rows.map((r, n) => pretty(eq3(r, dollars(totals[n]), vs))).join(', ')}. `
         + `Add all three: each letter is in two of them, so ${vs.map((v) => `2${v}`).join(' + ')} = ${dollars(2 * all)}, and ${vs.join(' + ')} = ${dollars(all)}. `
-        + `Take away each pair: ${[0, 1, 2].map((k) => `${vs[k]} = ${dollars(all)} − ${dollars(totals[without(k)])} = ${dollars(price[k])}`).join(', ')}. `
+        + `Subtract each pair: ${[0, 1, 2].map((k) => `${vs[k]} = ${dollars(all)} − ${dollars(totals[without(k)])} = ${dollars(price[k])}`).join(', ')}. `
         + `So (${vs.join(', ')}) = (${price.map(money).join(', ')}).`,
     };
   }

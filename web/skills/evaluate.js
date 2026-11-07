@@ -14,7 +14,7 @@
  * Writing from words comes in two parts. Typed answers are judged by form,
  * so the level that asks a student to type an expression uses only phrases
  * with one natural written form -- "7 less than twice n" -- while the
- * phrases that could fairly be written bracketed or expanded ("three times
+ * phrases that could fairly be written in parentheses or expanded ("three times
  * the sum of n and 4") are asked as a choice between expressions, which is
  * where the wrong readings can be put side by side.
  */
@@ -24,7 +24,7 @@ export const LEVELS = [
     blurb: 'The letter stands for a number. Put it in and do the arithmetic, in order.' },
   {
     name: 'Substitute a Negative', slug: 'substitute-a-negative',
-    blurb: 'Brackets round the negative, every time. Squaring it is where they earn their keep.',
+    blurb: 'Parentheses around the negative, every time. Squaring it is where they earn their keep.',
     dependsOn: [{ skill: 'int-muldiv', level: 1 }],
   },
   { name: 'Formulas', slug: 'formulas',

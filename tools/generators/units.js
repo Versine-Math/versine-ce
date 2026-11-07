@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for units of measure.
+ * Catalog authoring tool: builds the problem library for units of measure.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -437,7 +437,7 @@ function between(rng) {
     const shown = tidy ? num(result) : places >= 0 ? fixed(result, places) : num(answer.value.n);
     const to_ = places > 0 ? `to ${places} decimal place${places === 1 ? '' : 's'}` : places === 0 ? 'to the nearest whole number'
       : `to the nearest ${num(10 ** -places)} ${words(to)}`;
-    const said = places > 0 ? `to ${places} dp` : places === 0 ? 'to the nearest whole' : `to the nearest ${num(10 ** -places)}`;
+    const said = places > 0 ? to_ : places === 0 ? 'to the nearest whole' : `to the nearest ${num(10 ** -places)}`;
     const fact = `1 ${UNIT[p][1]} ${isExact ? '=' : '≈'} ${amt(k, q)}`;
     const steps = [];
     if (from !== side1) steps.push(`First into ${words(side1)}: ${converted(v, from, side1).work.split(' (')[0]}`);
@@ -543,9 +543,9 @@ function temperature(rng) {
     text: `temperature: ${fv} F to C${exactly ? '' : ' to 1 dp'}`,
     answer: exactly ? answerOf(cv) : roundedTo(cv, 1),
     visual: null,
-    explain: `Take the 32 off first: ${num(fv)} − 32 = ${num(fv - 32)}. Then (5/9) × ${fv - 32 < 0 ? `(${num(fv - 32)})` : num(fv - 32)} `
-      + `${exactly ? `= ${num(cv)}` : `≈ ${num(Math.round(cv * 1000) / 1000)}, which is ${fixed(cv, 1)} to 1 dp`}. `
-      + `(Multiplying by 5/9 before taking off 32 would treat the 32 as degrees Celsius.) So ${exactly ? num(cv) : fixed(cv, 1)}°C.`,
+    explain: `Subtract the 32 first: ${num(fv)} − 32 = ${num(fv - 32)}. Then (5/9) × ${fv - 32 < 0 ? `(${num(fv - 32)})` : num(fv - 32)} `
+      + `${exactly ? `= ${num(cv)}` : `≈ ${num(Math.round(cv * 1000) / 1000)}, which is ${fixed(cv, 1)} to 1 decimal place`}. `
+      + `(Multiplying by 5/9 before subtracting 32 would treat the 32 as degrees Celsius.) So ${exactly ? num(cv) : fixed(cv, 1)}°C.`,
   };
 }
 

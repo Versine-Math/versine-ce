@@ -145,7 +145,7 @@ class Parser {
     if (tok.k === '(') {
       this.next();
       const inner = this.expr();
-      if (!this.at(')')) throw new SyntaxError('a bracket is left open');
+      if (!this.at(')')) throw new SyntaxError('a parenthesis is left open');
       this.next();
       // Remembered for drawing only: (−2a)(3b) set side by side loses its
       // meaning without them, and canonical() never looks.
@@ -155,11 +155,11 @@ class Parser {
       this.next();
       const arity = FUNCTIONS[tok.v];
       if (arity !== undefined) {
-        if (!this.at('(')) throw new SyntaxError(`${tok.v} needs a bracket after it`);
+        if (!this.at('(')) throw new SyntaxError(`${tok.v} needs parentheses after it`);
         this.next();
         const args = [this.expr()];
         while (this.at(',')) { this.next(); args.push(this.expr()); }
-        if (!this.at(')')) throw new SyntaxError('a bracket is left open');
+        if (!this.at(')')) throw new SyntaxError('a parenthesis is left open');
         this.next();
         if (args.length !== arity) {
           throw new SyntaxError(`${tok.v} takes ${arity} ${arity === 1 ? 'thing' : 'things'}, not ${args.length}`);
@@ -200,9 +200,9 @@ export function parseExpression(src) {
  * Order-insensitive, and nothing more. `x+1` and `1+x` agree because addition
  * commutes; `2+3` and `5` do not, because collapsing them would be arithmetic,
  * and judging whether a student did the arithmetic is the entire job. This is
- * the "normalise, then look up" half of answering without a computer algebra
- * system: the catalogue stores the canonical forms it will accept, and a typed
- * answer is canonicalised and compared against them.
+ * the "normalize, then look up" half of answering without a computer algebra
+ * system: the catalog stores the canonical forms it will accept, and a typed
+ * answer is canonicalized and compared against them.
  *
  * Sums and products sort their parts. Subtraction is rewritten as adding a
  * negative first -- `x−1` and `−1+x` are the same expression, and refusing
@@ -216,7 +216,7 @@ export function canonical(node) {
   return negative ? `-(${body})` : body;
 }
 
-/** Whether a string's brackets all close within it: -(a)+-(b) is not -( … ). */
+/** Whether a string's parentheses all close within it: -(a)+-(b) is not -( … ). */
 function balanced(t) {
   let depth = 0;
   for (const c of t) {

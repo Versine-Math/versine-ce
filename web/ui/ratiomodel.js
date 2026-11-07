@@ -22,14 +22,14 @@ import { drawSegments } from './segments.js';
  * simplest form and back up; drawing that middle bar shows the detour rather
  * than asserting a factor that is not a whole number. It is the same middle
  * bar equivmodel draws for 4/6 = ?/9, deliberately -- the two pictures are
- * the same picture, and a student meeting the second should recognise it.
+ * the same picture, and a student meeting the second should recognize it.
  *
  * @typedef {{a:number, b:number}} Parts
  * @typedef {{a:number, b:number, to?:Parts, via?:Parts, by?:string,
  *            note?:string}} RatioSpec
  */
 
-/** "1 part", "3 parts" -- a unit ratio is common and reads badly pluralised. */
+/** "1 part", "3 parts" -- a unit ratio is common and reads badly pluralized. */
 const parts = (k) => `${k} part${k === 1 ? '' : 's'}`;
 
 const row = (a, b, tone) => ({ label: `${a} : ${b}`, bars: [{ total: a + b, filled: a, tone }] });

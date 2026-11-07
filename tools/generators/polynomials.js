@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for polynomials.
+ * Catalog authoring tool: builds the problem library for polynomials.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -7,7 +7,7 @@
  *
  * Run via: node scripts/build-library.mjs
  *
- * Every `text` carries the polynomial in plain ASCII, brackets and all, so
+ * Every `text` carries the polynomial in plain ASCII, parentheses and all, so
  * scripts/check-answers.py can work out its coefficients by evaluating it.
  */
 import * as T from '../terms.js';
@@ -126,7 +126,7 @@ function adding(rng) {
     text: `polynomial: (${write(p, v)}) + (${write(q, v)})`,
     answer: answerOf(out, v),
     visual: null,
-    explain: `Adding needs no change of sign: just collect like terms. ${collecting([...p, ...q], v)}. `
+    explain: `Adding needs no change of sign: just combine like terms. ${collecting([...p, ...q], v)}. `
       + `So ${pretty(out, v)}.`,
   };
 }
@@ -143,8 +143,8 @@ function takingAway(rng) {
     text: `polynomial: (${write(p, v)}) - (${write(q, v)})`,
     answer: answerOf(out, v),
     visual: null,
-    explain: `The minus changes every sign in the second bracket: −(${pretty(q, v)}) = ${pretty(flipped, v)}. `
-      + `Then collect: ${collecting([...p, ...flipped], v)}. So ${pretty(out, v)}.`,
+    explain: `The minus changes every sign in the second set of parentheses: −(${pretty(q, v)}) = ${pretty(flipped, v)}. `
+      + `Then combine like terms: ${collecting([...p, ...flipped], v)}. So ${pretty(out, v)}.`,
   };
 }
 
@@ -167,13 +167,13 @@ function monomialTimes(rng) {
   };
 }
 
-/** A term to multiply by, bracketed when it is negative: 3x², (−5). */
+/** A term to multiply by, in parentheses when it is negative: 3x², (−5). */
 const signedTerm = (t, v) => (t[0] < 0 ? `(${pretty([t], v)})` : pretty([t], v));
 
 /** A binomial ax + b with a small leading number. */
 const binomial = (rng, lead = [1, 1, 1, 2, 3]) => [[rng.pick(lead) * (rng.chance(0.15) ? -1 : 1), 1], [rng.nonZero(-9, 9), 0]];
 
-/** Every product of one bracket's terms with the other's, in order. */
+/** Every product of one set of parentheses's terms with the other's, in order. */
 const products = (a, b, v) => a.flatMap((s) => b.map((t) => `${signedTerm(s, v)} × ${signedTerm(t, v)} = ${pretty([[s[0] * t[0], s[1] + t[1]]], v)}`)).join(', ');
 
 function binomialTimes(rng) {
@@ -188,7 +188,7 @@ function binomialTimes(rng) {
     answer: answerOf(out, v),
     visual: null,
     explain: `Each term of the first times each term of the second: ${products(a, b, v)}. `
-      + `${out.length < parts.length ? `Collect the ${v} terms: ${collecting(parts, v)}. ` : ''}So ${pretty(out, v)}.`,
+      + `${out.length < parts.length ? `Combine the ${v} terms: ${collecting(parts, v)}. ` : ''}So ${pretty(out, v)}.`,
   };
 }
 
@@ -204,15 +204,15 @@ function special(rng) {
     src = `(${write([[lead, 1], [k, 0]], v)})(${write(b, v)})`;
     out = collect(times([[lead, 1], [k, 0]], b));
     why = `A sum times a difference: the middle terms, ${pretty([[k * lead, 1]], v)} and ${pretty([[-k * lead, 1]], v)}, `
-      + `cancel. What is left is a difference of squares: ${pretty([[lead, 1]], v)} squared take away ${k} squared.`;
+      + `cancel. What is left is a difference of squares: ${pretty([[lead, 1]], v)} squared minus ${k} squared.`;
   } else {
     src = `(${write(a, v)})^2`;
     out = collect(times(a, a));
     const half = lead * sign * k;
     const first = lead === 1 ? v : `${lead}${v}`;
-    why = `Squaring a bracket is not squaring its parts. It is (${pretty(a, v)})(${pretty(a, v)}): `
+    why = `Squaring a sum in parentheses is not squaring its parts. It is (${pretty(a, v)})(${pretty(a, v)}): `
       + `the first term squared, ${lead === 1 ? `${v}²` : `(${first})² = ${pretty([[lead * lead, 2]], v)}`}; `
-      + `then ${first} × ${signed(sign * k)} twice, once each way round: ${pretty([[half, 1], [half, 1]], v)} = ${pretty([[2 * half, 1]], v)}; `
+      + `then ${first} × ${signed(sign * k)} twice, once each way around: ${pretty([[half, 1], [half, 1]], v)} = ${pretty([[2 * half, 1]], v)}; `
       + `and the last squared, ${signed(sign * k)}² = ${k * k}.`;
   }
   return {
@@ -237,7 +237,7 @@ function trinomialTimes(rng) {
     answer: answerOf(out, v),
     visual: null,
     explain: `Each term of the first times each of the three in the second, six products: ${products(a, b, v)}. `
-      + `Collect: ${collecting(parts, v)}. So ${pretty(out, v)}.`,
+      + `Combine like terms: ${collecting(parts, v)}. So ${pretty(out, v)}.`,
   };
 }
 

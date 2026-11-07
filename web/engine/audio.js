@@ -1,7 +1,7 @@
 /**
  * Sound.
  *
- * Every sound is synthesised with the Web Audio API — no files to download,
+ * Every sound is synthesized with the Web Audio API — no files to download,
  * nothing to go missing offline, and the whole palette costs a few hundred
  * bytes instead of a folder of samples.
  *

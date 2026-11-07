@@ -28,7 +28,7 @@ export const LEVELS = [
   { name: 'Adding & Subtracting', slug: 'adding-and-subtracting',
     blurb: 'Tip to tail: add the across parts and the up parts. To subtract, add the opposite.' },
   { name: 'Scalar Multiples', slug: 'scalar-multiples',
-    blurb: 'k⟨a, b⟩ = ⟨ka, kb⟩: the same direction stretched, or turned round when k is negative.' },
+    blurb: 'k⟨a, b⟩ = ⟨ka, kb⟩: the same direction stretched, or turned around when k is negative.' },
   { name: 'Unit Vectors', slug: 'unit-vectors',
     blurb: 'Divide a vector by its length to get length 1 in the same direction; multiply that by any length you want.' },
   { name: 'Dot Product', slug: 'dot-product',

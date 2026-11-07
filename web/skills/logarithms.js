@@ -38,7 +38,7 @@ export const LEVELS = [
     dependsOn: [{ skill: 'quadratic-eq', level: 1 }, { skill: 'radical-eq', level: 1 }] },
   // requiem: catalogue/content/log-functions-in-logarithms
   { name: 'Log Functions', slug: 'log-functions',
-    blurb: 'y = log₂ x is the inverse of 2ˣ: its graph is the reflection in y = x, through (1, 0) and (2, 1). It takes only positive numbers, gives every real one, and runs down beside the line where its inside is 0.',
+    blurb: 'y = log₂ x is the inverse of 2ˣ: its graph is the reflection over y = x, through (1, 0) and (2, 1). It takes only positive numbers, gives every real one, and runs down beside the line where its inside is 0.',
     // The reflection in y = x, a point (a, b) becoming (b, a), is inverses'
     // Graph Reflection; reading log_b v = e as b^e = v is Log as Exponent,
     // earlier in this skill, and the stretch rows use ln & Change of Base.

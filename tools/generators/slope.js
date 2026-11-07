@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for slope.
+ * Catalog authoring tool: builds the problem library for slope.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -88,7 +88,7 @@ function fromTwo(rng) {
     explain: `Subtract in the same order, second point minus first. Rise: ${minus(p2[1])} − ${signed(p1[1])} `
       + `= ${minus(rise)}. Run: ${minus(p2[0])} − ${signed(p1[0])} = ${minus(run)}. `
       + `Slope: ${said(rise, run)}.`
-      + (run < 0 ? ' Subtracting the other way round gives the same slope, because both signs change.' : ''),
+      + (run < 0 ? ' Subtracting the other way around gives the same slope, because both signs change.' : ''),
   };
 }
 

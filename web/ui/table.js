@@ -8,7 +8,7 @@ import { el, mount } from './dom.js';
  * functions, linear models and sequences all hand a student a table and ask
  * what it says.
  *
- * Cells are strings the catalogue already wrote, never values the renderer
+ * Cells are strings the catalog already wrote, never values the renderer
  * works out. A cell reading '?' is the one being asked about; `fill`, the
  * string that belongs there, is withheld until an answer is committed, so a
  * table cannot show its own answer while the question is open.

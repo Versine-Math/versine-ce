@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for graphs of quadratics.
+ * Catalog authoring tool: builds the problem library for graphs of quadratics.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -56,7 +56,7 @@ function curves(f, step = 0.1) {
 }
 const paths = (f, tone, extra = {}) => curves(f).map((points) => ({ kind: 'path', points, tone, ...extra }));
 
-/** a, or a written in front of a bracket: 2, −, nothing. */
+/** a, or a written in front of parentheses: 2, −, nothing. */
 const lead = (a) => (a === 1 ? '' : a === -1 ? '-' : String(a));
 const bracket = (h) => `(x ${h < 0 ? '+' : '-'} ${Math.abs(h)})`;
 const plusK = (k) => (k === 0 ? '' : ` ${k < 0 ? '-' : '+'} ${Math.abs(k)}`);
@@ -71,7 +71,7 @@ function standardForm(a, b, c) {
     return i === 0 ? `${k < 0 ? '-' : ''}${body}` : ` ${k < 0 ? '-' : '+'} ${body}`;
   }).join('');
 }
-/** A number squared or multiplied, bracketed only when negative. */
+/** A number squared or multiplied, in parentheses only when negative. */
 const sq = (h) => (h < 0 ? `(${minus(h)})²` : `${h}²`);
 const num = (h) => (h < 0 ? `(${minus(h)})` : String(h));
 const pretty = (s) => s.replace(/\^2/g, '²').replace(/-/g, '−');
@@ -105,12 +105,12 @@ function upOrDown(rng) {
   } else if (shape === 'factored') {
     const p = rng.int(-6, 6), q = rng.int(-6, 6);
     src = factoredForm(a, p, q);
-    why = `Multiplied out, the x² term is ${pretty(lead(a))}x²`;
+    why = `Expanded, the x² term is ${pretty(lead(a))}x²`;
   } else if (shape === 'hidden') {
-    // (p − x)(x + q): the minus is on the x inside the bracket.
+    // (p − x)(x + q): the minus is on the x inside the parentheses.
     const p = rng.int(1, 6), q = rng.int(-6, 6);
     src = `(${p} - x)${bracket(q)}`;
-    why = `The minus is hiding inside the first bracket. The x² term comes from −x × x = −x²`;
+    why = `The minus is hiding inside the first set of parentheses. The x² term comes from −x × x = −x²`;
     return finishUpDown(src, -1, why);
   } else if (shape === 'constant-first') {
     const c = rng.int(1, 9);
@@ -143,7 +143,7 @@ function fromVertexForm(rng) {
     answer: pairOf(h, k),
     visual: graph((x) => a * (x - h) ** 2 + k, [[h, k]]),
     explain: `The square is 0, its smallest, when x ${h < 0 ? '+' : '−'} ${Math.abs(h)} = 0, so at x = ${minus(h)}`
-      + `${h < 0 ? ` -- the opposite of the sign in the bracket` : ''}. Then y is ${k === 0 ? 'the square alone: 0' : `the number left over: ${minus(k)}`}. `
+      + `${h < 0 ? ` -- the opposite of the sign in the parentheses` : ''}. Then y is ${k === 0 ? 'the square alone: 0' : `the number left over: ${minus(k)}`}. `
       + `So the vertex is ${at([h, k])}.`,
   };
 }
@@ -206,7 +206,7 @@ function intoVertex(rng) {
     answer: { type: 'expr', value: ans, accept: spellings(a, h, k) },
     visual: null,
     explain: `${inside}Half of ${minus(b / a)} is ${minus(-h)}, and ${pretty(standardForm(1, b / a, 0))} + ${h * h} = ${pretty(bracket(h))}². `
-      + `${a === 1 ? `That added ${h * h}` : `Adding ${h * h} inside the bracket adds ${minus(a * h * h)} in all`}, so take it away again: `
+      + `${a === 1 ? `That added ${h * h}` : `Adding ${h * h} inside the parentheses adds ${minus(a * h * h)} in all`}, so subtract it again: `
       + `${minus(c)} − ${signed(a * h * h)} = ${minus(k)}. So ${pretty(ans)}.`,
   };
 }
@@ -266,9 +266,9 @@ function context(rng) {
     src = `x(${top} - ${nx})`;
     ask = rng.chance(0.5) ? 'max' : 'when';
     value = ask === 'max' ? best * (top - n * best) : best;
-    prompt = `At a price of x dollars, a shop sells ${top} − ${nx} mugs a day, so its takings are x(${top} − ${nx}) dollars. `
+    prompt = `At a price of x dollars, a store sells ${top} − ${nx} mugs a day, so its revenue is x(${top} − ${nx}) dollars. `
       + `${ask === 'max' ? 'What are the most it can take in a day, in dollars?' : 'What price, in dollars, brings in the most?'}`;
-    why = `The takings are 0 at x = 0 and x = ${top / n}; the vertex is halfway, at x = ${best}`
+    why = `The revenue is 0 at x = 0 and x = ${top / n}; the vertex is halfway, at x = ${best}`
       + `${ask === 'max' ? `, where they are ${best} × ${top - n * best} = ${value} dollars` : ''}.`;
   }
   return {
@@ -300,7 +300,7 @@ const WHY = {
   'vertex/zeros': 'Vertex form shows the turning point, not the crossings: set y = 0 and solve.',
   'vertex/y-intercept': 'The y-intercept is where x = 0: put it in.',
   'factored/vertex': 'Factored form shows the zeros, and a parabola is symmetric: the vertex is halfway between them.',
-  'factored/zeros': 'Factored form is written around its zeros: set each bracket to 0.',
+  'factored/zeros': 'Factored form is written around its zeros: set each factor to 0.',
   'factored/y-intercept': 'The y-intercept is where x = 0: put it in.',
   'standard/vertex': 'Standard form hides the vertex: x = −b/2a, then put that x in for y.',
   'standard/zeros': 'Standard form does not show the zeros: set y = 0 and solve, by factoring or the formula.',

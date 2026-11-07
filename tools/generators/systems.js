@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for systems of
+ * Catalog authoring tool: builds the problem library for systems of
  * equations.
  *
  * NOT part of the running application. Nothing here is served to a browser
@@ -18,7 +18,7 @@ import { ratio, clip, lineText } from '../lines.js';
 import { LAST_LEVEL, PAR_SECONDS } from '../../web/skills/systems.js';
 
 const SPAN = 8;
-/** An equation for a sentence: one unbroken piece of maths among the words. */
+/** An equation for a sentence: one unbroken piece of math among the words. */
 const terms = (src) => [T.math(previewOf(src).terms)];
 const whole = (n) => ({ n, d: 1 });
 const tm = (s) => s.replace(/-/g, '−');
@@ -98,7 +98,7 @@ function substitution(rng) {
     visual: null,
     explain: `The first says y is ${tm(e1.slice(4))}, so put that in for y in the second: `
       + `${tm(std(a, 0, 0).split(' = ')[0])} ${b < 0 ? '−' : '+'} ${Math.abs(b) === 1 ? '' : Math.abs(b)}(${tm(e1.slice(4))}) `
-      + `= ${minus(c)}. Expand and collect: `
+      + `= ${minus(c)}. Expand and combine like terms: `
       + (b * k === 0 ? `${solved(coef, 'x', c, x)}. `
         : `${cx(coef)} ${b * k < 0 ? '−' : '+'} ${Math.abs(b * k)} = ${minus(c)}, so ${solved(coef, 'x', rest, x, ' and')}. `)
       + `Back into the first: y = ${minus(m)} × ${signed(x)}${k === 0 ? '' : ` ${k < 0 ? '−' : '+'} ${Math.abs(k)}`} = ${minus(y)}. `
@@ -113,7 +113,7 @@ function elimination(rng) {
   const k = rng.int(1, 5);
   const add = rng.chance(0.6);
   const p = rng.nonZero(-5, 5), q = rng.nonZero(-5, 5);
-  // The cancelling letter has k in one equation and ∓k in the other.
+  // The canceling letter has k in one equation and ∓k in the other.
   const [a1, b1, a2, b2] = onX ? [k, p, add ? -k : k, q] : [p, k, q, add ? -k : k];
   const det = a1 * b2 - a2 * b1;
   if (det === 0) return elimination(rng);

@@ -16,9 +16,9 @@
  * named, x = 2 + 3i or x = 2 − 3i. ± is typed +- with the signs touching,
  * or +/-; a plus and a minus apart, 3 + -2i, are plus a negative.
  *
- * Read as typed besides: capitals (a phone's 3 − 2I), one bracket round the
- * whole, (3 − 2i), a minus before a bracket, −(7 + 6i)/17, and a bracketed
- * signed coefficient, 3 + (−2)i. A root left in is refused with its own hint.
+ * Read as typed besides: capitals (a phone's 3 − 2I), one set of parentheses around the
+ * whole, (3 − 2i), a minus before parentheses, −(7 + 6i)/17, and a signed
+ * coefficient in parentheses, 3 + (−2)i. A root left in is refused with its own hint.
  *
  * Value: { re, im, pm?, simplest? }, re and im fractions { n, d }; pm marks
  * the pair re ± im·i, im then stored positive. simplest is false when the
@@ -59,10 +59,10 @@ function number(text) {
 /** (a + bi)/k is finished when a and b are whole, k > 1, and no number above 1 divides a, b and k. */
 const cleared = (re, im, k) => re.d === 1 && im.d === 1 && k.n > 1 && gcd(gcd(re.n, im.n), k.n) === 1;
 
-const POWER = 'Work out the powers of i first: i² is −1, so a complex answer is a + bi.';
-const ROOT = 'Work out the root first: √−1 is i, so a complex answer is a + bi with no root left in.';
+const POWER = 'Calculate the powers of i first: i² is −1, so a complex answer is a + bi.';
+const ROOT = 'Calculate the root first: √−1 is i, so a complex answer is a + bi with no root left in.';
 
-/** Whether s is one bracketed whole: (3 − 2i), not (3)(2i) or (1 + i)/2. */
+/** Whether s is one whole in parentheses: (3 − 2i), not (3)(2i) or (1 + i)/2. */
 function wrapped(s) {
   if (!s.startsWith('(') || !s.endsWith(')')) return false;
   let depth = 0;
@@ -75,7 +75,7 @@ function wrapped(s) {
 
 /** One complex number: real terms and i terms, summed. */
 function single(s) {
-  // −(7 + 6i)/17: a minus in front of a bracket reaches both parts. Over a
+  // −(7 + 6i)/17: a minus in front of parentheses reaches both parts. Over a
   // number it is as finished as (−7 − 6i)/17; −(3 − 2i) alone is not yet a + bi.
   if (/^-\(/.test(s)) {
     const inner = single(s.slice(1));
@@ -117,7 +117,7 @@ function single(s) {
 
 /** @returns {{ok: true, value: object} | {ok: false, hint?: string}} */
 export function parseComplex(raw) {
-  // Lowercase: a phone capitalises the first letter, so 3 − 2I is 3 − 2i.
+  // Lowercase: a phone capitalizes the first letter, so 3 − 2I is 3 − 2i.
   let s = String(raw).trim().toLowerCase().replace(/[−–—]/g, '-');
   // requiem: play/answers/plus-minus-only-when-touching
   // ± is +- with the two signs touching (2 +- 3i, 2+-3i) or +/-; a plus and a
@@ -129,7 +129,7 @@ export function parseComplex(raw) {
   // x = 2 + 3i or x = 2 − 3i: the letter may name each root.
   s = s.replace(/(^|,|;|\bor\b)\s*[a-hj-z]\s*=/g, '$1');
   s = s.replace(/\s+/g, '').replace(/\*|·|×/g, '').replace(/;/g, ',');
-  // 3 + (−2)i: a signed coefficient in a bracket, then the signs combined.
+  // 3 + (−2)i: a signed coefficient in parentheses, then the signs combined.
   s = s.replace(/\(([+-])([\d./]+)\)(?=i)/g, '$1$2');
   for (let was = ''; was !== s;) { was = s; s = s.replace(/\+-|-\+/g, '-').replace(/--|\+\+/g, '+'); }
   if (!s) return { ok: false };

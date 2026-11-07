@@ -182,7 +182,7 @@ BY_RULE = (
     # front, which Fraction does for itself.
     (re.compile(r"^(-?\d+)/(-?\d+) in lowest terms$"),
      lambda n, d: Fraction(int(n), int(d))),
-    # The negative of a bracketed fraction: the same number, minus in front.
+    # The negative of a fraction in parentheses: the same number, minus in front.
     (re.compile(r"^-\((\d+)/(\d+)\) in lowest terms$"),
      lambda n, d: -Fraction(n, d)),
     # Rounding, re-derived in exact rationals. Doing it in floats is the one
@@ -202,7 +202,7 @@ BY_RULE = (
      lambda a, op, b: (half_up(Fraction(a), 0) * half_up(Fraction(b), 0) if op == "×"
                        else half_up(Fraction(a), 0) + half_up(Fraction(b), 0))),
     # Two amounts combined, each written in whichever form the question used:
-    # a mixed number, a top-heavy fraction, a proper fraction or a whole. The
+    # a mixed number, an improper fraction, a proper fraction or a whole. The
     # evaluator cannot read "1 1/10 + 2 1/2" -- a whole beside a fraction is
     # juxtaposition meaning addition, which is not what juxtaposition means
     # anywhere else in this notation -- so the conversion happens here, by the
@@ -355,7 +355,7 @@ def solve_inequality(neg, coeff, op, b, sign, rhs, want):
 # --- Rational & Irrational -------------------------------------------------
 
 def repeating(text: str) -> Fraction:
-    """0.1(6), 0.(27): the bracketed digits repeat for ever. Exact, by place value."""
+    """0.1(6), 0.(27): the digits in parentheses repeat forever. Exact, by place value."""
     m = re.fullmatch(r"(-?)(\d+)\.(\d*)\((\d+)\)", text)
     sign, whole, fixed, cycle = m.groups()
     head = Fraction(int(whole + fixed), 10 ** len(fixed))
@@ -388,7 +388,7 @@ class Surd:
     A sum of rational multiples of square roots of squarefree whole numbers,
     {m: coefficient}, with m = 1 the rational part. Closed under +, - and x,
     so a sum or product of roots is decided by arithmetic rather than by
-    recognizing which shapes the catalogue happens to ask about.
+    recognizing which shapes the catalog happens to ask about.
     """
 
     def __init__(self, terms):
@@ -1556,10 +1556,10 @@ EXPR_RULES += (
 # --- Polynomials -------------------------------------------------------------
 #
 # A polynomial's coefficients are found by evaluating it at x = 0..7 and
-# solving for them, so the question is read as the expression it is, brackets
+# solving for them, so the question is read as the expression it is, parentheses
 # and all, and never by its terms. Two more points confirm the degree is under
 # eight. An answer must have the same coefficients and be written expanded
-# and collected: no brackets, each power once, no 0 or 1 left written.
+# and collected: no parentheses, each power once, no 0 or 1 left written.
 
 def coefficients(src: str) -> list:
     letter = re.search(r"[a-z]", src)[0]
@@ -1595,8 +1595,8 @@ def expanded(answer: str) -> bool:
 
 def same_polynomial(src: str, answer: str) -> str:
     if coefficients(src) != coefficients(answer):
-        return f"is not {src} multiplied out"
-    return "ok" if expanded(answer) else "is not expanded and collected"
+        return f"is not {src} expanded"
+    return "ok" if expanded(answer) else "is not expanded and combined"
 
 
 EXPR_RULES += (
@@ -1614,10 +1614,10 @@ BY_RULE += (
 
 # --- Factoring ---------------------------------------------------------------
 #
-# An answer is a factorisation when it multiplies back to the question --
+# An answer is a factorization when it multiplies back to the question --
 # coefficients compared, as for Polynomials -- and is finished: a monomial in
-# front, then brackets, each with no number left to take out and nothing in
-# it that factors again. A bracket of degree two is tested by its
+# front, then parentheses, each with no number left to take out and nothing in
+# it that factors again. A factor of degree two is tested by its
 # discriminant: it factors over the integers exactly when that is a square.
 
 FACTORED = re.compile(r"^(-?\d*(?:[a-z](?:\^\d+)?)?)((?:\([^()]+\)(?:\^\d+)?)+)$")
@@ -1673,7 +1673,7 @@ CHOICE_RULES += (
 # Solved by the discriminant from the equation's coefficients, read as for
 # Polynomials, whatever form it was written in: the roots are compared as an
 # exact set of points with the answer's. Which Method is decided from the
-# equation's shape -- a bracket squared, or no term in the letter, is square
+# equation's shape -- a factor squared, or no term in the letter, is square
 # roots; otherwise it factors exactly when the discriminant is a square.
 
 def quadratic_roots(equation: str) -> set:
@@ -1783,8 +1783,8 @@ CHOICE_RULES += (
 # its zeros are the roots of y = 0 and it opens the way a's sign says. A
 # vertex form typed as the answer must have the same coefficients and be
 # written as a(x − h)² + k. Which Form Shows It is decided from how the
-# question is written: a bracket squared is vertex form, a product of
-# brackets factored, anything else standard.
+# question is written: a quantity squared is vertex form, a product of
+# factors factored, anything else standard.
 
 def vertex_of(src: str):
     c, b, a = (coefficients(src) + [Fraction(0)] * 3)[:3]
@@ -2167,7 +2167,7 @@ def whole(x: Fraction) -> int:
 
 
 def prime_blank(n: int, rhs: str) -> int:
-    """N = 2^4 × 3^2 × ?: the blank, from N's own prime factorisation."""
+    """N = 2^4 × 3^2 × ?: the blank, from N's own prime factorization."""
     own, m, p = {}, n, 2
     while m > 1:
         while m % p == 0:
@@ -2233,7 +2233,7 @@ BY_RULE += (
     (re.compile(r"^point \((-?\d+), (-?\d+)\): ([xy])$"), lambda x, y, which: int(x if which == "x" else y)),
     (re.compile(r"^distance \((-?\d+),(-?\d+)\) to \((-?\d+),(-?\d+)\)$"),
      lambda x1, y1, x2, y2: whole_root((int(x2) - int(x1)) ** 2 + (int(y2) - int(y1)) ** 2)),
-    (re.compile(r"^gradient \((-?\d+),(-?\d+)\) to \((-?\d+),(-?\d+)\)$"), rise_over_run),
+    (re.compile(r"^slope \((-?\d+),(-?\d+)\) to \((-?\d+),(-?\d+)\)$"), rise_over_run),
     (re.compile(r"^(\d+)\^(-?\d+)$"), lambda a, b: Fraction(a) ** int(b)),
     (re.compile(r"^(\d+)((?: × \d+)*) = (\d+)\^\?$"), repeated_factor),
     (re.compile(r"^(\d+)\^(\d+) ([×÷]) (\d+)\^(\d+) = (\d+)\^\?$"), power_law),
@@ -2354,7 +2354,7 @@ JUDGED = {
     "Pens come in boxes of # and pencils in boxes of #. What is the fewest pens you can buy and still have exactly as many pencils?": "lcm",
     "Ribbons come # inches and # inches long. Laid end to end, what is the shortest length both kinds can make exactly?": "lcm",
     "# red counters and # blue ones, in rows of equal length, no row mixing colors. What is the fewest rows there can be?": "gcf",
-    "Two classes of # and # pupils are split into teams of the same size, no team mixing classes. What is the largest team size?": "gcf",
+    "Two classes of # and # students are split into teams of the same size, no team mixing classes. What is the largest team size?": "gcf",
     "Tiles # cm by # cm, laid out to make the smallest possible square.": "lcm",
     "Two buses set off together, then run every # and every # minutes. Next time together?": "lcm",
     "Buns come in packs of # and sausages in packs of #. Fewest packs to have equal numbers?": "lcm",
@@ -2365,12 +2365,12 @@ JUDGED = {
     # Whichever form the number is given in: multiplying by, or dividing by,
     # a whole and a bit needs a single fraction, and reading a size needs the
     # whole number out in front.
-    "You need to work out # #/# × # #/#.": "improper",
-    "You need to work out #/# × # #/#.": "improper",
-    "You need to work out # #/# ÷ # #/#.": "improper",
-    "You need to work out #/# ÷ # #/#.": "improper",
-    "You need to work out # ÷ # #/#.": "improper",
-    "You need to work out # ÷ #/#.": "improper",
+    "You need to calculate # #/# × # #/#.": "improper",
+    "You need to calculate #/# × # #/#.": "improper",
+    "You need to calculate # #/# ÷ # #/#.": "improper",
+    "You need to calculate #/# ÷ # #/#.": "improper",
+    "You need to calculate # ÷ # #/#.": "improper",
+    "You need to calculate # ÷ #/#.": "improper",
     "You need to say whether #/# is more than #.": "mixed",
     "You need to say whether # #/# is more than #.": "mixed",
     "You want to know roughly how big #/# is, at a glance.": "mixed",
@@ -2395,10 +2395,10 @@ JUDGED = {
     "You are cutting a board to fit a gap of # feet.": "exact",
     "You are checking that a bill of $# looks right before paying it.": "estimate",
     "You are checking that # × # on your calculator has its decimal point in the right place.": "estimate",
-    "You are working out the change from $# and handing it over.": "exact",
+    "You are figuring out the change from $# and handing it over.": "exact",
     "You are recording a race time that decides who won.": "exact",
     "You have just divided and want to know if the answer is the right size.": "estimate",
-    # brackets: kept to divide, cancel or set to zero whole; opened when the
+    # parentheses: kept to divide, cancel or set to zero whole; opened when the
     # terms must meet other terms
     "You need to solve #(v + #) = # for v.": "keep",
     "You need to cancel a factor of # from #(v + #) over #.": "keep",
@@ -2486,7 +2486,7 @@ CHOICE_RULES += (
     (re.compile(r"^does (.+) [<>≤≥] −?\d+ flip$"), flips),
     (re.compile(r"^sign of (.+)$"), sign_of),
     (re.compile(r"^(\d+)/(\d+) = \?/(\d+), which way in$"), which_way_in),
-    # One step when either is a whole number of lots of the other: 4 of 12
+    # One step when either is a whole number of groups of the other: 4 of 12
     # is the price divided by 3, as surely as 24 of 12 is it doubled.
     (re.compile(r"^(\d+) \w+ at \$\d+, need (\d+)$"),
      lambda have, need: "scale" if int(have) != int(need) and (int(need) % int(have) == 0
@@ -2579,7 +2579,7 @@ CHOICE_RULES += (
 # --- Angle Relationships -----------------------------------------------------
 #
 # Each relationship applied again from what the text says: a right angle,
-# a straight line and a full turn take away what is given; where two lines
+# a straight line and a full turn subtract what is given; where two lines
 # cross, angles an even number of places round are equal and the rest make
 # 180; on parallel lines TR and BL are one size and TL and BR the other, at
 # both crossings. An equation in x is solved again from the relationship's
@@ -2937,7 +2937,7 @@ BY_RULE += tuple((re.compile(rule.pattern[:-1] + r" to (\d) dp$"), rounded(solve
 #
 # Each move is applied again from its own rule: a translation adds, a
 # reflection over an axis changes one sign and over x = k keeps the distance
-# to the line, y = x swaps, a rotation about a centre turns the offset from
+# to the line, y = x swaps, a rotation about a center turns the offset from
 # it, and a dilation scales that offset. A figure is named from coordinates
 # alone -- sides scaled, then turned over, then pointing the same way -- and
 # a rule or sequence is congruent when it keeps every length, similar when it
@@ -3395,7 +3395,7 @@ def similar_by_sas(c1, b1, a1, c2, b2, a2) -> str:
     c1, b1, c2, b2 = (Fraction(v) for v in (c1, b1, c2, b2))
     if a1 != a2:
         return "no"
-    # The angle sits between the two sides either way round, so either pairing will do.
+    # The angle sits between the two sides either way around, so either pairing will do.
     return "yes" if c2 / c1 == b2 / b1 or c2 / b1 == b2 / c1 else "no"
 
 
@@ -3838,7 +3838,7 @@ def diagonal_angle(shape: str, given: str, value: int, asked: str) -> Fraction:
 def special_name(name: str, listing: str) -> str:
     facts = set(listing.split(", "))
     parallelogram = bool(facts & {"opp-par", "opp-eq", "diag-bis", "pair-eq-par", "opp-ang", "all-right", "all-eq"})
-    # A parallel pair makes neighboring angles co-interior, so one equal pair of
+    # A parallel pair makes neighboring angles same-side interior, so one equal pair of
     # opposite angles brings the other pair with it.
     parallelogram |= {"pair-par", "pair-opp-ang"} <= facts
     rectangle = "all-right" in facts or (parallelogram and bool(facts & {"right", "diag-eq"}))
@@ -6295,7 +6295,7 @@ for path in sorted(LIB.glob("domain-range-*.json")):
 #
 # f and g are read from the text and combined or composed here, by putting
 # one formula into the other as a string -- every x in f replaced by "(g)" --
-# so the evaluator does the algebra and no rule for multiplying out is shared
+# so the evaluator does the algebra and no rule for expanding is shared
 # with the generator. A polynomial answer is compared by its coefficients and
 # must be expanded and collected; a number is a whole number in its own box.
 # A domain is found by trying f(g(x)) itself, unsimplified, along the line.
@@ -6326,7 +6326,7 @@ def cf_table(f: str, g: str, outer: str, inner: str, a) -> Fraction:
 
 # requiem: catalogue/content/composition-domain-level
 def cf_domain(f: str, g: str) -> OnGrid:
-    """Every twelfth at which f(g(x)), written out with g in brackets in
+    """Every twelfth at which f(g(x)), written out with g in parentheses in
     place of f's x, can be worked out: g's own limits and f's on g(x) come
     from the evaluation itself, never from simplifying."""
     h = dr_fn(cf_into(f, g))
@@ -6364,7 +6364,7 @@ def cf_equal(a: str, b: str) -> bool:
 
 
 def cf_finished(answer: str) -> bool:
-    """Expanded and collected, or a number over x: no brackets left in it."""
+    """Expanded and combined, or a number over x: no parentheses left in it."""
     return expanded(answer) or bool(re.fullmatch(r"\d+/x", answer.strip()))
 
 
@@ -6820,7 +6820,7 @@ def ra_equal(a: str, b: str) -> bool:
 
 
 def ra_split(expr: str):
-    """expr as (top, bottom) at its last division outside every bracket, or (expr, None)."""
+    """expr as (top, bottom) at its last division outside all parentheses, or (expr, None)."""
     depth, cut = 0, None
     for i, ch in enumerate(expr):
         depth += ch == "("
@@ -7227,7 +7227,7 @@ def rf_yint(f: str) -> tuple:
 # right of it, and the level far out. Exactly one may fit. The drawing is
 # then held to that option below, point by point.
 def rf_value(top: list, bottom: list, x: Fraction):
-    """f at x, with any factor the top and bottom share there cancelled first."""
+    """f at x, with any factor the top and bottom share there canceled first."""
     while qe_at(bottom, x) == 0 and qe_at(top, x) == 0:
         top, bottom = qe_deflate(top, x), qe_deflate(bottom, x)
     return None if qe_at(bottom, x) == 0 else qe_at(top, x) / qe_at(bottom, x)
@@ -7616,7 +7616,7 @@ CHOICE_RULES += (
 )
 
 # The graph is the student's only copy of P: every height the text lists
-# must be on the drawn curve, the zeros must be the labelled dots, and the
+# must be on the drawn curve, the zeros must be the labeled dots, and the
 # set answers' ends must be half-steps the sets above are read at.
 for path in sorted(LIB.glob("poly-functions-*.json")):
     for i, p in enumerate(json.loads(path.read_text())["problems"]):
@@ -8266,7 +8266,7 @@ def sr_sigma_constant(lo, hi, c):
 BY_RULE += (
     (re.compile(r"^sigma: k=(\d+)\.\.(\d+) of (-?\d+)$"), sr_sigma_constant),
     (re.compile(r"^sigma scale: k=1\.\.(\d+), sum (-?\d+), times (-?\d+), plus (-?\d+)$"), sr_sigma_scaled),
-    (re.compile(r"^takings: (\d+) first, (\d+) percent, (\d+) months$"), sr_salary),
+    (re.compile(r"^revenue: (\d+) first, (\d+) percent, (\d+) months$"), sr_salary),
     (re.compile(r"^arith sum: first (\d+) of (.+)$"), lambda n, ts: sr_first_n(n, ts, False)),
     (re.compile(r"^arith sum: (\d+) terms, first (\S+), last (\S+)$"), sr_ends),
     (re.compile(r"^arith sum: (\d+) terms, first (\S+), difference (\S+)$"),
@@ -8310,7 +8310,7 @@ CHOICE_RULES += (
 # --- The Binomial Theorem ------------------------------------------------------------
 #
 # Pascal's triangle is built by adding, row from row, and a row is found by
-# the numbers it begins with. A binomial power is multiplied out one bracket
+# the numbers it begins with. A binomial power is expanded one set of parentheses
 # at a time, as a polynomial in its letters (negative powers included, for
 # 1/x), so a coefficient is read off the product and never from C(n, k). An
 # expansion typed as an answer is read term by term into the same form and
@@ -8370,7 +8370,7 @@ def bn_times(p: dict, q: dict) -> dict:
 
 
 def bn_power(src: str) -> dict:
-    """(A + B)^n multiplied out, one bracket at a time."""
+    """(A + B)^n expanded, one set of parentheses at a time."""
     m = re.fullmatch(r"\((-?[^ ]+) ([+-]) ([^ ]+)\)\^(\d+)", src)
     assert m, f"cannot read {src}"
     a = bn_mono(m[1])
@@ -8424,7 +8424,7 @@ def bn_expanded(src: str, answer: str) -> str:
             return f"has the power {m[2] or 'constant'} twice"
         seen[key] = Fraction(int(m[1]) if m[1] else 1) * (-1 if sign else 1)
     if seen != bn_power(src):
-        return f"is not {src} multiplied out"
+        return f"is not {src} expanded"
     return "ok"
 
 
@@ -8443,7 +8443,7 @@ def bn_chance(n, p, how, k):
 
 
 def bn_constant_number(src: str) -> int:
-    # Every term multiplied out, in descending powers of x: where x's power is 0.
+    # Every term expanded, in descending powers of x: where x's power is 0.
     terms = sorted(bn_power(src).items(), key=lambda kv: -dict(kv[0]).get("x", 0))
     hits = [i + 1 for i, (key, _) in enumerate(terms) if dict(key).get("x", 0) == 0]
     assert len(hits) == 1, f"{src} has {len(hits)} constant terms"
@@ -8470,7 +8470,7 @@ EXPR_RULES += (
 # The worked text is checked as well as the answer. Pascal's triangle is
 # drawn as rows above the asked one, which must be the triangle's own rows,
 # numbered as they are, with the asked row held back and its number shown as
-# the two above added. C(n, k) is cancelled before it is multiplied: from the
+# the two above added. C(n, k) is canceled before it is multiplied: from the
 # smaller of k and n - k, each factor of j! dividing a factor on top, and what
 # is left multiplying to the triangle's number. An expansion is worked term
 # by term, and each worked term must be the product's term with its power. A
@@ -9381,7 +9381,7 @@ for path in sorted(LIB.glob("conics-*.json")):
             if mk["kind"] == "point":
                 # A dot is where its label says, and is what its label names:
                 # a focus, a vertex or the center; a bare point label is a
-                # focus or vertex, and an unlabelled dot a vertex.
+                # focus or vertex, and an unlabeled dot a vertex.
                 dot_at = (Fraction(mk["at"][0]).limit_denominator(1000), Fraction(mk["at"][1]).limit_denominator(1000))
                 lm = re.fullmatch(r"(?:(focus|vertex|center) )?\((\S+), (\S+)\)", (mk.get("label") or "").replace("−", "-"))
                 if mk.get("label") and not lm:
@@ -9391,7 +9391,7 @@ for path in sorted(LIB.glob("conics-*.json")):
                         else feats.get(lm[1], []) + (feats.get("vertices", []) if lm[1] == "vertex" else []) if lm[1]
                         else feats.get("foci", []) + feats.get("vertices", []))
                 if lm and (Fraction(lm[2]), Fraction(lm[3])) != dot_at:
-                    problems.append(f"{where}: the dot labelled {mk['label']!r} is drawn at {mk['at']}")
+                    problems.append(f"{where}: the dot labeled {mk['label']!r} is drawn at {mk['at']}")
                 if dot_at not in pool:
                     problems.append(f"{where}: the revealed dot at {mk['at']} is not the {lm[1] if lm and lm[1] else 'focus or vertex'} it should be")
             if mk["kind"] == "segment":
@@ -9631,9 +9631,9 @@ def vc_arrow(marks, tail, tip) -> bool:
 
 
 # A drawn vector is the one the text names: the arrow runs from its tail to
-# its tip with the head at the tip, and once answered the legs are labelled
+# its tip with the head at the tip, and once answered the legs are labeled
 # with its components, the sum is drawn from the tail of u to the tip of v,
-# and a direction is labelled with the answer.
+# and a direction is labeled with the answer.
 def vc_check_drawings() -> None:
     for path in sorted(LIB.glob("vectors-*.json")):
         lib = json.loads(path.read_text())
@@ -9648,7 +9648,7 @@ def vc_check_drawings() -> None:
                 if not vc_arrow(marks, P, R):
                     problems.append(f"{where}: no arrow from {P} to {R}")
                 # The legs go across from the tail and then up to the tip,
-                # each labelled with its component.
+                # each labeled with its component.
                 corner = [float(R[0]), float(P[1])]
                 legs = sorted((mk["from"], mk["to"], mk.get("label", "").replace("−", "-")) for mk in shown if mk["kind"] == "segment")
                 want = sorted([([float(c) for c in P], corner, str(R[0] - P[0])), (corner, [float(c) for c in R], str(R[1] - P[1]))])
@@ -9669,7 +9669,7 @@ def vc_check_drawings() -> None:
                     problems.append(f"{where}: the angle is not measured from the positive x-axis")
                 said = [mk["label"] for mk in shown if mk["kind"] == "text"]
                 if said != [f"θ ≈ {p['answer']['accept'][0]}°"]:
-                    problems.append(f"{where}: θ is labelled {said}")
+                    problems.append(f"{where}: θ is labeled {said}")
             else:
                 problems.append(f"{where}: a drawing no rule holds to its text")
 
@@ -9812,7 +9812,7 @@ def pp_model(v, th, h, listing):
 
 # requiem: catalogue/content/parametric-orientation-asked
 # Which way a curve runs: its points at t = 0°, 90°, 180° and 270°, in that
-# order, enclose a positive area (the shoelace sum) when they go round
+# order, enclose a positive area (the shoelace sum) when they go around
 # counterclockwise.
 def pp_orientation(xs, ys) -> str:
     pts = [(pp_trig_at(xs, d), pp_trig_at(ys, d)) for d in (0, 90, 180, 270)]
@@ -10712,7 +10712,7 @@ for path in sorted(LIB.glob("*.json")):
         # Fractional and negative solutions substitute the same way, since the
         # evaluator works in exact rationals and reads "10(-6/5)" as the
         # juxtaposed product it is. Restricting this to whole answers left
-        # every non-whole solution in the catalogue -- a thousand rows of
+        # every non-whole solution in the catalog -- a thousand rows of
         # equations-both -- checked by nothing at all.
         if " = " in text and answer["type"] in ("int", "frac", "decimal") and var_in(text):
             v = var_in(text)

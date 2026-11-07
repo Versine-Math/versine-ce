@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for roots.
+ * Catalog authoring tool: builds the problem library for roots.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -110,7 +110,7 @@ function simplify(rng, hard) {
   const inside = rng.pick(hard ? SQUARE_FREE : SQUARE_FREE.slice(0, 8));
   const n = outside * outside * inside;
   if (n > 4000) return simplify(rng, hard);
-  // Read the factorisation back off the number rather than trusting the one it
+  // Read the factorization back off the number rather than trusting the one it
   // was built from: the prompt, the working and the answer then cannot
   // disagree, whatever the multiplier lists later become.
   const check = pullOut(n);
@@ -222,7 +222,7 @@ const SITUATIONS = {
  *
  * Asked in words rather than with a radical sign carrying a little three,
  * because the prompt vocabulary has one root term and it draws a square root.
- * Inventing a term kind for a level is the wrong way round -- the words are
+ * Inventing a term kind for a level is the wrong way around -- the words are
  * perfectly clear, and a cube root written out is what a student will meet in
  * a question anyway.
  *

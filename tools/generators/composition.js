@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for composition.
+ * Catalog authoring tool: builds the problem library for composition.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -51,7 +51,7 @@ const compose = (f, g) => collect(f.flatMap(([c, p]) => times([[c, 0]], power(g,
 const valueAt = (poly, x) => poly.reduce((s, [c, p]) => s + c * x ** p, 0);
 const same = (a, b) => write(collect(a)) === write(collect(b));
 
-/** f with each x shown as the bracketed inside, as a student writes the substitution. */
+/** f with each x shown as the inside in parentheses, as a student writes the substitution. */
 function substituted(f, inner) {
   return f.map(([c, p], i) => {
     const sign = i === 0 ? (c < 0 ? '−' : '') : c < 0 ? ' − ' : ' + ';
@@ -86,7 +86,7 @@ function combine(rng) {
       if (f.length === 1 && g.length === 1) continue;
     } else {
       f = either(rng); g = either(rng, 0.6);
-      // Taking away must change more than one sign: g has at least two terms.
+      // Subtracting must change more than one sign: g has at least two terms.
       if (g.length < 2) continue;
     }
     const out = op === '+' ? plus(f, g) : op === '-' ? plus(f, neg(g)) : times(f, g);
@@ -94,12 +94,12 @@ function combine(rng) {
     const shown = { '+': '+', '-': '−', '*': '·' }[op];
     let why;
     if (op === '+') {
-      why = `(f + g)(x) = f(x) + g(x) = (${pretty(f)}) + (${pretty(g)}). Adding changes no signs: collect like terms.`;
+      why = `(f + g)(x) = f(x) + g(x) = (${pretty(f)}) + (${pretty(g)}). Adding changes no signs: combine like terms.`;
     } else if (op === '-') {
-      why = `(f − g)(x) = f(x) − g(x) = (${pretty(f)}) − (${pretty(g)}). The minus takes away all of g, `
-        + `so every sign in g's bracket changes: −(${pretty(g)}) = ${pretty(neg(g))}. Then collect like terms.`;
+      why = `(f − g)(x) = f(x) − g(x) = (${pretty(f)}) − (${pretty(g)}). The minus subtracts all of g, `
+        + `so every sign in g's parentheses changes: −(${pretty(g)}) = ${pretty(neg(g))}. Then combine like terms.`;
     } else {
-      why = `(f · g)(x) = f(x) · g(x) = (${pretty(f)})(${pretty(g)}). Multiply each term of the first by each term of the second, then collect.`;
+      why = `(f · g)(x) = f(x) · g(x) = (${pretty(f)})(${pretty(g)}). Multiply each term of the first by each term of the second, then combine like terms.`;
     }
     return {
       prompt: [T.prose(`${rule('f', f)} and ${rule('g', g)}. Find (f ${shown} g)(x), expanded and simplified.`)],
@@ -188,10 +188,10 @@ function ofX(rng) {
 
 function explainCompose(outer, inner, O, I, out) {
   const squares = outer.some(([, p]) => p >= 2) && inner.length > 1;
-  return `${O}(${I}(x)) is ${O} with every x replaced by the whole of ${I}(x), ${pretty(inner)}, in brackets: `
+  return `${O}(${I}(x)) is ${O} with every x replaced by all of ${I}(x), ${pretty(inner)}, in parentheses: `
     + `${O}(${I}(x)) = ${substituted(outer, pretty(inner))}. `
     + `${squares ? `(${pretty(inner)})² is (${pretty(inner)})(${pretty(inner)}), not each term squared. ` : ''}`
-    + `Multiply out and collect: ${O}(${I}(x)) = ${pretty(out)}.`;
+    + `Expand and combine like terms: ${O}(${I}(x)) = ${pretty(out)}.`;
 }
 
 // --- Not Commutative -------------------------------------------------------
@@ -262,7 +262,7 @@ function sameOrNot(rng) {
     text: `same composition: ${ascii('f', f)}; ${ascii('g', g)}; options a: same | b: different`,
     answer: { type: 'choice', value: equal ? 'a' : 'b', options },
     visual: null,
-    explain: `Work out both. f(g(x)) = ${substituted(f, pretty(g))} = ${pretty(fg)}; `
+    explain: `Calculate both. f(g(x)) = ${substituted(f, pretty(g))} = ${pretty(fg)}; `
       + `g(f(x)) = ${substituted(g, pretty(f))} = ${pretty(gf)}. `
       + (equal
         ? 'They are the same for every x. This pair happens to commute, but most pairs do not: the order has to be checked, never assumed.'
@@ -308,13 +308,13 @@ function decompose(rng) {
       const lead = a === 1 ? '' : a === -1 ? '−' : minus(a);
       hShown = `${lead}(${G})${sup(n)} ${c < 0 ? '−' : '+'} ${Math.abs(c)}`;
       hAscii = `${a === -1 ? '-' : a === 1 ? '' : a}(${Ga})^${n} ${c < 0 ? '-' : '+'} ${Math.abs(c)}`;
-      sayF = `${n === 2 ? 'squares' : 'cubes'} its input, multiplies by ${minus(a)}, then ${c < 0 ? `takes away ${-c}` : `adds ${c}`}`;
+      sayF = `${n === 2 ? 'squares' : 'cubes'} its input, multiplies by ${minus(a)}, then ${c < 0 ? `subtracts ${-c}` : `adds ${c}`}`;
     } else {
       f = out.f;
       const n = f[0][1];
       fShown = pretty(f); fAscii = write(f);
       hShown = `(${G})${sup(n)}`; hAscii = `(${Ga})^${n}`;
-      sayF = `raises its input to the power ${n}`;
+      sayF = `raises its input to the power of ${n}`;
     }
     if (askInner) {
       value = Ga;
@@ -348,7 +348,7 @@ function decompose(rng) {
 /*
  * The domain of f(g(x)) is every x that g accepts whose output f accepts in
  * turn. Each pair is written three ways: shown, in the ASCII the checker
- * evaluates (f with each x replaced by the bracketed g), and as the parts
+ * evaluates (f with each x replaced by g in parentheses), and as the parts
  * of the answer. The simplified formula can hide the inside's own limit:
  * (√x)² is x, but only for x ≥ 0.
  */
@@ -390,7 +390,7 @@ function compositionDomain(rng) {
     return {
       f: F, g: G, fA: `sqrt(${shiftA(-p)})`, gA: Ga, parts,
       work: `g takes every x, so the only limit is f's: what goes into f must make ${shiftShow(-p)} ≥ 0. Into f goes g(x) = ${G}, so ${G} ${p === 0 ? '' : `${nfix(p)} `}≥ 0, which is ${pretty([[a, 1], [k, 0]])} ≥ 0`
-        + `${a === 1 ? '' : a < 0 ? `; dividing by ${minus(a)} turns the sign round` : `; divide by ${a}`}: x ${a > 0 ? '≥' : '≤'} ${fracText(edge)}.`,
+        + `${a === 1 ? '' : a < 0 ? `; dividing by ${minus(a)} turns the sign around` : `; divide by ${a}`}: x ${a > 0 ? '≥' : '≤'} ${fracText(edge)}.`,
       trap: `(f's own domain, x ≥ ${minus(-p)}, is about f's input, which here is g(x), not x.)`,
     };
   }

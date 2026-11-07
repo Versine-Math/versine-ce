@@ -56,7 +56,7 @@
         if (answered) {
           // Type the stored answer the way a student would, box by box.
           const boxes = input.node.matches('input') ? [input.node] : [...input.node.querySelectorAll('input')];
-          // A pair's brackets belong to the widget, not the boxes; an
+          // A pair's parentheses belong to the widget, not the boxes; an
           // expression's are part of what is typed.
           const raw = type.format(p.answer.value).replace(/−/g, '-');
           const parts = boxes.length === 2 ? raw.replace(/[()]/g, '').split(/,\s*|\//) : [raw];

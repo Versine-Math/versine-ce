@@ -30,7 +30,7 @@ def _():
           ([], 0, 0, 0, 0, False, []), "an untouched skill")
 
 
-@test("practising without finishing counts as a day practised, not a day completed")
+@test("practicing without finishing counts as a day practiced, not a day completed")
 def _():
     student = group().add_student()
     skill, slugs = a_skill(student)

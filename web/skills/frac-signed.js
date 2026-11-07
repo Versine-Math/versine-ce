@@ -68,7 +68,7 @@ export const LEVELS = [
   {
     name: 'What Sign Will It Be?', slug: 'what-sign-will-it-be', kind: 'strategy',
     blurb: 'Count the negatives — but only when it is × or ÷. Adding plays by a different rule.',
-    // The judgement is worth its own level because the sign is knowable
+    // The judgment is worth its own level because the sign is knowable
     // before any arithmetic is done, and knowing it first is what stops a
     // long calculation ending in a coin flip.
     dependsOn: [{ skill: 'int-muldiv', level: 4 }],
@@ -101,7 +101,7 @@ export default {
 
   /**
    * Only the opening level walks its working: the sign-and-size picture
-   * reveals in one move rather than progressively, and a judgement question's
+   * reveals in one move rather than progressively, and a judgment question's
    * `explain` is the whole of its argument.
    */
   lesson(problem) {

@@ -33,7 +33,7 @@ export const LEVELS = [
   { name: 'And or Or?', slug: 'and-or-or',
     blurb: 'Two conditions. "And" keeps what passes both; "or" keeps what passes either.' },
   { name: 'Interval Notation', slug: 'interval-notation',
-    blurb: 'A round bracket leaves the end out, a square one keeps it in. ∞ is never in.' },
+    blurb: 'A parenthesis leaves the end out, a square bracket keeps it in. ∞ is never in.' },
   { name: 'All Together', slug: 'all-together',
     blurb: 'Everything mixed. Clear this against the clock to finish the skill for the day.' },
 ];

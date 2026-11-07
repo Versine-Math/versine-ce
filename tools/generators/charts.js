@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring helper: data charts drawn on the plane.
+ * Catalog authoring helper: data charts drawn on the plane.
  *
  * The plane draws square units with its axes through the origin, which suits
  * a coordinate grid and not a scatter plot of test scores from 40 to 100. A

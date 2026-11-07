@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for logarithms.
+ * Catalog authoring tool: builds the problem library for logarithms.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -142,7 +142,7 @@ function asExponent(rng) {
       const shown = `log${sub(b)} ${v.d === 1 ? v.n : `(${Qs(v)})`} = ${minus(e)}`;
       const ask = choice([T.prose(`Which equation says the same thing as ${shown}?`)],
         `log form: log_${b}(${Qs(v)}) = ${e}`, claims.map(([t, l]) => [t, l]),
-        `A logarithm is an exponent: ${shown} says that ${b} raised to the power ${minus(e)} is ${fx(v.n, v.d)}. So ${claims[0][1]}.`);
+        `A logarithm is an exponent: ${shown} says that ${b} raised to the power of ${minus(e)} is ${fx(v.n, v.d)}. So ${claims[0][1]}.`);
       if (ask) return ask(rng);
       continue;
     }
@@ -186,7 +186,7 @@ function evaluate(rng) {
       const e = kind === 'whole' ? k : -k;
       return evaluated(L(b, arg), A(b, arg), e, 1,
         kind === 'whole'
-          ? (k === 0 ? `Any base to the power 0 is 1: ${b}⁰ = 1.` : `Ask what power of ${b} gives ${v}: ${b}${sup(k)} = ${v}.`)
+          ? (k === 0 ? `Any base to the power of 0 is 1: ${b}⁰ = 1.` : `Ask what power of ${b} gives ${v}: ${b}${sup(k)} = ${v}.`)
           : `1/${v} is ${b}${sup(k)} turned over, which a negative power does: ${b}${sup(-k)} = 1/${v}.`);
     }
   }
@@ -197,8 +197,8 @@ function evaluate(rng) {
       const neg = rng.chance(0.35);
       const arg = neg ? `1/${c}` : String(c);
       return evaluated(L(b, arg), A(b, arg), neg ? -1 : 1, k,
-        `${b} = ${c}${sup(k)}, so ${c} is the ${k === 2 ? 'square' : k === 3 ? 'cube' : `${k}th`} root of ${b}, which is ${b} to the power 1/${k}.`
-        + (neg ? ` Turning it over makes the power negative: 1/${c} is ${b} to the power −1/${k}.` : ''));
+        `${b} = ${c}${sup(k)}, so ${c} is the ${k === 2 ? 'square' : k === 3 ? 'cube' : `${k}th`} root of ${b}, which is ${b} to the power of 1/${k}.`
+        + (neg ? ` Turning it over makes the power negative: 1/${c} is ${b} to the power of −1/${k}.` : ''));
     }
   }
   if (kind === 'ratio') {
@@ -210,7 +210,7 @@ function evaluate(rng) {
       const arg = neg ? `1/${v}` : String(v);
       return evaluated(L(b, arg), A(b, arg), neg ? -n : n, m,
         `Write both as powers of ${c}: ${b} = ${c}${sup(m)} and ${v} = ${c}${sup(n)}. `
-        + `Raising ${c}${sup(m)} to the power ${fx(n, m)} multiplies the exponents, ${m} × ${fx(n, m)} = ${n}, giving ${c}${sup(n)} = ${v}${neg ? '; the negative power turns it over' : ''}.`);
+        + `Raising ${c}${sup(m)} to the power of ${fx(n, m)} multiplies the exponents, ${m} × ${fx(n, m)} = ${n}, giving ${c}${sup(n)} = ${v}${neg ? '; the negative power turns it over' : ''}.`);
     }
   }
   if (kind === 'ln') {
@@ -239,7 +239,7 @@ function evaluate(rng) {
     const asciiArg = q === 2 ? `sqrt(${k === 1 ? 'e' : `e^${k}`})` : `root(${k === 1 ? 'e' : `e^${k}`}, ${q})`;
     const word = q === 2 ? 'square' : q === 3 ? 'cube' : 'fourth';
     return evaluated(over ? `ln(1/${shownArg})` : `ln ${shownArg}`, over ? `ln(1/${asciiArg})` : `ln(${asciiArg})`, over ? -k : k, q,
-      `ln is the log to base e, and a ${word} root is the power 1/${q}: ${shownArg} is e to the power ${fx(k, q)}`
+      `ln is the log to base e, and a ${word} root is the power 1/${q}: ${shownArg} is e to the power of ${fx(k, q)}`
       + `${over ? `, and one over it turns the power negative, ${fx(-k, q)}` : ''}.`);
   }
   // common: log alone is base 10. 10ᵏ written out, as a decimal or as a
@@ -264,7 +264,7 @@ function evaluate(rng) {
   const asciiArg = q === 2 ? `sqrt(${num})` : `root(${num}, ${q})`;
   const word = q === 2 ? 'square' : q === 3 ? 'cube' : 'fourth';
   return evaluated(over ? `log(1/${r}${num})` : `log ${r}${num}`, over ? `log(1/${asciiArg})` : `log(${asciiArg})`, over ? -k : k, q,
-    `log with no base written is base 10. ${num} = 10${sup(k)}, and a ${word} root is the power 1/${q}, so ${r}${num} is 10 to the power ${fx(k, q)}`
+    `log with no base written is base 10. ${num} = 10${sup(k)}, and a ${word} root is the power 1/${q}, so ${r}${num} is 10 to the power of ${fx(k, q)}`
     + `${over ? `; one over it turns the power negative, ${fx(-k, q)}` : ''}.`);
 }
 
@@ -479,7 +479,7 @@ function changeBase(rng) {
       ];
       const shown = L(b, String(v));
       const ask = choice([T.prose(`Which of these equals ${shown}?`)], `change of base: ${A(b, v)}`, opts,
-        `Change of base: a log to any base is the log of the number over the log of the base, both to one base you can work out, such as ${f}. So ${shown} = ${opts[0][1]}.`);
+        `Change of base: a log to any base is the log of the number over the log of the base, both to one base you can calculate, such as ${f}. So ${shown} = ${opts[0][1]}.`);
       if (ask) return ask(rng);
     }
   }
@@ -501,7 +501,7 @@ function changeBase(rng) {
     const v = rng.int(2, 9), k = rng.pick([2, 3, -1, -2]);
     const val = k > 0 ? [v ** k, 1] : [1, v ** -k];
     const kt = k === -1 ? '−' : `${minus(k)} `;
-    const shown = `e to the power ${kt}ln ${v}`;
+    const shown = `e to the power of ${kt}ln ${v}`;
     return {
       prompt: [T.prose('Simplify'), T.pow('e', `${kt}ln ${v}`), T.prose('.')],
       text: `log value: e^(${k}ln(${v}))`,
@@ -513,7 +513,7 @@ function changeBase(rng) {
   const b = form === 'raiseE' ? 'e' : rng.pick([2, 3, 5, 7, 10]);
   const v = rng.int(2, 40);
   if (b !== 'e' && isPowerOf(v, b)) return changeBase(rng);
-  const shown = `${b} to the power ${lname(b)} ${v}`;
+  const shown = `${b} to the power of ${lname(b)} ${v}`;
   return {
     prompt: [T.prose('Simplify'), T.pow(b, `${lname(b)} ${v}`), T.prose('.')],
     text: `log value: ${b}^(${A(b, v)})`,
@@ -570,7 +570,7 @@ function unlikeBases(rng) {
       answer: roundedAnswer(qx, places),
       visual: null,
       explain: `${B1} and ${B2} are not powers of one number, so take ln of both sides; each power comes down in front: `
-        + `${downFrom(p, q, B1)} = ${downFrom(r, t, B2)}. Multiply out and gather the x terms on the left: `
+        + `${downFrom(p, q, B1)} = ${downFrom(r, t, B2)}. Expand and gather the x terms on the left: `
         + `x(${bottom}) = ${top}, so x = (${top}) / (${bottom}) ≈ ${at4(x)}. So x ≈ ${roundedText(qx, places)}.`,
     };
   }
@@ -637,7 +637,7 @@ function growthTime(rng) {
           T.prose(`. After how many years are there ${V.toLocaleString('en-US')} people? Give the time ${placeWords(places)}.`)]
         : [T.prose(`${usd(A)} is invested at ${k}% a year compounded continuously, so after t years it is worth`), ...drawn(`${A}e^(${K}t)`),
           T.prose(`dollars. After how many years is it worth ${usd(V)}? Give the time ${placeWords(places)}.`)];
-      setup = `Set ${A}e to the power ${K}t equal to ${V} and divide by ${A}: e to the power ${K}t is ${ratio}. ln undoes e, so take ln of both sides: ${K}t = ln ${ratio}, and t = ln ${ratio} / ${K}`;
+      setup = `Set ${A}e to the power of ${K}t equal to ${V} and divide by ${A}: e to the power of ${K}t is ${ratio}. ln undoes e, so take ln of both sides: ${K}t = ln ${ratio}, and t = ln ${ratio} / ${K}`;
     }
     const qt = safeRound(want, places, alt);
     if (qt === null || want <= 0 || want > 80) continue;
@@ -674,7 +674,7 @@ function expEquation(rng) {
         text: `exp eq: ${src}`,
         answer: fa(num, den),
         visual: null,
-        explain: `Write both sides as powers of ${c0}: ${m === 1 ? '' : `${B} = ${c0}${sup(m)}, so the left is ${c0} to the power ${m}(${lin(a, c, true)}), and `}${V} = ${vf}. `
+        explain: `Write both sides as powers of ${c0}: ${m === 1 ? '' : `${B} = ${c0}${sup(m)}, so the left is ${c0} to the power of ${m}(${lin(a, c, true)}), and `}${V} = ${vf}. `
           + `Equal powers of one base have equal exponents: ${m === 1 ? '' : `${m}(`}${lin(a, c, true)}${m === 1 ? '' : ')'} = ${minus(n)}, so x = ${fx(num, den)}.`,
       };
     }
@@ -925,7 +925,7 @@ function lfReflect(rng) {
       visual: revealed(W, [...lfCurves((x) => b ** x + k, W), ...lfCurves(logFn(b, k, 0), W, LF_OTHER), lfDiag(W),
         lfDot(e, num(y), ptQ(E, y), LF_LINE), lfDot(num(y), e, ptQ(y, E))]),
       explain: `f(${minus(e)}) = ${fq(v)}${plusK(k)} = ${fq(y)}, so f⁻¹(${fq(y)}) = ${minus(e)}: f⁻¹, here ${logS(b, k)}, sends each output back to its input. `
-        + `So the graph of f⁻¹ is the graph of f reflected in y = x, and ${ptQ(E, y)} becomes ${ptQ(y, E)}.`,
+        + `So the graph of f⁻¹ is the graph of f reflected over y = x, and ${ptQ(E, y)} becomes ${ptQ(y, E)}.`,
     };
   }
   const e = rng.int(-2, top), v = powB(b, e), E = Q1(e), toLog = rng.chance(0.5);
@@ -1028,7 +1028,7 @@ function lfRange(rng) {
     answer: { type: 'solutions', value: { letter: 'y', parts: [part] } },
     visual,
     explain: `${pos}${flip ? `, so with the minus sign in front it is always negative: −${powF(b, ex)} < 0` : ''}. `
-      + `${k ? `${k > 0 ? 'Adding' : 'Taking away'} ${Math.abs(k)} moves every value ${k > 0 ? 'up' : 'down'}. ` : ''}So the range is y ${flip ? '<' : '>'} ${minus(k)}.`,
+      + `${k ? `${k > 0 ? 'Adding' : 'Subtracting'} ${Math.abs(k)} moves every value ${k > 0 ? 'up' : 'down'}. ` : ''}So the range is y ${flip ? '<' : '>'} ${minus(k)}.`,
   };
 }
 
@@ -1142,7 +1142,7 @@ function lfMirror(rng) {
     `y = ${G[1]} is the inverse of y = ${F[1]}, so each point's coordinates swap: (x, y) becomes (y, x), and ${p} becomes ${q}.`,
     `x is replaced by −x and the height is negated, so (x, y) becomes (−x, −y), and ${p} becomes ${q}: both reflections at once, which is the reflection through the origin.`,
   ][key];
-  const labels = ['Reflected in the x-axis', 'Reflected in the y-axis', 'Reflected in the line y = x', 'Reflected through the origin'];
+  const labels = ['Reflected over the x-axis', 'Reflected over the y-axis', 'Reflected over the line y = x', 'Reflected through the origin'];
   const W = { xRange: [-7, 7], yRange: [-7, 7] };
   const mirror = [lfH(0, W, 'x-axis'), lfV(0, W, 'y-axis'), lfDiag(W), lfDot(0, 0, 'origin')][key];
   return {
@@ -1169,7 +1169,7 @@ function lfStretch(rng) {
       text: `stretch factor: log_${to}(x) from log_${from}(x)`,
       answer: fa(n, m),
       visual: null,
-      explain: `By change of base, ${L(to, 'x')} = ${L(from, 'x')} / ${L(from, String(to))}, and ${L(from, String(to))} = ${fx(m, n)}, since ${from} to the power ${fx(m, n)} is ${to}. `
+      explain: `By change of base, ${L(to, 'x')} = ${L(from, 'x')} / ${L(from, String(to))}, and ${L(from, String(to))} = ${fx(m, n)}, since ${from} to the power of ${fx(m, n)} is ${to}. `
         + `Dividing every height by ${fx(m, n)} multiplies it by ${fx(n, m)}: a vertical ${n > m ? 'stretch' : 'shrink'}. (At x = ${to}, ${L(to, String(to))} = 1 and ${L(from, String(to))} = ${fx(m, n)}, and ${fx(m, n)} × ${fx(n, m)} = 1.) So the number is ${fx(n, m)}.`,
     };
   }
@@ -1259,7 +1259,7 @@ function lfInverse(rng) {
     [f, fF, why] = [
       [`${c}*${b}^x`, `${c} · ${b}ˣ`, `x = ${c} · ${b}ʸ. Undo the ×${c} first, ${b}ʸ = x/${c}, then the power: y = ${opts[0][1]}. ${wrong(opts[2][1])}`],
       [`${b}^x/${c}`, `${b}ˣ/${c}`, `x = ${b}ʸ/${c}. Undo the ÷${c} first, ${b}ʸ = ${c}x, then the power: y = ${opts[1][1]}. ${wrong(opts[3][1])}`],
-      [`${b}^(${c}x)`, powF(b, `${c}x`), `x = ${b} to the power ${c}y. The log undoes the power first, ${c}y = ${Lx}, then divide by ${c}: y = ${opts[2][1]}. ${wrong(opts[0][1])}`],
+      [`${b}^(${c}x)`, powF(b, `${c}x`), `x = ${b} to the power of ${c}y. The log undoes the power first, ${c}y = ${Lx}, then divide by ${c}: y = ${opts[2][1]}. ${wrong(opts[0][1])}`],
       [`${b}^(x/${c})`, `${b}^(x/${c})`, `x = ${b} to the power y/${c}. The log undoes the power first, y/${c} = ${Lx}, then multiply by ${c}: y = ${opts[3][1]}. ${wrong(opts[1][1])}`],
     ][key];
     why = `Write y = ${fF} and swap x and y: ${why}`;

@@ -8,7 +8,7 @@ whose database the community checks can open.
 
 Every student here sends UTC as their time zone, so a day is a UTC day and a
 daylight-saving change can never move a boundary under a test. The skills are
-real catalogue ones, chosen for their edges: Integer Multiply & Divide builds
+real catalog ones, chosen for their edges: Integer Multiply & Divide builds
 on Integer Add & Subtract, and some of its levels name it outright; The
 Coordinate Plane, Integer Multiply & Divide and Add & Subtract Fractions do
 not build on one another.
@@ -18,7 +18,7 @@ from __future__ import annotations
 from datetime import datetime, timedelta, timezone
 
 from . import context
-from .context import answers, catalogue, group, progress, submit
+from .context import answers, catalog, group, progress, submit
 from .harness import TIME_TRAVEL, equal, check, test
 
 BASE, NEXT = "int-addsub", "int-muldiv"
@@ -30,7 +30,7 @@ def age(student, days):
 
 
 def slugs_of(client, skill):
-    return catalogue(client)[skill]
+    return catalog(client)[skill]
 
 
 def finish(student, skill):

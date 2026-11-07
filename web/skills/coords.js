@@ -32,7 +32,7 @@ export const LEVELS = [
     // free — declaring "rise over run is a unit rate" would have made the
     // whole of Coordinates unreachable until Ratio was done, and reading a
     // point off a grid is the most beginner-accessible thing in the
-    // catalogue. A gradient needs a division, not a ratio skill. So the
+    // catalog. A slope needs a division, not a ratio skill. So the
     // connection lives where it costs nothing and still does its work: in
     // the sentence the student reads when they get one wrong.
   },

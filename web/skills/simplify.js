@@ -4,25 +4,25 @@
  * The first skill where the answer is an expression rather than a number, so
  * it is typed into a single box and rendered back as the student types. That
  * is not only an input change: an answer that is itself an expression is the
- * whole reason algebra needs a different kind of judgement, and meeting it
+ * whole reason algebra needs a different kind of judgment, and meeting it
  * here, on expressions small enough to check by eye, is the point.
  *
  * The strategy level is the one this skill exists for. Expanding and factoring
- * are both easy; knowing that you keep the brackets to divide both sides of an
+ * are both easy; knowing that you keep the parentheses to divide both sides of an
  * equation by them, and lose them to collect like terms, is what decides
  * whether algebra feels like a machine or a mystery. A student who can do both
  * and chooses at random has learned neither.
  */
 
 export const LEVELS = [
-  { name: 'Collecting Like Terms', slug: 'collecting-like-terms',
+  { name: 'Combining Like Terms', slug: 'collecting-like-terms',
     blurb: 'Same letter, so they count the same thing. Add the numbers in front.' },
   { name: 'What Will Not Combine', slug: 'what-will-not-combine',
     blurb: 'Numbers and letters count different things. Some of it stays as it is.' },
   { name: 'Distributing', slug: 'distributing',
-    blurb: 'A bracket multiplied hits everything inside it, not just the first.' },
-  { name: 'Distribute and Collect', slug: 'distribute-and-collect',
-    blurb: 'Open the bracket, then gather what matches.' },
+    blurb: 'A number times parentheses hits everything inside them, not just the first term.' },
+  { name: 'Distribute and Combine', slug: 'distribute-and-collect',
+    blurb: 'Distribute, then gather what matches.' },
   {
     name: 'Taking a Factor Out', slug: 'taking-a-factor-out',
     blurb: 'Distributing backwards. What do both terms share?',
@@ -32,7 +32,7 @@ export const LEVELS = [
   },
   {
     name: 'Which Form?', slug: 'which-form', kind: 'strategy',
-    blurb: 'Keep the brackets or open them? What you are about to do decides.',
+    blurb: 'Keep the parentheses or distribute? What you are about to do decides.',
     // After both forms can be produced, which is the first point at which
     // preferring one costs anything.
     dependsOn: [{ skill: 'order-ops', level: 2 }],
@@ -55,7 +55,7 @@ export default {
   name: 'Simplifying Expressions',
   category: 'expressions',
   glyph: '2x',
-  blurb: 'Gathering what matches, and opening brackets when it helps.',
+  blurb: 'Gathering what matches, and clearing parentheses when it helps.',
   answerInput: 'expr',
   dependsOn: ['order-ops', 'int-muldiv', 'factors'],
   levels: LEVELS,

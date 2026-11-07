@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for poly-division.
+ * Catalog authoring tool: builds the problem library for poly-division.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -413,7 +413,7 @@ function rationalRoots(rng) {
   if (rng.chance(0.4)) {
     // Which does the theorem rule out? Three it allows, and one it does not.
     // The rank it is to take is drawn once, before any redraw, so the redraws
-    // cannot favour the ranks that are easy to reach.
+    // cannot favor the ranks that are easy to reach.
     const rank = rng.int(0, 3);
     for (;;) {
       const an = rng.pick([2, 3, 4, 6]), a0 = rng.pick([1, 2, 3, 4, 5, 6, 8, 9, -2, -3, -4, -6]);

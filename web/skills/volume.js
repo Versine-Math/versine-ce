@@ -5,7 +5,7 @@
  * Every volume here is a base times a height. A prism or a cylinder is its
  * base area stacked up its length; a pyramid or a cone fills a third of the
  * prism or cylinder around it, and the slip it is built around is leaving
- * out that third. A cone's slant is drawn and labelled beside its height, so
+ * out that third. A cone's slant is drawn and labeled beside its height, so
  * which length is the height is a choice, as it was for the parallelogram.
  * A sphere is 4/3 πr³, and half of that for a hemisphere.
  *

@@ -13,7 +13,7 @@
  * multiplier, which is a lookup rather than a piece of reasoning -- and a
  * student who has only ever done that is stuck the moment the bottoms are
  * 6 and 9. Through Simplest Form is that case, and the strategy level after
- * it is the judgement of which situation you are in.
+ * it is the judgment of which situation you are in.
  */
 
 export const LEVELS = [

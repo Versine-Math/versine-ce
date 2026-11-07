@@ -31,7 +31,7 @@ export const LEVELS = [
   { name: 'Between the Systems', slug: 'between-the-systems',
     blurb: 'The factor is given. Into the smaller unit, multiply; into the bigger one, divide.' },
   { name: 'Temperature', slug: 'temperature',
-    blurb: 'F = (9/5)C + 32, and back: take the 32 off first.',
+    blurb: 'F = (9/5)C + 32, and back: subtract the 32 first.',
     dependsOn: [{ skill: 'frac-signed', level: 3 }] },
   { name: 'Unit Fractions', slug: 'unit-fractions',
     blurb: 'Chain factors that each equal 1, so the unit you want gone cancels.',

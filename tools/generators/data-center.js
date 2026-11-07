@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for center and spread.
+ * Catalog authoring tool: builds the problem library for center and spread.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -326,7 +326,7 @@ const POPS = [
     ],
     unfair: [
       [(k) => `nets ${k} fish in the shallow corner by the dock`, 'part', 'choice'],
-      [(k) => `measures the ${k} fish that anglers choose to bring in to show off`, 'all', 'choice'],
+      [(k) => `measures the ${k} fish that people who fish choose to bring in to show off`, 'all', 'choice'],
       [(k) => `nets ${k} fish at random spots, all along the north shore`, 'part', 'chance'],
     ] },
   { id: 'app', who: 'A music app', the: 'The company', all: 'all 2 million of its members',

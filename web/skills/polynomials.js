@@ -1,7 +1,7 @@
 /**
- * Polynomials: adding, taking away and multiplying them.
+ * Polynomials: adding, subtracting and multiplying them.
  *
- * Nothing here is a new rule. Adding is collecting like terms, which
+ * Nothing here is a new rule. Adding is Combining Like Terms, which
  * Simplifying taught; multiplying is distributing, with Monomials' rule for
  * the powers. What is new is the size: a trinomial times a binomial is six
  * products and a collection, and the skill is doing every one of them and
@@ -9,7 +9,7 @@
  *
  * Special Products is the exception, and the reason it has a level: (x + 5)²
  * is the single most common wrong expansion in algebra, x² + 25. Squaring a
- * bracket is not squaring its parts, and seeing the middle term 10x come out
+ * parentheses are not squaring its parts, and seeing the middle term 10x come out
  * of (x + 5)(x + 5) every time is what fixes it.
  *
  * Answers are typed expanded and collected, in any order: x^2 + 8x + 15.
@@ -19,17 +19,17 @@ export const LEVELS = [
   { name: 'Degree and Standard Form', slug: 'degree-and-standard-form',
     blurb: 'Highest power first. The degree is that power; its number leads.' },
   { name: 'Adding', slug: 'adding',
-    blurb: 'Collect the like terms: x² with x², x with x, numbers with numbers.' },
-  { name: 'Taking Away', slug: 'taking-away',
-    blurb: 'A minus before a bracket changes every sign inside it.' },
+    blurb: 'Combine the like terms: x² with x², x with x, numbers with numbers.' },
+  { name: 'Subtracting', slug: 'taking-away',
+    blurb: 'A minus before parentheses changes every sign inside them.' },
   { name: 'Monomial Times Polynomial', slug: 'monomial-times-polynomial',
     blurb: 'Multiply every term inside by the one outside. Powers add.' },
   { name: 'Binomial Times Binomial', slug: 'binomial-times-binomial',
-    blurb: 'Each term of one times each term of the other: four products, then collect.' },
+    blurb: 'Each term of one times each term of the other: four products, then combine like terms.' },
   { name: 'Special Products', slug: 'special-products',
     blurb: '(x + 5)² is not x² + 25. Where does the middle term come from?' },
   { name: 'Trinomial Times Binomial', slug: 'trinomial-times-binomial',
-    blurb: 'Six products. Miss none, then collect.' },
+    blurb: 'Six products. Miss none, then combine like terms.' },
   { name: 'All Together', slug: 'all-together',
     blurb: 'Everything mixed. Clear this against the clock to finish the skill for the day.' },
 ];
@@ -48,7 +48,7 @@ export default {
   name: 'Polynomials',
   category: 'expressions',
   glyph: '(x+1)²',
-  blurb: 'Adding, taking away and multiplying polynomials, and the products worth knowing.',
+  blurb: 'Adding, subtracting and multiplying polynomials, and the products worth knowing.',
   answerInput: 'expr',
   dependsOn: ['monomials'],
   levels: LEVELS,

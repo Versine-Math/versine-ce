@@ -12,7 +12,7 @@
  * committed, but `answerRows` says how many there will be, so the picture
  * is laid out at its final height from the start and nothing jumps on reveal.
  *
- * Ends are plain numbers the catalogue already holds; the renderer never
+ * Ends are plain numbers the catalog already holds; the renderer never
  * works out a set, only draws one.
  *
  * @typedef {object} Run

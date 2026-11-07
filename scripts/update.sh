@@ -3,7 +3,7 @@
 # Bring the running instance up to date with the git remote, safely.
 #
 # Run at boot and on a timer. The whole thing is built around one priority:
-# a kid sitting down to practise must find a working app. An update that
+# a kid sitting down to practice must find a working app. An update that
 # cannot be done safely is an update that does not happen -- this script
 # fails open, leaving the previous version serving, and says why.
 #
@@ -84,7 +84,7 @@ wait_healthy() {
 }
 
 # ── Library validity ─────────────────────────────────────────────────────────
-# The problem libraries are the catalogue. Their rows are meant to be corrected
+# The problem libraries are the catalog. Their rows are meant to be corrected
 # by hand -- fixing a bad problem in place beats debugging the generator that
 # produced it -- so this deliberately does not check that a library still
 # matches its generator. A hand-fixed library is supposed to have diverged.
@@ -127,7 +127,7 @@ libraries_valid() {
     [ "${PIPESTATUS[0]}" = "0" ] || return 1
   fi
 
-  # The catalogue's shape as well as its contents -- but only if node is here.
+  # The catalog's shape as well as its contents -- but only if node is here.
   # A server without a JavaScript runtime still gets the library check above,
   # which is the one that catches a broken problem reaching a student.
   # check-imports goes first: every browser module parses and every import it

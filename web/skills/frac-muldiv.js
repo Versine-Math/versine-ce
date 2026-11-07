@@ -27,7 +27,7 @@ export const LEVELS = [
     blurb: '3/8 of 24. The whole number is a fraction too, and the rule still works.',
     // The bridge level. A ratio share, a percentage and a fraction of an
     // amount are one operation in three notations, and until this level the
-    // catalogue multiplied fractions only by other fractions -- so the
+    // catalog multiplied fractions only by other fractions -- so the
     // operation a student actually meets in the wild was never drilled.
   },
   { name: 'How Many Fit', slug: 'how-many-fit', blurb: 'Division as counting copies — the answers come out whole.' },

@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for congruent
+ * Catalog authoring tool: builds the problem library for congruent
  * triangles.
  *
  * NOT part of the running application. Nothing here is served to a browser
@@ -118,7 +118,7 @@ export function solve(e1, e2) {
   const lin = (e) => (e[0] === 0 ? num(e[1]) : linear(...e));
   const steps = [];
   if (lo[0] !== 0) steps.push(`take ${linear(lo[0], 0)} from both sides: ${linear(a, hi[1])} = ${num(lo[1])}`);
-  if (hi[1] !== 0) steps.push(`${hi[1] > 0 ? `take away ${hi[1]}` : `add ${-hi[1]}`}: ${linear(a, 0)} = ${num(rhs)}`);
+  if (hi[1] !== 0) steps.push(`${hi[1] > 0 ? `subtract ${hi[1]}` : `add ${-hi[1]}`}: ${linear(a, 0)} = ${num(rhs)}`);
   if (a !== 1) steps.push(`divide by ${a}: x = ${num(x)}`);
   const told = steps.join('; ');
   return { x, work: `${lin(e1)} = ${lin(e2)}. ${told.charAt(0).toUpperCase()}${told.slice(1)}.` };
@@ -316,7 +316,7 @@ function criterionWork(crit, parts) {
     const leg = sides.find((s) => s !== hyp);
     return `Both are right triangles, the right angle at ${ABC[r]}. The marked sides are the hypotenuse ${hyp}, opposite the right angle, `
       + `and a leg ${leg}, as HL asks. (Two sides and an angle not between them is usually not enough, but with a right angle `
-      + 'Pythagoras fixes the third side.)';
+      + 'The Pythagorean theorem fixes the third side.)';
   }
   if (crit === 'ssa') {
     const [v] = angs;

@@ -11,8 +11,8 @@
  */
 
 export const LEVELS = [
-  { name: 'Into Wholes', slug: 'into-wholes', blurb: 'Top-heavy fractions become a whole and a bit.' },
-  { name: 'Back Again', slug: 'back-again', blurb: 'A whole and a bit becomes a top-heavy fraction.' },
+  { name: 'Into Wholes', slug: 'into-wholes', blurb: 'Improper fractions become a whole and a fraction.' },
+  { name: 'Back Again', slug: 'back-again', blurb: 'A whole and a fraction becomes an improper fraction.' },
   { name: 'Exactly Whole', slug: 'exactly-whole', blurb: 'Sometimes nothing is left over at all.' },
   { name: 'Both Ways', slug: 'both-ways', blurb: 'Either direction, without warning which.' },
   {
@@ -22,7 +22,7 @@ export const LEVELS = [
   },
   {
     name: 'Working With Them', slug: 'working-with-them',
-    blurb: '2 1/2 × 1 3/4. Convert, do it, convert back — and the middle bit is top-heavy.',
+    blurb: '2 1/2 × 1 3/4. Convert, do it, convert back — and the middle step is improper.',
     requireSimplest: true,
     // The arithmetic itself is frac-muldiv's and frac-addsub's; what is new
     // is that both operands and the working are improper on the way through.
@@ -60,7 +60,7 @@ export default {
   name: 'Improper & Mixed Numbers',
   category: 'fractions',
   glyph: '1½',
-  blurb: 'Top-heavy fractions and the wholes hiding in them.',
+  blurb: 'Improper fractions and the wholes hiding in them.',
   answerInput: 'mixed',
   dependsOn: ['frac-addsub', 'frac-muldiv'],
   levels: LEVELS,

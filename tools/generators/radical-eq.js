@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for radical-eq.
+ * Catalog authoring tool: builds the problem library for radical-eq.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -105,7 +105,7 @@ function extraneous(rng) {
     const rhs = moved ? 'x' : right;
     return problem(lhs, rhs, xs,
       `${moved ? `Get the root on its own: √(${insideF}) = ${rightF}. ` : ''}Square both sides: ${insideF} = ${s === 0 ? 'x²' : `(${rightF})², which is ${insideF} = x²${pm(2 * s)}x${pm(s * s)}`}`
-      + `. Collect on one side: ${qText} = 0, which factors as ${factors(r1, r2)} = 0, so x = ${minus(r1)} or x = ${minus(r2)}. `
+      + `. Gather on one side: ${qText} = 0, which factors as ${factors(r1, r2)} = 0, so x = ${minus(r1)} or x = ${minus(r2)}. `
       + `Squaring can let in an answer that makes the right side negative, so check both in the original: ${check(r1, ok1)}; ${check(r2, ok2)}.`);
   }
 }
@@ -149,7 +149,7 @@ const rootF = (b) => (b === 0 ? '√x' : `√(${lin(1, b, true)})`);
 /**
  * Squaring once leaves a root behind, so it is got alone and squared again.
  * Four shapes: √(x + a) = √(x + b) + c and the same as a difference, the x's
- * cancelling; √(px + a) = √(x + b) + c, which leaves a quadratic in
+ * canceling; √(px + a) = √(x + b) + c, which leaves a quadratic in
  * u = √(x + b); and √x + √(x + a) = c, a sum. Each is built from u, the
  * second root's value, so a u below 0 is an answer the second squaring lets
  * in and the check throws out.
@@ -267,7 +267,7 @@ function rational(rng) {
     const bases = p % 2 === 0 && q % 2 === 1 ? [t ** q, -(t ** q)] : [t ** q];
     const xs = [...new Set(bases.map((v) => v - b))];
     return problem(lhs, String(k * c + d), xs,
-      `${iso}${baseF}^(${p}/${q}) = ${minus(c)}. Raise both sides to the power ${q}/${p}, which undoes ${p}/${q}`
+      `${iso}${baseF}^(${p}/${q}) = ${minus(c)}. Raise both sides to the power of ${q}/${p}, which undoes ${p}/${q}`
       + `${p % 2 === 0 && q % 2 === 1 ? `, and since ${p} is even, ${minus(c)} = (±${Math.abs(t)})^${p}: both the positive and the negative root count` : ''}: `
       + `${bases.map((v) => `${bare} = ${minus(v)}`).join(' or ')}${b ? `, so ${xs.map((v) => `x = ${minus(v)}`).join(' or ')}` : ''}. `
       + `${q % 2 === 0 ? `An even root needs a base of 0 or more, and ${minus(t ** q)} is.` : 'An odd root takes negatives, so every answer stands.'}`);

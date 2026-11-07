@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for ratio.
+ * Catalog authoring tool: builds the problem library for ratio.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -16,7 +16,7 @@ const gcd = (a, b) => (b === 0 ? a : gcd(b, a % b));
 const range = (a, b) => Array.from({ length: Math.max(0, b - a + 1) }, (_, i) => a + i);
 const ordinal = (k) => ['', '', 'half', 'third', 'quarter', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth'][k];
 
-/** "1 part", "3 parts" -- a unit ratio is common and reads badly pluralised. */
+/** "1 part", "3 parts" -- a unit ratio is common and reads badly pluralized. */
 const parts = (k) => `${k} part${k === 1 ? '' : 's'}`;
 
 /**
@@ -233,7 +233,7 @@ const GOODS = ['tickets', 'books', 'pens', 'batteries', 'tiles', 'cables'];
  * The full proportion: from one quantity to another, through the value of
  * one.
  *
- * The target is deliberately not always a whole number of lots of what is
+ * The target is deliberately not always a whole number of groups of what is
  * given. When it is, one multiplication does the whole thing; when it is not,
  * there is nothing to multiply by and the unit rate is the only way in. Both
  * appear here so that the strategy level after it has something to arbitrate.
@@ -265,15 +265,15 @@ function scaling(rng) {
         : [`${from} for $${cost}`, `$${cost} ÷ ${from} = $${one} each`, `$${one} × ${to}`,
            `$${one * to}`],
       rules: clean
-        ? [up ? `${to} is a whole number of lots of ${from}` : `${from} is a whole number of lots of ${to}`,
+        ? [up ? `${to} is a whole number of groups of ${from}` : `${from} is a whole number of groups of ${to}`,
            'so scale the price the same way', 'which comes to']
         : ['find what one costs', `then take ${to} of them`, 'which comes to'],
       hint: 'Can you get there in one step, or do you need the price of one?',
     },
     explain: clean
-      ? (up ? `${to} is exactly ${by} lots of ${from}` : `${to} is ${from} ÷ ${by}, a ${ordinal(by)} of ${from}`)
+      ? (up ? `${to} is exactly ${by} groups of ${from}` : `${to} is ${from} ÷ ${by}, a ${ordinal(by)} of ${from}`)
         + `, so the price scales the same way: ${scaled} = $${one * to}.`
-      : `${to} and ${from} are not whole numbers of lots of each other, so go through one: `
+      : `${to} and ${from} are not whole-number multiples of each other, so go through one: `
         + `$${cost} ÷ ${from} = $${one} each, and $${one} × ${to} = $${one * to}.`,
   };
 }
@@ -282,7 +282,7 @@ function scaling(rng) {
  * The strategic layer: whether the shortcut is available at all.
  *
  * Scaling in one step is faster and is what a confident student reaches for,
- * and it works exactly when the target is a whole number of lots of what you
+ * and it works exactly when the target is a whole number of groups of what you
  * have. When it is not, there is no whole number to multiply by, and reaching
  * for one anyway produces either a wrong answer or an awkward fraction that
  * the unit rate would have avoided. The discriminator is a divisibility
@@ -318,10 +318,10 @@ function scaleOrFindOne(rng) {
     visual: null,
     explain: clean
       ? (to > from
-        ? `${to} is exactly ${to / from} lots of ${from}, so multiplying by ${to / from} gets there `
+        ? `${to} is exactly ${to / from} groups of ${from}, so multiplying by ${to / from} gets there `
         : `${to} is ${from} ÷ ${from / to}, so dividing by ${from / to} gets there `)
         + `in one step. Dividing down to one first would be an extra step for nothing.`
-      : `${to} and ${from} are not whole numbers of lots of each other, so scaling in one step `
+      : `${to} and ${from} are not whole-number multiples of each other, so scaling in one step `
         + `means multiplying by a fraction. Finding what one costs is the shorter way in.`,
   };
 }

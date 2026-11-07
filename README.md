@@ -4,7 +4,7 @@ Math practice for people who are going somewhere with it.
 
 A self-hosted practice game covering arithmetic, algebra, geometry and trig as
 one connected subject rather than four separate ones. The measure of success is
-simple: a student who is proficient across this catalogue is genuinely ready to
+simple: a student who is proficient across this catalog is genuinely ready to
 begin calculus.
 
 Runs on a machine on your own network. Kids reach it from a laptop or a phone
@@ -27,7 +27,7 @@ If a word appears here, it does not have a synonym anywhere else.
 | **Skill** | A named area of practice, e.g. *Integer Add & Subtract*. Contains Levels. Listed on the Map. |
 | **Level** | One step inside a Skill, teaching one idea. The unit of practice, progress, unlocking and scheduling. |
 | **Last level** | Exactly what it says: the final Level of a Skill. By convention it mixes every Level before it, and clearing it in a Time Trial finishes the Skill for the day. Not a separate kind of thing — a position. |
-| **Mode** | How a Level is practised: *Practice* or *Time Trial*. |
+| **Mode** | How a Level is practiced: *Practice* or *Time Trial*. |
 | **Run** | One session of one Level in one Mode. |
 | **Attempt** | One answer to one Problem. Every attempt is recorded. |
 | **Problem** | A single generated question. |
@@ -67,7 +67,7 @@ The very first screen creates the **teacher** account — that's the one that ca
 see everyone's progress and remove people.
 
 After that, anyone signs themselves up: the sign-in screen has a **New profile**
-tile, and whoever taps it picks an icon and a colour, types a name, and chooses
+tile, and whoever taps it picks an icon and a color, types a name, and chooses
 a 4-digit PIN. No grown-up needed to get started. Self-serve profiles are always
 students, so nobody can grant themselves the teacher role.
 
@@ -130,12 +130,12 @@ curl localhost:8000/api/health                    # which commit is serving
 
 ### The rule it follows
 
-**A kid sitting down to practise must find a working app.** Every decision
+**A kid sitting down to practice must find a working app.** Every decision
 above falls out of that. The update is an improvement on a running system, not
 a precondition for one — `restart: unless-stopped` has the container up long
 before the timer fires, so an unreachable remote or a failed update costs
 nothing but staying on yesterday's version. When the script declines to update
-it exits 0, because declining is correct behaviour; a non-zero exit means a
+it exits 0, because declining is correct behavior; a non-zero exit means a
 genuine failure worth looking at in `systemctl status`.
 
 ### Knobs
@@ -197,7 +197,7 @@ equations and inequalities, including writing them from a situation, and
 compound inequalities and absolute value -- and all of the
 linear algebra after it: functions, slope, linear equations and their forms,
 linear models, systems of two equations, graphing inequalities, and sequences. Phase 2, polynomials to
-exponentials, is built too: monomials, rational exponents, polynomials, both factoring skills, quadratic equations, the quadratic formula, graphs of quadratics, exponential functions (with e and continuous growth) and transforming functions. The Pythagorean theorem, center and spread (mean, median, quartiles, MAD and samples), two-variable data (scatter plots, lines of fit, residuals, correlation and two-way tables), and distributions (box plots, histograms, standard deviation, the normal curve and z-scores) finish the Algebra 1 milestone, and geometry has begun with angle relationships, the angles of triangles and polygons, area and the circle, the volume and surface area of solids, transformations of the plane, geometry worked in coordinates, conic sections (which conic an equation is, a parabola's focus and directrix, the foci, vertices and asymptotes of ellipses and hyperbolas, writing their equations, completing the square for a center, and matching a graph to its equation), congruent and similar triangles, the properties of quadrilaterals, circles, and logical reasoning with conditionals. Probability has begun as well, with likelihood, single events, complements, sample spaces, independent events and expected counts, and counting, with the multiplication principle, factorials, permutations, combinations and probability by counting, and compound probability: Venn diagrams, the addition rule, conditional probability, drawing without replacement and independence. Trigonometry has begun with the ratios of a right triangle: missing sides and angles, the 45-45-90 and 30-60-90 triangles, cofunctions, and elevation and bearings, and the laws of sines and cosines, the ambiguous case and ½ab sin C. The unit circle has begun with radians: converting to and from degrees, coterminal and reference angles, arc length, sector area and angular speed, and the unit circle itself: exact values all the way round, signs by quadrant, tangent and the reciprocals, and every ratio from one, then the graphs of sine and cosine: amplitude, period, midline, phase shift, the equation of a drawn wave, and sinusoidal models. Identities have begun too: Pythagorean, reciprocal and quotient, even and odd, cofunction, sum and difference and double-angle identities, telling an identity from an equation that only looks like one, and choosing the next step in a proof, then trig equations: the inverse functions, solving in one turn in degrees and radians, general solutions and equations that factor. Vectors follow them: component form from two points or a drawing, magnitude and direction, components from a length and an angle, adding and subtracting tip to tail, scalar multiples, unit vectors, the dot product and the angle between two vectors, and the resultant of two forces, velocities or bearings. Parametric and polar curves follow vectors: plotting a parametric curve and the way it runs, eliminating the parameter, a thrown ball's path and its model, polar coordinates to rectangular and back on a polar grid, a point's other polar names, converting equations, and roses, limaçons, cardioids and circles. Functions has gone on to domain and range: from a formula with a root or a fraction, from a graph, for the parent functions, in stories, and the values of piecewise and step functions, then to combining functions: sums, differences and products, composition at a number and as a formula, why the order matters, and taking a function apart, and to inverse functions: undoing a function, solving for its formula, checking by composing, cutting a parabola to one side, and the reflection in y = x, and to rational functions: vertical asymptotes and holes, horizontal asymptotes by degree, slant asymptotes, end behavior, intercepts, and matching a graph to its formula, and to polynomial functions: zeros and their multiplicity, end behavior, matching a graph to its factors, turning points, and polynomial, quadratic and rational inequalities. Equations have gone on to radical equations: isolating and squaring, extraneous answers, roots on both sides, cube roots and fractional powers, and expressions to rational expressions: simplifying, excluded values, multiplying and dividing, adding over common and unlike denominators, and complex fractions, then rational equations: clearing denominators, extraneous answers, proportions with x, inverse variation, and work and rate, and polynomial division: long division by lines and quadratics, synthetic division, the remainder, factor and rational root theorems, and every zero from one. Powers have gone on to complex numbers: square roots of negatives, powers of i, adding, multiplying and dividing a + bi, conjugates, and the complex roots of a quadratic, and to logarithms: logs as exponents, evaluating them, the product, quotient and power laws both ways, ln and change of base, and solving exponential and log equations, unlike bases and the time a growth story takes among them, and the graph of log_b x as the inverse of bˣ: its key points, domain, range and asymptote, which way it runs, its reflections and stretches, and matching a graph to its equation. Sequences have gone on to series: arithmetic and geometric sums, sigma notation, read and written, and its sum rules, infinite geometric series and repeating decimals, the sums that stories add up, and working back from a total. The binomial theorem follows them: Pascal's triangle, coefficients as combinations, one term or the whole expansion, the constant term, and the chance of k successes in n tries. Systems have gone on to curves and three unknowns: where a line meets a parabola or a circle, how many times they can meet, two curves at once (two circles among them, by taking x² out), each drawn once answered, systems in x, y and z by elimination, the ones with no solution or infinitely many, and stories in three unknowns. What comes next, and which standards it answers to, is in
+exponentials, is built too: monomials, rational exponents, polynomials, both factoring skills, quadratic equations, the quadratic formula, graphs of quadratics, exponential functions (with e and continuous growth) and transforming functions. The Pythagorean theorem, center and spread (mean, median, quartiles, MAD and samples), two-variable data (scatter plots, lines of fit, residuals, correlation and two-way tables), and distributions (box plots, histograms, standard deviation, the normal curve and z-scores) finish the Algebra 1 milestone, and geometry has begun with angle relationships, the angles of triangles and polygons, area and the circle, the volume and surface area of solids, transformations of the plane, geometry worked in coordinates, conic sections (which conic an equation is, a parabola's focus and directrix, the foci, vertices and asymptotes of ellipses and hyperbolas, writing their equations, completing the square for a center, and matching a graph to its equation), congruent and similar triangles, the properties of quadrilaterals, circles, and logical reasoning with conditionals. Probability has begun as well, with likelihood, single events, complements, sample spaces, independent events and expected counts, and counting, with the multiplication principle, factorials, permutations, combinations and probability by counting, and compound probability: Venn diagrams, the addition rule, conditional probability, drawing without replacement and independence. Trigonometry has begun with the ratios of a right triangle: missing sides and angles, the 45-45-90 and 30-60-90 triangles, cofunctions, and elevation and bearings, and the laws of sines and cosines, the ambiguous case and ½ab sin C. The unit circle has begun with radians: converting to and from degrees, coterminal and reference angles, arc length, sector area and angular speed, and the unit circle itself: exact values all the way around, signs by quadrant, tangent and the reciprocals, and every ratio from one, then the graphs of sine and cosine: amplitude, period, midline, phase shift, the equation of a drawn wave, and sinusoidal models. Identities have begun too: Pythagorean, reciprocal and quotient, even and odd, cofunction, sum and difference and double-angle identities, telling an identity from an equation that only looks like one, and choosing the next step in a proof, then trig equations: the inverse functions, solving in one turn in degrees and radians, general solutions and equations that factor. Vectors follow them: component form from two points or a drawing, magnitude and direction, components from a length and an angle, adding and subtracting tip to tail, scalar multiples, unit vectors, the dot product and the angle between two vectors, and the resultant of two forces, velocities or bearings. Parametric and polar curves follow vectors: plotting a parametric curve and the way it runs, eliminating the parameter, a thrown ball's path and its model, polar coordinates to rectangular and back on a polar grid, a point's other polar names, converting equations, and roses, limaçons, cardioids and circles. Functions has gone on to domain and range: from a formula with a root or a fraction, from a graph, for the parent functions, in stories, and the values of piecewise and step functions, then to combining functions: sums, differences and products, composition at a number and as a formula, why the order matters, and taking a function apart, and to inverse functions: undoing a function, solving for its formula, checking by composing, cutting a parabola to one side, and the reflection in y = x, and to rational functions: vertical asymptotes and holes, horizontal asymptotes by degree, slant asymptotes, end behavior, intercepts, and matching a graph to its formula, and to polynomial functions: zeros and their multiplicity, end behavior, matching a graph to its factors, turning points, and polynomial, quadratic and rational inequalities. Equations have gone on to radical equations: isolating and squaring, extraneous answers, roots on both sides, cube roots and fractional powers, and expressions to rational expressions: simplifying, excluded values, multiplying and dividing, adding over common and unlike denominators, and complex fractions, then rational equations: clearing denominators, extraneous answers, proportions with x, inverse variation, and work and rate, and polynomial division: long division by lines and quadratics, synthetic division, the remainder, factor and rational root theorems, and every zero from one. Powers have gone on to complex numbers: square roots of negatives, powers of i, adding, multiplying and dividing a + bi, conjugates, and the complex roots of a quadratic, and to logarithms: logs as exponents, evaluating them, the product, quotient and power laws both ways, ln and change of base, and solving exponential and log equations, unlike bases and the time a growth story takes among them, and the graph of log_b x as the inverse of bˣ: its key points, domain, range and asymptote, which way it runs, its reflections and stretches, and matching a graph to its equation. Sequences have gone on to series: arithmetic and geometric sums, sigma notation, read and written, and its sum rules, infinite geometric series and repeating decimals, the sums that stories add up, and working back from a total. The binomial theorem follows them: Pascal's triangle, coefficients as combinations, one term or the whole expansion, the constant term, and the chance of k successes in n tries. Systems have gone on to curves and three unknowns: where a line meets a parabola or a circle, how many times they can meet, two curves at once (two circles among them, by taking x² out), each drawn once answered, systems in x, y and z by elimination, the ones with no solution or infinitely many, and stories in three unknowns. What comes next, and which standards it answers to, is in
 `docs/catalogue-plan.md`.
 
 ```
@@ -207,7 +207,7 @@ server/           FastAPI + SQLite. No ORM; the queries are the interesting part
   auth.py         PIN hashing, session tokens, lockout
 web/
   engine/         mode-agnostic game machinery
-    registry.js   the catalogue: skills, the learning graph, the gate, map order
+    registry.js   the catalog: skills, the learning graph, the gate, map order
     session.js    one run: serving, scoring, retry queue, end conditions
     modes.js      Practice / Time Trial as policy objects
     library.js    loads a level's library and deals from it
@@ -320,12 +320,12 @@ grid: a heading per group forces a row break, and with two skills in a group
 every row would leave a track empty.
 
 **The grid is ordered by dependency, not by filing.** Walking subjects, then
-categories, then skills is how the catalogue is *filed*, and reading it out in
-that order put Factors & Multiples — where lowest common multiple and greatest
+categories, then skills is how the catalog is *filed*, and reading it out in
+that order put Factors & Multiples — where least common multiple and greatest
 common factor are taught — after all eight fraction skills that stand on it,
 and Ratio & Rate after the Percents level that needs it. A student scrolling
 for the thing they are missing passed everything that needs it first and could
-reasonably conclude it was not in the catalogue at all.
+reasonably conclude it was not in the catalog at all.
 
 `mapOrder()` in the registry walks the same filing order with one rule added:
 a skill's dependencies are laid out before it, recursively, and then the
@@ -339,7 +339,7 @@ dependents costs them the skill. `check-catalogue.mjs` fails a map order that
 draws a skill before something it builds on.
 
 Categories and subjects with no skills yet are declared anyway. They cost a
-line, they say what the catalogue is for, and they stop the next skill being
+line, they say what the catalog is for, and they stop the next skill being
 filed under whichever existing name is least wrong. Empty ones do not render.
 
 A skill filed under a category the registry does not declare — or a category
@@ -409,7 +409,7 @@ coarse edges alone — a level-precise edge never gates a skill, or one level
 deep inside a skill could close the whole thing. `validateGraph()` in
 `web/engine/registry.js` checks that, plus unknown ids, out-of-range levels,
 cycles, and that at least one Skill has no dependencies at all; without a root,
-nothing is open on day one and the catalogue is unplayable. `check-catalogue`
+nothing is open on day one and the catalog is unplayable. `check-catalogue`
 then drives the real gate from an empty account and fails if any Skill can
 never be reached.
 
@@ -434,7 +434,7 @@ and because the fine graph carries edges the coarse one does not: levels
 unlock in order, so each waits on the one before it.
 
 The fix is **never** to delete whichever edge closed the loop. That edge is
-usually true, and deleting it leaves the catalogue lying about what rests on
+usually true, and deleting it leaves the catalog lying about what rests on
 what. The fix is to split: a cycle says two skills each need the whole of the
 other, which is nearly always a sign that one of them is two skills. The part
 that is genuinely needed earlier becomes its own skill, and the rest depends
@@ -444,7 +444,7 @@ can get, arrived at from a completely different direction than the eight-level
 guide, and one to work *with* rather than around.
 
 Since an edge now costs access, a connective edge is no longer free. Coordinates
-had one to Ratio — a gradient is a unit rate, which is true and worth saying —
+had one to Ratio — a slope is a unit rate, which is true and worth saying —
 and it put reading a point off a grid behind eight skills. The edge went; the
 sentence stayed, in the explanation a student reads when they get one wrong.
 Declare an edge when the second skill is genuinely needed to *do* the first;
@@ -464,13 +464,13 @@ An earlier design described problems with a faceted tag vocabulary
 (`rule:sub-a-negative` and so on). It was removed: it needed its own grammar,
 its own curation policy, and it invited a combinatorial explosion of
 relationships between attributes. The graph above says the same useful things
-using artefacts that already exist. Every Attempt still stores the literal
+using artifacts that already exist. Every Attempt still stores the literal
 problem text, so finer-grained analysis remains possible after the fact if it
 is ever actually needed.
 
 ## Generators are authoring tools, not runtime code
 
-The catalogue is the set of problem libraries in `web/library/`. Those files
+The catalog is the set of problem libraries in `web/library/`. Those files
 are what students are served, and they are the thing to edit when a problem is
 wrong: correcting one row is immediate and reviewable, where debugging the code
 that produced it is neither.
@@ -531,7 +531,7 @@ very correction someone had just made.
 Most levels drill a procedure. A **strategy level** drills the choice *between*
 procedures — which form to convert to, which method to reach for, when a
 shortcut is worth taking and when it is a trap. It is marked `kind: 'strategy'`
-and shows a "judgement" tag on the map.
+and shows a "judgment" tag on the map.
 
 Being able to convert both ways and having no idea which one the situation
 wants is most of what "bad at fractions" actually means. The same is true
@@ -551,7 +551,7 @@ both the conversions and the multiplication, at the first point where picking
 wrong is expensive.
 
 **Never let a strategy level be where a topic is first met.** Working a
-judgement question in early, by referring to something the student has not
+judgment question in early, by referring to something the student has not
 covered, buys the strategic layer at the cost of teaching the topic badly. If a
 strategy level needs a topic, the skill must depend on it — and the level
 declares a level-precise `dependsOn` naming the skill that creates the need.
@@ -572,7 +572,7 @@ leaning model answers a question that is entirely about which way to lean.
 
 A student's Level is **not accumulated experience**. XP in games measures how
 long you have played rather than what you can do, and it can only ever go up —
-which misrepresents arithmetic, because a skill you stop practising genuinely
+which misrepresents arithmetic, because a skill you stop practicing genuinely
 does get slower and less accurate.
 
 So Level is computed fresh from present ability, and it can fall:
@@ -614,9 +614,9 @@ Nobody sets a clock by hand — not the teacher, not the student, not the author
 of a skill. It arrives one of three ways:
 
 1. **Not yet.** A level with no history keeps its Time Trial locked. You must
-   practise it first; Practice quietly times you while you learn it.
+   practice it first; Practice quietly times you while you learn it.
 2. **Seeded.** After 8 answers, the clock is set to the pace you actually
-   practised at: `median × target`. Keep up your own practice pace and you pass
+   practiced at: `median × target`. Keep up your own practice pace and you pass
    exactly.
 3. **Adapted.** After every trial the clock moves, stored per student per
    level in `level_clocks`.
@@ -662,7 +662,7 @@ when each skill's clock started.
   its next review months out.
 - **A failed or quit review changes nothing.** The skill stays due until it
   is passed; a Trial failed on the clock is not evidence of forgetting.
-- **Work that builds on a skill counts towards it.** Each day with a passed
+- **Work that builds on a skill counts toward it.** Each day with a passed
   Time Trial in a skill that directly depends on this one postpones its
   review by a quarter of the interval, or half when the level passed names
   it outright -- capped at one interval, so it still gets a direct review.
@@ -735,7 +735,7 @@ between and no level ever left without something.
 
 - a slim **banner on the mode screen**, above Practice and Time Trial —
   deliberately not a third mode card, since that choice was cut to two on
-  purpose and this is what you do *before* practising;
+  purpose and this is what you do *before* practicing;
 - the **"Why?" button inside Practice**, which now steps through the problem
   actually on screen.
 
@@ -746,7 +746,7 @@ asked how something works. It captures the keyboard while open — `Enter` or
 ## Modes
 
 Two, deliberately. Every extra mode is another decision standing between a kid
-and the maths.
+and the math.
 
 | Mode | Shape |
 |---|---|
@@ -768,12 +768,12 @@ random order with no warning which shape is coming. Earlier levels teach one
 idea at a time; the last level checks you can tell them apart.
 
 A skill is **not done for the day** until that last level is cleared in a Time
-Trial. Practising an easy level all afternoon does not tick the box, and
-neither does practising the last level without the clock, nor failing the
+Trial. Practicing an easy level all afternoon does not check the box, and
+neither does practicing the last level without the clock, nor failing the
 trial.
 That single rule is what the streak counts: consecutive days *finished*, not
 days merely touched. The day strip shows both — solid gold for a finished day,
-faded for a day practised without finishing.
+faded for a day practiced without finishing.
 
 The skill's level count travels with each submitted run, so the server knows
 which level is last without hardcoding anything per skill. Add a seventh level
@@ -820,7 +820,7 @@ Twelve exist so far:
   by, so the route runs down through lowest terms and back up, and the picture
   draws that detour rather than captioning itself with a factor of 1.5.
 - **`evalmodel`** — order of operations. The working written out line by line,
-  each labelled with the rule that justified it. While the question is open
+  each labeled with the rule that justified it. While the question is open
   only the first line shows — that line *is* the question; everything after it
   is the answer. The stepped lesson uses the same renderer with one more line
   each press, which is what makes a walkthrough of this skill worth having.
@@ -857,7 +857,7 @@ Twelve exist so far:
   reaches further without ever finding a common denominator, which is what
   the level with the picture is *for* and useless as a check that the method
   took. So the comparison is asked twice, with the bars and then without
-  them, and in the held version the recut bars arrive afterwards as the
+  them, and in the held version the recut bars arrive afterward as the
   explanation rather than as the method.
 - **`barmodel`** — adding and subtracting fractions. Two bars of *identical*
   length, divided by their own denominators. That alignment is the point: it
@@ -878,7 +878,7 @@ While a problem is being *asked*, only the first hop is drawn: `0 → a`. That
 anchors where you start without handing over where you finish.
 
 Once an answer is committed, the second hop is drawn from `a` to the result,
-the answer lands as a gold dot, and a green tick or red cross says how it went.
+the answer lands as a gold dot, and a green check mark or red X says how it went.
 
 This distinction matters. An earlier version drew the whole chain up front,
 which quietly turned the teaching aid into an answer key — you could read the
@@ -889,11 +889,11 @@ result off the picture without doing any arithmetic.
 Every screen inside a skill carries a breadcrumb trail — `Map / Integer Add &
 Subtract / Adding Negatives` — and each part is clickable, from the run screen
 and from the summary alike. Leaving a run part-way through still files it away
-first, so nothing practised is ever lost by navigating away.
+first, so nothing practiced is ever lost by navigating away.
 
 ## Sound
 
-Every sound is synthesised with the Web Audio API — no files to download,
+Every sound is synthesized with the Web Audio API — no files to download,
 nothing to go missing offline, and the whole palette costs a few hundred bytes
 rather than a folder of samples.
 
@@ -1074,27 +1074,27 @@ comparable between siblings and across months.
 Skills the engine is built for but that aren't written yet: scientific
 notation, sequences, functions, and then the three subjects the map declares
 and nothing yet fills — geometry beyond coordinates, trigonometry, and chance
-and data. Ratio and gradient are the rungs trigonometry stands on and both are
+and data. Ratio and slope are the rungs trigonometry stands on and both are
 in, so that is the order to take them in.
 
 Two things worth not repeating. Negatives were taught in the Integers category
-and then never used again: for a long stretch the catalogue held tens of
+and then never used again: for a long stretch the catalog held tens of
 thousands of problems across fractions, decimals, percents, ratio and
 equations without a single negative answer among them, so a student drilled to
 fluency on −7 + 3 had still never solved `x + 7 = 3`. Nothing caught it,
 because every check asks whether a problem is well-formed or right and none of
-them asks what the catalogue as a whole never does. A gap of that shape is
+them asks what the catalog as a whole never does. A gap of that shape is
 invisible to a test suite and shows up only by counting — which is worth doing
 deliberately, now and then, along whichever axis a skill might have been
 quarantined on.
 
 The second is narrower and has the same cause. A skill can teach every idea
 it names and still never present some ordinary *shape* of the problem, and a
-student meeting that shape for the first time in an exam has effectively met
+student meeting that shape for the first time on a test has effectively met
 a new topic. Adding fractions never once summed to exactly one. Solving
-equations never had an answer of nought. Nothing anywhere did arithmetic on a
+equations never had an answer of zero. Nothing anywhere did arithmetic on a
 mixed number, though a strategy level asked which form to use before dividing
-2 1/2 by 2 — a judgement about an operation the catalogue could not perform.
+2 1/2 by 2 — a judgment about an operation the catalog could not perform.
 None of these are bugs and no check will ever find them, because each level
 does correctly what it says it does. They are found by asking, of a skill you
 believe is finished, what it never asks.

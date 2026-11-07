@@ -3,7 +3,7 @@ import { el } from './dom.js';
 /**
  * Pick one of a few.
  *
- * Exists for the questions that are about *judgement* rather than calculation
+ * Exists for the questions that are about *judgment* rather than calculation
  * — which form to convert to, which method to reach for — where the answer is
  * a decision and typing it would be silly.
  *

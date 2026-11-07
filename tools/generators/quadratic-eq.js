@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for quadratic equations.
+ * Catalog authoring tool: builds the problem library for quadratic equations.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -121,7 +121,7 @@ function factorable(rng) {
   if (shape === 'lead') {
     const a = rng.pick([2, 3, 5]), q = rng.nonZero(-9, 9), s = rng.nonZero(-9, 9);
     if (gcd(a, q) !== 1) return factorable(rng);
-    return { factors: [linear(a, q), linear(1, s)], how: 'the brackets start with the factors of the first term' };
+    return { factors: [linear(a, q), linear(1, s)], how: 'the parentheses start with the factors of the first term' };
   }
   const p = rng.nonZero(-12, 12), q = rng.nonZero(-12, 12);
   if (Math.abs(p * q) > 120) return factorable(rng);
@@ -198,13 +198,13 @@ function squareRoots(rng) {
     const a = rng.int(2, 6), r = rng.int(1, 10), k = rng.pick([0, rng.int(1, 20)]);
     src = `${a}${v}^2${k ? ` + ${k}` : ''} = ${a * r * r + k}`;
     roots = [root(r), root(-r)];
-    how = `${k ? `Take away ${k}: ${a}${v}² = ${a * r * r}. ` : ''}Divide by ${a}: ${v}² = ${r * r}. Root both sides, both signs`;
+    how = `${k ? `Subtract ${k}: ${a}${v}² = ${a * r * r}. ` : ''}Divide by ${a}: ${v}² = ${r * r}. Root both sides, both signs`;
   } else if (shape === 'shifted') {
     const h = rng.nonZero(-9, 9), r = rng.int(1, 10);
     src = `(${write(linear(1, -h), v)})^2 = ${r * r}`;
     roots = [root(h + r), root(h - r)];
     how = `Root both sides: ${pretty(linear(1, -h), v)} = ${r} or ${pretty(linear(1, -h), v)} = −${r}. `
-      + `Then ${h > 0 ? `add ${h}` : `take away ${-h}`}`;
+      + `Then ${h > 0 ? `add ${h}` : `subtract ${-h}`}`;
   } else if (shape === 'one') {
     const h = rng.nonZero(-9, 9);
     src = `(${write(linear(1, -h), v)})^2 = 0`;
@@ -243,7 +243,7 @@ function whichMethod(rng, again = null) {
     if (shape === 'shifted') {
       const h = rng.nonZero(-9, 9), k = rng.int(2, 40);
       src = `(${write(linear(1, -h), v)})^2 = ${k}`;
-      why = 'A square equal to a number: root both sides, and nothing needs multiplying out.';
+      why = 'A square equal to a number: root both sides, and nothing needs expanding.';
     } else {
       const a = rng.int(1, 5), k = rng.int(2, 60);
       src = `${a === 1 ? '' : a}${v}^2 = ${k}`;

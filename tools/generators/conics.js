@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for conics.
+ * Catalog authoring tool: builds the problem library for conics.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -233,7 +233,7 @@ function whichConic(rng) {
       : kind === 'circle' ? `${sq('x', h)} + ${sq('y', k)} = ${made.X}`
         : kind === 'ellipse' ? standard({ kind, h, k, X: made.X, Y: made.Y })
           : standard({ kind, h, k, X: Math.abs(made.X), Y: Math.abs(made.Y), opens: made.X > 0 ? 'x' : 'y' });
-    shown = `Multiplied out, it is ${pretty(general(cs))}. `;
+    shown = `Expanded, it is ${pretty(general(cs))}. `;
   } else if (form === 'moved') {
     // One squared term carried to the other side, where its sign turns.
     const moveY = rng.chance(0.5);
@@ -504,7 +504,7 @@ function writing(rng) {
   const key = ids[order.indexOf(0)];
   const listing = order.map((j, i) => `${ids[i]}: ${opts[j]}`).join(' | ');
   const rule = kind === 'ellipse' ? `b² = a² − c² = ${C.a * C.a} − ${C.c * C.c} = ${C.b * C.b}` : `b² = c² − a² = ${C.c * C.c} − ${C.a * C.a} = ${C.b * C.b}`;
-  const otherRule = kind === 'ellipse' ? 'b² = a² + c², adding where an ellipse takes away' : 'b² = c² + a², adding where a hyperbola takes away';
+  const otherRule = kind === 'ellipse' ? 'b² = a² + c², adding where an ellipse subtracts' : 'b² = c² + a², adding where a hyperbola subtracts';
   const dirTxt = axis === 'x' ? 'to its left or right' : 'above or below it';
   const told = locus
     ? `foci ${ptA(...P.foci[0])} and ${ptA(...P.foci[1])}; ${kind === 'ellipse' ? 'sum' : 'difference'} ${2 * C.a}`

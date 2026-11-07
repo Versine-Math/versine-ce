@@ -3,7 +3,7 @@
 Optional: an edition may replace sign-in through the browser app's
 authentication provider (server/extensions/extension-points), and then
 serves the core suite without this one. These tests need a server nobody
-has set up yet, and the PIN, icon and colour the edition accepts.
+has set up yet, and the PIN, icon and color the edition accepts.
 """
 from __future__ import annotations
 
@@ -25,21 +25,21 @@ def _():
     client, e = fresh()
     equal(client.get("/api/bootstrap").ok("bootstrap"),
           {"needs_setup": True, "users": [], "me": None}, "bootstrap on an empty server")
-    me = client.post("/api/setup", account(e, "Mum")).ok("setup")["me"]
-    equal((me["name"], me["role"]), ("Mum", "teacher"), "the first account")
+    me = client.post("/api/setup", account(e, "Mom")).ok("setup")["me"]
+    equal((me["name"], me["role"]), ("Mom", "teacher"), "the first account")
     boot = client.get("/api/bootstrap").ok("bootstrap after setup")
     equal((boot["needs_setup"], boot["me"]["id"]), (False, me["id"]), "bootstrap after setup")
     equal(Client(client.base_url).post("/api/setup", account(e, "Dad")).status, 409,
           "a second setup")
 
 
-@test("a new account needs a 4-digit PIN and one of the offered icons and colours", PIN_ACCOUNTS)
+@test("a new account needs a 4-digit PIN and one of the offered icons and colors", PIN_ACCOUNTS)
 def _():
     client, e = fresh()
     for what, body in [("a 3-digit PIN", account(e, "x", pin="123")),
                        ("a PIN of letters", account(e, "x", pin="abcd")),
                        ("an icon not offered", account(e, "x", icon="<script>")),
-                       ("a colour not offered", account(e, "x", accent="#000001"))]:
+                       ("a color not offered", account(e, "x", accent="#000001"))]:
         equal(client.post("/api/setup", body).status, 400, what)
     for what, body in [("an empty name", account(e, "")),
                        ("a name over 16 characters", account(e, "x" * 17))]:
@@ -52,7 +52,7 @@ def _():
 @test("anyone can make a profile, and a profile is always a student", PIN_ACCOUNTS)
 def _():
     client, e = fresh()
-    client.post("/api/setup", account(e, "Mum")).ok("setup")
+    client.post("/api/setup", account(e, "Mom")).ok("setup")
     kid = Client(client.base_url)
     me = kid.post("/api/profiles", account(e, "kid", role="teacher")).ok("profile")["me"]
     equal(me["role"], "student", "a self-made profile's role")
@@ -78,7 +78,7 @@ def _():
 @test("signing in takes the right PIN, and five wrong tries lock the account", PIN_ACCOUNTS)
 def _():
     client, e = fresh()
-    teacher = client.post("/api/setup", account(e, "Mum")).ok("setup")["me"]
+    teacher = client.post("/api/setup", account(e, "Mom")).ok("setup")["me"]
     wrong = "0000" if e.pin != "0000" else "1111"
     door = Client(client.base_url)
     equal(door.post("/api/login", {"user_id": teacher["id"], "pin": wrong}).status, 401,
@@ -96,7 +96,7 @@ def _():
 @test("signing out ends the session", PIN_ACCOUNTS)
 def _():
     client, e = fresh()
-    client.post("/api/setup", account(e, "Mum")).ok("setup")
+    client.post("/api/setup", account(e, "Mom")).ok("setup")
     client.post("/api/logout").ok("logout")
     equal(client.get("/api/bootstrap").ok("bootstrap")["me"], None, "me after signing out")
     equal(client.get("/api/progress").status, 401, "progress after signing out")
@@ -105,7 +105,7 @@ def _():
 @test("a teacher can add another teacher, and only a known role", PIN_ACCOUNTS)
 def _():
     client, e = fresh()
-    client.post("/api/setup", account(e, "Mum")).ok("setup")
+    client.post("/api/setup", account(e, "Mom")).ok("setup")
     added = client.post("/api/teacher/users", account(e, "Dad", role="teacher")).ok("add teacher")
     equal(added["role"], "teacher", "the added account's role")
     equal(client.post("/api/teacher/users", account(e, "Gran", role="admin")).status, 400,

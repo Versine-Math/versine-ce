@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for factors.
+ * Catalog authoring tool: builds the problem library for factors.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -16,8 +16,8 @@ import { LEVELS, LAST_LEVEL, PAR_SECONDS } from '../../web/skills/factors.js';
 /** Small enough to be recognized on sight, which is the point of knowing them. */
 const PRIMES = [2, 3, 5, 7, 11, 13, 17, 19, 23];
 
-/** Ascending prime factorisation as [prime, exponent] pairs. */
-function factorise(n) {
+/** Ascending prime factorization as [prime, exponent] pairs. */
+function factorize(n) {
   const out = [];
   let rest = n;
   for (let p = 2; p * p <= rest; p++) {
@@ -32,12 +32,12 @@ function factorise(n) {
 const gcd = (a, b) => (b === 0 ? a : gcd(b, a % b));
 
 /** 2 × 2 × 2 × 3, so that "what they share" is visibly a statement about factors. */
-const spelt = (n) => factorise(n).flatMap(([p, e]) => Array.from({ length: e }, () => p)).join(' × ');
+const spelled = (n) => factorize(n).flatMap(([p, e]) => Array.from({ length: e }, () => p)).join(' × ');
 
-/** Superscript digits, so a factorisation reads as it would be written. */
+/** Superscript digits, so a factorization reads as it would be written. */
 const SUP = { 0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴', 5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹' };
 const sup = (n) => String(n).split('').map((c) => SUP[c] ?? c).join('');
-const powered = (n) => factorise(n).map(([p, e]) => (e > 1 ? `${p}${sup(e)}` : String(p))).join(' × ');
+const powered = (n) => factorize(n).map(([p, e]) => (e > 1 ? `${p}${sup(e)}` : String(p))).join(' × ');
 
 /**
  * Factor pairs, asked from either side.
@@ -86,7 +86,7 @@ function factorPair(rng) {
  *
  * The stride does the spreading, so the evens run from 24 to 596 rather than
  * clustering in the small numbers. 22 is the stride and not a rounder one
- * because of two artefacts it avoids: the final digit advances by two each
+ * because of two artifacts it avoids: the final digit advances by two each
  * time and so cycles through all five even endings, where a stride of 20
  * would have made every one of them end in 4; and 22 is not a multiple of 6,
  * where a tidier 18 would have made every even number a multiple of 6 and
@@ -113,7 +113,7 @@ for (let n = 23; n <= 599; n++) if (n % 2 === 1 || n % 22 === 2) SPF_POOL.push(n
  */
 function smallestPrimeFactor(rng) {
   const n = rng.pick(SPF_POOL);
-  const [p] = factorise(n)[0];
+  const [p] = factorize(n)[0];
   const prime = p === n;
   const even = p === 2;
 
@@ -153,13 +153,13 @@ function smallestPrimeFactor(rng) {
 }
 
 /**
- * A factorisation with one piece missing.
+ * A factorization with one piece missing.
  *
  * Half the rows blank an exponent rather than a prime, and those are the ones
  * that carry the skill: "how many 2s are in 168" cannot be answered by
- * dividing 168 by what is left, so it has to be answered by factorising.
+ * dividing 168 by what is left, so it has to be answered by factorizing.
  */
-function primeFactorisation(rng) {
+function primeFactorization(rng) {
   const base = rng.pick([2, 3, 5, 7]);
   const exponent = rng.int(2, base === 2 ? 5 : base === 3 ? 4 : 3);
   // Capped so the number stays one a student can actually take apart in their
@@ -180,7 +180,7 @@ function primeFactorisation(rng) {
     product *= p ** e;
   }
   const n = base ** exponent * product;
-  const pairs = factorise(n);
+  const pairs = factorize(n);
   // Blanking a prime only works where the prompt would otherwise show it on
   // its own: a power drawn with a blank base has nowhere to put the exponent.
   const single = others.filter(([, e]) => e === 1);
@@ -213,11 +213,11 @@ function primeFactorisation(rng) {
     answer: { type: 'int', value: answer },
     visual: {
       kind: 'evalmodel',
-      lines: [String(n), spelt(n), powered(n)],
+      lines: [String(n), spelled(n), powered(n)],
       rules: ['split it until only primes are left', 'gather the repeats into powers'],
       hint: askExponent ? 'How many times does that prime go in?' : 'Which prime is unaccounted for?',
     },
-    explain: `Split ${n} all the way down and it is ${spelt(n)}. Gathered up that is `
+    explain: `Split ${n} all the way down and it is ${spelled(n)}. Gathered up that is `
       + `${powered(n)}, so the missing piece is ${answer}.`,
   };
 }
@@ -254,16 +254,16 @@ function greatestCommonFactor(rng) {
     answer: { type: 'int', value: share },
     visual: {
       kind: 'evalmodel',
-      lines: [`${x} and ${y}`, `${x} = ${spelt(x)}`, `${y} = ${spelt(y)}`,
-              `both have ${spelt(share)}`, String(share)],
+      lines: [`${x} and ${y}`, `${x} = ${spelled(x)}`, `${y} = ${spelled(y)}`,
+              `both have ${spelled(share)}`, String(share)],
       rules: ['break the first into primes', 'and the second',
               'keep only the factors that appear in both', 'multiply those together'],
       hint: 'What do both of them contain?',
     },
-    explain: `${x} is ${spelt(x)} and ${y} is ${spelt(y)}. `
-      + (factorise(share).length === 1 && factorise(share)[0][1] === 1
+    explain: `${x} is ${spelled(x)} and ${y} is ${spelled(y)}. `
+      + (factorize(share).length === 1 && factorize(share)[0][1] === 1
         ? `The only factor they both hold is ${share}.`
-        : `The factors they both hold are ${spelt(share)}, and multiplying those gives ${share}.`),
+        : `The factors they both hold are ${spelled(share)}, and multiplying those gives ${share}.`),
   };
 }
 
@@ -272,25 +272,25 @@ function coprimePair(rng) {
   do {
     x = rng.int(10, 99);
     y = rng.int(10, 99);
-  } while (x === y || gcd(x, y) !== 1 || factorise(x).length + factorise(y).length < 3);
+  } while (x === y || gcd(x, y) !== 1 || factorize(x).length + factorize(y).length < 3);
   return {
     prompt: [T.prose(`What is the greatest common factor of ${x} and ${y}?`)],
     text: `GCF of ${x} and ${y}`,
     answer: { type: 'int', value: 1 },
     visual: {
       kind: 'evalmodel',
-      lines: [`${x} and ${y}`, `${x} = ${spelt(x)}`, `${y} = ${spelt(y)}`,
+      lines: [`${x} and ${y}`, `${x} = ${spelled(x)}`, `${y} = ${spelled(y)}`,
               'no prime in both', '1'],
       rules: ['break the first into primes', 'and the second',
               'keep only the factors that appear in both', 'so only 1 goes into both'],
       hint: 'What do both of them contain?',
     },
-    explain: `${x} is ${spelt(x)} and ${y} is ${spelt(y)}. No prime appears in both, so the only `
+    explain: `${x} is ${spelled(x)} and ${y} is ${spelled(y)}. No prime appears in both, so the only `
       + `factor they share is 1, and ${x}/${y} is already in lowest terms.`,
   };
 }
 
-/** The lowest common multiple: the first place two counts land together. */
+/** The least common multiple: the first place two counts land together. */
 function lowestCommonMultiple(rng) {
   const { x, y, lcm } = pairSharing(rng);
   const runUp = (n) => {
@@ -305,7 +305,7 @@ function lowestCommonMultiple(rng) {
   const short = lcm / Math.min(x, y) <= 8;
   const shortcut = `Or use the GCF: ${x} × ${y} ÷ ${share} = ${lcm}.`;
   return {
-    prompt: [T.prose(`What is the lowest common multiple of ${x} and ${y}?`)],
+    prompt: [T.prose(`What is the least common multiple of ${x} and ${y}?`)],
     text: `LCM of ${x} and ${y}`,
     answer: { type: 'int', value: lcm },
     visual: short
@@ -320,12 +320,12 @@ function lowestCommonMultiple(rng) {
         lines: [`${x} and ${y}`, `${x} = ${powered(x)}`, `${y} = ${powered(y)}`,
                 powered(lcm), String(lcm)],
         rules: ['break the first into primes', 'and the second',
-                'each prime, as many times as either one has it', 'multiplied out'],
+                'each prime, as many times as either one has it', 'expanded'],
         hint: 'Counting up would take a while. What are they made of?',
       },
     explain: short
       ? `Counting in ${x}s and counting in ${y}s, the first number both reach is ${lcm}. `
-        + `That is the lowest common multiple. ${shortcut}`
+        + `That is the least common multiple. ${shortcut}`
       : `${x} is ${powered(x)} and ${y} is ${powered(y)}. A multiple of both needs every prime `
         + `either one has, as many times as it has it: ${powered(lcm)} = ${lcm}. ${shortcut}`,
   };
@@ -358,7 +358,7 @@ const SITUATIONS = [
   { text: 'Two lights flash every {a} seconds and every {b} seconds. When do they next flash together?',
     want: 'lcm',
     why: 'Both lights have to have completed whole cycles, so the answer is a number of seconds '
-      + 'both counts reach — at least as big as either. That is the lowest common multiple.' },
+      + 'both counts reach — at least as big as either. That is the least common multiple.' },
   { text: '{a} pens and {b} pencils, split into identical packs with nothing left over. '
       + 'What is the greatest number of packs?',
     want: 'gcf',
@@ -368,13 +368,13 @@ const SITUATIONS = [
       + 'buy and still have exactly as many pencils?',
     want: 'lcm',
     why: 'The number of pens has to be a whole number of boxes of {a} and also of {b}, so it is a '
-      + 'number both counts reach. The fewest is the lowest common multiple.' },
+      + 'number both counts reach. The fewest is the least common multiple.' },
   { text: 'Ribbons come {a} inches and {b} inches long. Laid end to end, what is the shortest length both '
       + 'kinds can make exactly?',
     want: 'lcm',
     why: 'The length has to be a whole number of each kind of ribbon, so both counts reach it — '
-      + 'it is at least as long as either. The shortest is the lowest common multiple.' },
-  { text: 'Two classes of {a} and {b} pupils are split into teams of the same size, no team mixing '
+      + 'it is at least as long as either. The shortest is the least common multiple.' },
+  { text: 'Two classes of {a} and {b} students are split into teams of the same size, no team mixing '
       + 'classes. What is the largest team size?',
     want: 'gcf',
     why: 'A team size has to divide both classes exactly, so it is no bigger than either. '
@@ -387,7 +387,7 @@ const SITUATIONS = [
   { text: 'Tiles {a} cm by {b} cm, laid out to make the smallest possible square.',
     want: 'lcm',
     why: 'The square\'s side has to be a whole number of tiles each way, so it is a length both '
-      + 'sides count up to. Smallest such length is the lowest common multiple.' },
+      + 'sides count up to. Smallest such length is the least common multiple.' },
   { text: 'The largest square tile that exactly fills a {a} cm by {b} cm rectangle.',
     want: 'gcf',
     why: 'The tile has to fit whole along both sides, so its side divides both. Largest such tile '
@@ -395,7 +395,7 @@ const SITUATIONS = [
   { text: 'Buns come in packs of {a} and sausages in packs of {b}. Fewest packs to have equal numbers?',
     want: 'lcm',
     why: 'You need a total both pack sizes can reach exactly, which is at least as many as either. '
-      + 'The smallest one is the lowest common multiple.' },
+      + 'The smallest one is the least common multiple.' },
   { text: '{a} red counters and {b} blue ones, in rows of equal length, no row mixing colors. '
       + 'How long can a row be?',
     want: 'gcf',
@@ -404,11 +404,11 @@ const SITUATIONS = [
   { text: 'Two buses set off together, then run every {a} and every {b} minutes. Next time together?',
     want: 'lcm',
     why: 'Both buses must have run whole numbers of trips, so the time is one both counts reach. '
-      + 'The first is the lowest common multiple.' },
+      + 'The first is the least common multiple.' },
   { text: 'Adding {aths} and {bths} — what should the denominator become?',
     want: 'lcm',
     why: 'Both fractions have to be rewritten into pieces of the same size, and a denominator both '
-      + 'can reach is a common multiple. The smallest is the lowest common multiple.' },
+      + 'can reach is a common multiple. The smallest is the least common multiple.' },
   { text: 'Putting {a}/{b} into lowest terms — what do you divide by?',
     want: 'gcf',
     why: 'Dividing top and bottom needs a number that goes into both, and doing it in one move '
@@ -429,7 +429,7 @@ function gcfOrLcm(rng) {
       value: situation.want,
       options: rng.shuffle([
         { id: 'gcf', label: 'Greatest common factor', note: 'the answer fits inside both' },
-        { id: 'lcm', label: 'Lowest common multiple', note: 'the answer is reached by both' },
+        { id: 'lcm', label: 'Least common multiple', note: 'the answer is reached by both' },
       ]),
     },
     visual: null,
@@ -443,11 +443,11 @@ export function generate(rng, level) {
     switch (lv) {
       case 0: return factorPair(rng);
       case 1: return smallestPrimeFactor(rng);
-      case 2: return primeFactorisation(rng);
+      case 2: return primeFactorization(rng);
       case 3: return greatestCommonFactor(rng);
       case 4: return lowestCommonMultiple(rng);
       case 5: return gcfOrLcm(rng);
-      default: return rng.pick([factorPair, smallestPrimeFactor, primeFactorisation,
+      default: return rng.pick([factorPair, smallestPrimeFactor, primeFactorization,
                                 greatestCommonFactor, lowestCommonMultiple])(rng);
     }
   };

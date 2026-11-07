@@ -1,7 +1,7 @@
 """What a contract test can reach: the edition under test, and helpers over it.
 
 The edition adapter is the only edition-specific code. Everything a test
-needs beyond it -- the catalogue, a finished run -- it gets through the API,
+needs beyond it -- the catalog, a finished run -- it gets through the API,
 the same way the browser app does.
 """
 from __future__ import annotations
@@ -19,7 +19,7 @@ def group():
     return EDITION.new_group()
 
 
-def catalogue(client: Client) -> dict[str, list[str]]:
+def catalog(client: Client) -> dict[str, list[str]]:
     """{skill_id: [level slug, ...]} as the server publishes it."""
     global _manifest
     if _manifest is None:
@@ -29,10 +29,10 @@ def catalogue(client: Client) -> dict[str, list[str]]:
 
 def a_skill(client: Client, levels: int = 3) -> tuple[str, list[str]]:
     """A real skill with at least `levels` levels, the same one every time."""
-    for skill_id, slugs in sorted(catalogue(client).items()):
+    for skill_id, slugs in sorted(catalog(client).items()):
         if len(slugs) >= levels:
             return skill_id, slugs
-    raise AssertionError(f"the catalogue has no skill with {levels} levels")
+    raise AssertionError(f"the catalog has no skill with {levels} levels")
 
 
 def summary(**kw) -> dict:

@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for the Pythagorean theorem.
+ * Catalog authoring tool: builds the problem library for the Pythagorean theorem.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -57,7 +57,7 @@ function simplified(n) {
 
 /**
  * The triangle on a grid, right angle at the origin, legs along the axes.
- * The side asked for is drawn but labelled only once it is answered.
+ * The side asked for is drawn but labeled only once it is answered.
  */
 function triangle(a, b, unknown, answerLabel) {
   // Never smaller than a 6 by 6 grid, so legs of 1 and 1 still read as a triangle.
@@ -123,7 +123,7 @@ function leg(rng) {
     text: `leg: ${c}, ${known} (${at.id})`,
     answer: { type: 'int', value: want },
     visual: at.id === 'triangle' ? triangle(known, want, 'b', String(want)) : null,
-    explain: `${c} is the longest side, so its square is the sum of the other two: take away. `
+    explain: `${c} is the longest side, so its square is the sum of the other two: subtract. `
       + `b² = ${c}² − ${known}² = ${c * c} − ${known * known} = ${want * want}, so b = ${want}.`
       + ` (Adding would give √${c * c + known * known}, longer than the hypotenuse.)`,
   };

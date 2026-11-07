@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for counting.
+ * Catalog authoring tool: builds the problem library for counting.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -383,7 +383,7 @@ function rowRule(rng) {
   return {
     prompt: `${intro} How many orders keep ${A} and ${B} apart, not next to each other?`, text: `row: ${N} people, A and B apart`, v: all - 2 * rest,
     explain: `Count the opposite and take it away. Every order: ${N}! = ${fmt(all)}. Together, as one block that can face 2 ways: 2 × ${N - 1}! = ${fmt(2 * rest)}. Apart: ${fmt(all)} − ${fmt(2 * rest)} = ${fmt(all - 2 * rest)}. `
-      + `(Forgetting the block's 2 orders takes away too little.) So ${fmt(all - 2 * rest)}.`,
+      + `(Forgetting the block's 2 orders subtracts too little.) So ${fmt(all - 2 * rest)}.`,
   };
 }
 

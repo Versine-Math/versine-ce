@@ -2,10 +2,10 @@
  * Rational Expressions: fractions with polynomials top and bottom.
  *
  * They follow the rules of number fractions. Simplify by factoring and
- * cancelling whole factors, never terms; a value of x that makes any
+ * canceling whole factors, never terms; a value of x that makes any
  * denominator zero is excluded, even after the factor that caused it has
- * cancelled. Multiply straight across and divide by multiplying by the
- * reciprocal, factoring first so the cancelling is visible. Add over a common
+ * canceled. Multiply straight across and divide by multiplying by the
+ * reciprocal, factoring first so the canceling is visible. Add over a common
  * denominator, taking the whole of the second numerator away when
  * subtracting, and clear a fraction inside a fraction by multiplying its top
  * and bottom by the denominator they share. a − x and x − a are opposites,
@@ -18,14 +18,14 @@ export const LEVELS = [
     // Factoring x² + bx + c, top and bottom.
     dependsOn: [{ skill: 'factoring', level: 1 }] },
   { name: 'Excluded Values', slug: 'excluded-values',
-    blurb: 'A value that makes a denominator zero is excluded: set the denominator to zero and solve. Cancelling does not bring it back.',
+    blurb: 'A value that makes a denominator zero is excluded: set the denominator to zero and solve. Canceling does not bring it back.',
     // Setting a factored denominator to zero is the zero product property.
     dependsOn: [{ skill: 'quadratic-eq', level: 0 }] },
   { name: 'Multiply & Divide', slug: 'multiply-and-divide',
     blurb: 'Factor everything, multiply across, cancel; to divide, flip the second fraction and multiply.',
     dependsOn: [{ skill: 'frac-muldiv', level: 4 }] },
   { name: 'Common Denominator', slug: 'common-denominator',
-    blurb: 'Same denominator: combine the numerators over it. Subtracting takes away all of the second numerator, then simplify.',
+    blurb: 'Same denominator: combine the numerators over it. Subtracting subtracts all of the second numerator, then simplify.',
     dependsOn: [{ skill: 'frac-addsub', level: 0 }] },
   { name: 'Unlike Denominators', slug: 'unlike-denominators',
     blurb: 'Factor the denominators; the common one has each factor as often as one of them does, so a shared factor is used once. Multiply each fraction up to it, then combine the numerators.',

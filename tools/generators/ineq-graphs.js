@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for ineq-graphs.
+ * Catalog authoring tool: builds the problem library for ineq-graphs.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -51,7 +51,7 @@ const valueOf = (h) => ('x' in h ? { x: ratio(h.x, 1), op: h.op } : { m: h.m, b:
 const shown = (h) => getType('halfplane').format(valueOf(h));
 const ascii = (h) => shown(h).replace(/−/g, '-').replace(/≤/g, '<=').replace(/≥/g, '>=');
 /**
- * The inequality in running text. A fractional slope is bracketed, (3/2)x,
+ * The inequality in running text. A fractional slope is in parentheses, (3/2)x,
  * because "3/2x" in a sentence reads as three over 2x; the typed form the
  * answer box and the plain-text checker read keeps 3/2x.
  */
@@ -129,7 +129,7 @@ function isSolution(rng) {
       ? `Only x matters: is ${check}? `
       : h.m.n === 0
         ? `The line is y = ${minus(h.k)} everywhere, whatever x is. Is y = ${check}? `
-        : `Work out the right side at x = ${minus(p[0])}: ${h.m.d === 1 ? minus(h.m.n) : `(${minus(h.m.n)}/${h.m.d})`} × ${signed(p[0])}`
+        : `Calculate the right side at x = ${minus(p[0])}: ${h.m.d === 1 ? minus(h.m.n) : `(${minus(h.m.n)}/${h.m.d})`} × ${signed(p[0])}`
           + `${h.k === 0 ? '' : ` ${h.k < 0 ? '−' : '+'} ${Math.abs(h.k)}`} = ${minus(rhs)}. Is y = ${check}? `)
       + `${yes ? 'Yes' : 'No'}, so ${pt(p)} ${yes ? 'is' : 'is not'} a solution, and ${yes ? 'is' : 'is not'} in the shaded half.`
       + (onLine ? ` It is on the line itself, which ${strict(h.op) ? 'a strict < or > leaves out' : '≤ and ≥ keep'}.` : ''),

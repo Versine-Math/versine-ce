@@ -2,7 +2,7 @@
  * Inequalities.
  *
  * The skill that was missing from the map rather than merely absent from it:
- * every other empty corner of the catalogue has a category declared and
+ * every other empty corner of the catalog has a category declared and
  * waiting, and this one had nothing at all. It sits beside Solving Equations
  * and reuses every move in it, which is probably why it slipped through — an
  * inequality is an equation until the very last step, and then it is not.

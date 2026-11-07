@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for frac-signed.
+ * Catalog authoring tool: builds the problem library for frac-signed.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -28,7 +28,7 @@ function pick(rng, sign) {
 const size = (f) => format(frac(Math.abs(f.n), f.d));
 const sign = (f) => (f.n < 0 ? '−' : '+');
 const show = (f) => format(f).replace(/-/g, '−');
-/** A negative after an operator is bracketed: "× (−5/7)", never "× −5/7". */
+/** A negative after an operator is in parentheses: "× (−5/7)", never "× −5/7". */
 const after = (f) => (f.n < 0 ? `(${format(f)})` : format(f));
 /**
  * Where lowest terms are demanded, the question says so. Only the level blurb
@@ -80,7 +80,7 @@ function whereTheMinus(rng) {
               ['the minus is already in front',
                'a minus below the line means the same as one in front',
                'and the two cancel',
-               'a minus outside the bracket is a minus in front'][shape],
+               'a minus outside the parentheses is a minus in front'][shape],
               'then divide both by what they share'],
       hint: 'How many negatives are there, and where do they end up?',
     },
@@ -94,7 +94,7 @@ function whereTheMinus(rng) {
         + 'taking the negative of a division come to the same thing. ',
       `Two negatives: a negative divided by a negative is positive, so ${shown} is `
         + `${Math.abs(n)}/${Math.abs(den)}. `,
-      `One negative, outside the bracket: the negative of ${n}/${den} is `
+      `One negative, outside the parentheses: the negative of ${n}/${den} is `
         + `−${n}/${den}, the same number with the minus written in front. `,
     ][shape]
       + `Then ${Math.abs(n)} and ${Math.abs(den)} share a factor of ${k}, `
@@ -115,7 +115,7 @@ function whereTheMinus(rng) {
  *
  * Every shape a student can meet is drawn from: negative first, negative
  * second, both negative, and for subtraction the one that catches everyone --
- * taking away a negative, where the answer comes out bigger than what you
+ * subtracting a negative, where the answer comes out bigger than what you
  * started with.
  *
  * No bar model. There is no honest way to shade minus three quarters of a
@@ -140,7 +140,7 @@ function why(work, subtracting, b, common) {
   const left = work.left.n;
   const right = subtracting ? -work.right.n : work.right.n;
   if (subtracting && b.n < 0) {
-    return 'Taking away a negative adds: the answer comes out bigger than what you '
+    return 'Subtracting a negative adds: the answer comes out bigger than what you '
       + 'started with, which is the one that looks wrong and is not.';
   }
   if ((left < 0) === (right < 0)) {
@@ -163,7 +163,7 @@ function signedAddSub(rng, subtracting) {
   const op = subtracting ? '−' : '+';
   const common = work.common;
 
-  // A negative operand after an operator is bracketed, the way it is written
+  // A negative operand after an operator is in parentheses, the way it is written
   // everywhere: "1/2 − (−3/4)", never "1/2 − −3/4".
   const second = b.n < 0
     ? T.group([T.frac(b.n, b.d, 2)], 2)
@@ -314,7 +314,7 @@ function signOfSum(rng) {
     explain: `This one ${subtracting ? 'subtracts' : 'adds'}, so counting negatives does not `
       + `decide it. In ${nths(work.common)} it is ${String(work.left.n).replace('-', '−')} `
       + `${right < 0 ? '−' : '+'} ${Math.abs(right)}`
-      + (subtracting && b.n < 0 ? ' (taking away a negative adds)' : '')
+      + (subtracting && b.n < 0 ? ' (subtracting a negative adds)' : '')
       + `, and ${(work.left.n < 0) === (right < 0)
         ? 'both push the same way'
         : `${Math.abs(work.left.n) > Math.abs(right) ? Math.abs(work.left.n) : Math.abs(right)} is the bigger`}`

@@ -5,7 +5,7 @@
  * The mean shares the total out equally and the median is the middle once
  * the data is in order, and the slip each level is built to catch is the
  * one people make: the median read off an unsorted list, a zero left out of
- * the count. A missing value for a mean is the total turned round: a mean of
+ * the count. A missing value for a mean is the total turned around: a mean of
  * 12 over five numbers is a total of 60. Quartiles are medians of the two
  * halves, with the middle value of an odd count in neither half, and the
  * interquartile range is the spread of the middle half, set beside the range

@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for series.
+ * Catalog authoring tool: builds the problem library for series.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -45,9 +45,9 @@ const qa = (p) => (p.d === 1 ? String(p.n) : `${p.n}/${p.d}`);
 const qs = (p) => (p.d === 1 ? commas(p.n) : `${commas(p.n)}/${commas(p.d)}`);
 /** A whole number as US prose writes it: −12,500. */
 const commas = (n) => minus(n).replace(/\d{4,}/, (m) => Number(m).toLocaleString('en-US'));
-/** In brackets when negative or a fraction, for a product: 3(−2), 5(1/2). */
+/** In parentheses when negative or a fraction, for a product: 3(−2), 5(1/2). */
 const qb = (p) => (p.n < 0 || p.d !== 1 ? `(${qs(p)})` : qs(p));
-/** In brackets when a fraction, for the top of a division: (5/3)/(1 − 1/3). */
+/** In parentheses when a fraction, for the top of a division: (5/3)/(1 − 1/3). */
 const qf = (p) => (p.d !== 1 ? `(${qs(p)})` : qs(p));
 const answer = (p) => ({ type: 'frac', value: Q(p.n, p.d), requireSimplest: false });
 
@@ -250,11 +250,11 @@ const linRule = (a, b) => `${a === 1 ? '' : a === -1 ? '-' : a}k${b === 0 ? '' :
 /** c(r)^(k - s): a geometric rule. */
 const geoRule = (c, r, s) => {
   const power = s === 0 ? 'k' : `(k - ${s})`;
-  // 2^k alone; 3(2)^k with a number in front, the bracket on the base.
+  // 2^k alone; 3(2)^k with a number in front, the parentheses on the base.
   if (c.n === 1 && c.d === 1) return `${isInt(r) && r.n > 0 ? r.n : `(${qa(r)})`}^${power}`;
   return `${qa(c)}(${qa(r)})^${power}`;
 };
-/** The body drawn as the expression box draws it, in brackets when it is a sum. */
+/** The body drawn as the expression box draws it, in parentheses when it is a sum. */
 function body(src, bracket) {
   const r = previewOf(src);
   if (!r.ok) throw new Error(`cannot draw ${src}`);
@@ -689,10 +689,10 @@ function context(rng) {
     // The taught form, a₁(1 − rⁿ)/(1 − r), with every decimal exact.
     return {
       prompt: [T.prose(`A ${who} takes in $${commas(first)} in its first month, and each month it takes in ${pct}% more than the month before. How many dollars does it take in over its first ${months} months?`)],
-      text: `takings: ${first} first, ${pct} percent, ${months} months`,
+      text: `revenue: ${first} first, ${pct} percent, ${months} months`,
       answer: answer(S),
       visual: null,
-      explain: `Rising ${pct}% multiplies the takings by ${dec(r)} each month, so the months make a geometric series: ${ts.map(qs).join(' + ')}, ratio ${dec(r)}. `
+      explain: `Rising ${pct}% multiplies the revenue by ${dec(r)} each month, so the months make a geometric series: ${ts.map(qs).join(' + ')}, ratio ${dec(r)}. `
         + `S = a₁(1 − rⁿ)/(1 − r) = ${commas(first)}(1 − ${dec(r)}${sup(months)})/(1 − ${dec(r)}). ${dec(r)}${sup(months)} = ${dec(rn)}, so this is ${commas(first)}(${dec(sub(Q(1), rn))})/(${dec(sub(Q(1), r))}) = ${commas(first)}(${dec(div(sub(Q(1), rn), sub(Q(1), r)))}) = ${qs(S)}. `
         + `So it takes in $${qs(S)} in all.`,
     };
@@ -774,7 +774,7 @@ function backward(rng) {
         answer: answer(Q(n)),
         visual: null,
         explain: `With a₁ = ${minus(a)} and d = ${d}, Sₙ = n(2a₁ + (n − 1)d)/2 = n(${minus(2 * a)} + ${d}(n − 1))/2 = ${commas(S)}. `
-          + `Multiplied out, ${quad(d, 2 * a - d, -2 * S)} = 0${g === 1 ? '' : `; divided by ${g}, ${quad(A, B, C)} = 0`}. `
+          + `Expanded, ${quad(d, 2 * a - d, -2 * S)} = 0${g === 1 ? '' : `; divided by ${g}, ${quad(A, B, C)} = 0`}. `
           + `It factors as (n − ${n})(${lead(A)}n ${M < 0 ? '−' : '+'} ${Math.abs(M)}) = 0, so n = ${n} or n = ${qs(other)}. A count of terms cannot be negative. So ${n} terms add up to ${commas(S)}.`,
       };
     }

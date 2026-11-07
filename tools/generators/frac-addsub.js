@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for frac-addsub.
+ * Catalog authoring tool: builds the problem library for frac-addsub.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -22,7 +22,7 @@ function coprimeNumerator(rng, d, max) {
   return options.length ? rng.pick(options) : 1;
 }
 /**
- * Denominator pairs whose lowest common denominator stays drawable.
+ * Denominator pairs whose least common denominator stays drawable.
  *
  * Built rather than listed. A hand-written list of six pairs looks like plenty
  * until you count what survives the "sum stays under one" filter: with 2 and 3
@@ -65,7 +65,7 @@ const minus = (n) => (n < 0 ? `−${-n}` : String(n));
 const lowest = (requireSimplest, terms) => (requireSimplest
   ? [T.prose('In lowest terms:'), ...terms] : terms);
 /**
- * Denominator pairs, capped so the lowest common denominator stays readable.
+ * Denominator pairs, capped so the least common denominator stays readable.
  */
 function draw(rng, level) {
   switch (level) {
@@ -156,7 +156,7 @@ function compare(rng, hold, far = false) {
 }
 
 /**
- * Taking away more than there was.
+ * Subtracting more than there was.
  *
  * No bar model: the bar draws a single whole cut into pieces, and there is no
  * honest way to shade minus three twelfths of it. The working is written out
@@ -193,10 +193,10 @@ function crossingZero(rng, requireSimplest) {
               landed],
       rules: [`rewrite both in ${nths(common)}`, 'now it is a subtraction of whole numbers',
               reduces ? 'over the same denominator, then simplified' : 'over the same denominator'],
-      hint: 'Which is bigger — and what happens if you take it off the other?',
+      hint: 'Which is bigger — and what happens if you subtract it from the other?',
     },
     explain: `In ${nths(common)} this is ${left} − ${right}, and ${right} is more than `
-      + `${left}, so the answer is below zero: ${landed}. Taking away more than `
+      + `${left}, so the answer is below zero: ${landed}. Subtracting more than `
       + 'you had is a negative, and a fraction is no different from a whole number '
       + 'about that.',
   };
@@ -209,7 +209,7 @@ for (let a = 2; a <= 24; a++) {
 }
 
 /**
- * Simplify the Answer's sums. It drew the very rows Taking Away had, in the
+ * Simplify the Answer's sums. It drew the very rows Subtracting had, in the
  * same order, and only 12% of them simplified. Now it adds as well as
  * subtracts, over denominators up to 24 (equal ones too) whose common denominator stays
  * drawable, and about two rows in three simplify -- not all, so checking is still

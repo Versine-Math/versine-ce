@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for two-variable
+ * Catalog authoring tool: builds the problem library for two-variable
  * data.
  *
  * NOT part of the running application. Nothing here is served to a browser
@@ -855,7 +855,7 @@ function twoWay(rng) {
     answer: { type: 'decimal', value: A.value, percent: true },
     visual: grid(S, c, null, null, ['Part ÷ whole',
       [0, 1, 2].map((r) => (r === (kind === 'col' || kind === 'given-col' ? 2 : i) ? `${part} ÷ ${whole}` : ''))]),
-    explain: `The whole is ${wholeName}, and the part is ${kind === 'row' ? `${cells[i][0]} + ${cells[i][1]} = ${part}` : part}: ${part} ÷ ${whole} × 100 = ${A.rounded ? `${(pct(part, whole)).toFixed(3)}…, which is ${A.shown} to 1 dp` : A.shown}. `
+    explain: `The whole is ${wholeName}, and the part is ${kind === 'row' ? `${cells[i][0]} + ${cells[i][1]} = ${part}` : part}: ${part} ÷ ${whole} × 100 = ${A.rounded ? `${(pct(part, whole)).toFixed(3)}…, which is ${A.shown} to 1 decimal place` : A.shown}. `
       + `(${kind.startsWith('given') ? `“Of the ${kind === 'given-row' ? S.row[i] : S.colWho[j]}” makes that ${kind === 'given-row' ? 'row' : 'column'} the whole, not the grand total.` : `Out of everyone, the whole is all ${total}, not a row or a column total.`}) So ${A.shown}%.`,
   };
 }

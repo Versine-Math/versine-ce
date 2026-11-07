@@ -11,9 +11,9 @@ import { rootTerms } from '../math/surds.js';
  * string of markup it merely echoes. That buys four things:
  *
  *   Notation can be restyled everywhere at once. Changing how a fraction is
- *   set is a change here, not a rewrite of 27,000 catalogue rows.
+ *   set is a change here, not a rewrite of 27,000 catalog rows.
  *
- *   Nothing from the catalogue reaches innerHTML. Terms become elements with
+ *   Nothing from the catalog reaches innerHTML. Terms become elements with
  *   textContent, so a stray angle bracket in a problem is a character, not
  *   markup.
  *
@@ -21,11 +21,11 @@ import { rootTerms } from '../math/surds.js';
  *   missing a field, is caught by the deploy gate rather than rendering as
  *   nothing in front of a student.
  *
- *   New notation is available to the whole catalogue at once. Adding a term
+ *   New notation is available to the whole catalog at once. Adding a term
  *   type here — a radical, an exponent, a coordinate pair — lets every level
  *   use it immediately, which is the point of a shared vocabulary.
  *
- * Slots (`s`) carry the accent colour a term is drawn in, matching the visual
+ * Slots (`s`) carry the accent color a term is drawn in, matching the visual
  * beside it: the first operand and its bar are the same hue. They are
  * presentation, not meaning.
  */
@@ -35,14 +35,14 @@ import { rootTerms } from '../math/surds.js';
  *
  * Nesting is what lets a typed expression be drawn at all -- (x+1)/2 has a
  * whole expression above the line, and 2^(n+1) has one in the exponent. A
- * vocabulary that only took numbers there could describe the catalogue's own
+ * vocabulary that only took numbers there could describe the catalog's own
  * problems and nothing a student typed.
  */
 function part(v, cls) {
   if (v === null || v === undefined) return el(`span.${cls}.is-blank`, {}, '?');
   if (Array.isArray(v)) return el(`span.${cls}`, {}, v.map(drawTerm));
   // A negative number is drawn with a real minus sign rather than a hyphen,
-  // the same as everywhere else in the app. The catalogue stores numbers here
+  // the same as everywhere else in the app. The catalog stores numbers here
   // -- the deploy gate insists on it, and refuses a pre-formatted string --
   // so the formatting has to happen at the point of drawing.
   if (typeof v === 'number' && v < 0) return el(`span.${cls}`, {}, `−${Math.abs(v)}`);
@@ -121,7 +121,7 @@ const TERMS = {
    */
   juxt: (t) => el(`span.t${t.s ?? 1}.juxt-term`, {}, (t.terms ?? []).map(drawTerm)),
 
-  /** Brackets around a nested expression, drawn full height. */
+  /** Parentheses around a nested expression, drawn full height. */
   group: (t) => el(`span.t${t.s ?? 1}.group-term`, {},
     el('span.group-term__b', {}, '('),
     el('span', {}, (t.terms ?? []).map(drawTerm)),
@@ -223,7 +223,7 @@ export function renderPrompt(node, terms, opts = {}) {
       }
     }
     const make = TERMS[t?.t];
-    // A term the system does not know is a catalogue fault, not a student's.
+    // A term the system does not know is a catalog fault, not a student's.
     // Show a marker rather than nothing, so it is obvious on sight.
     return make ? make(t) : el('span.t1.is-unknown', {}, '⚠');
   }));
@@ -246,15 +246,15 @@ export function renderPrompt(node, terms, opts = {}) {
     pair.append(op, q);
   }
   // requiem: play/ui/long-pieces-set-smaller
-  // A bracket or a product set side by side cannot break across a line, so
+  // Parentheses or a product set side by side cannot break across a line, so
   // a long one is set smaller rather than run off the card: (x + 5)(x² − 3x
-  // + 2) is one piece, and so is a piece of maths set by hand, y = −2f(x − 1)
+  // + 2) is one piece, and so is a piece of math set by hand, y = −2f(x − 1)
   // + 5. Measured from the question, so a reveal never resizes.
   const widest = Math.max(0, ...(terms ?? []).filter((t) => t?.t === 'juxt' || t?.t === 'group' || t?.t === 'math')
     .map((t) => promptText([t]).length));
   node.classList.toggle('is-long', widest > 11 && widest <= 16);
   node.classList.toggle('is-longer', widest > 16);
-  // Drawn maths reads aloud as its pieces -- 4/5 as "4 5", 4n² as "4 n2" --
+  // Drawn math reads aloud as its pieces -- 4/5 as "4 5", 4n² as "4 n2" --
   // so a screen reader is given the question in words and skips the drawing.
   for (const n of node.children) n.setAttribute('aria-hidden', 'true');
   // Once the blank is filled, it is read filled.
@@ -305,7 +305,7 @@ export function answerTerm(type, value) {
       return box.preview(box.format(value)).terms;
     }
     case 'roots': return rootTerms(value);
-    // As the box previews it: each point in its brackets, none as the word,
+    // As the box previews it: each point in its parentheses, none as the word,
     // and a vector in its angle brackets.
     case 'vector':
     case 'points': {

@@ -13,9 +13,9 @@
 export const LEVELS = [
   { name: 'Times Before Plus', slug: 'times-before-plus', blurb: 'Multiplying and dividing happen before adding and subtracting.' },
   { name: 'Left to Right', slug: 'left-to-right', blurb: 'Same rank? Work left to right. This is the one that catches people.' },
-  { name: 'Brackets First', slug: 'brackets-first', blurb: 'Whatever is in brackets goes first, whatever it is.' },
-  { name: 'Powers Too', slug: 'powers-too', blurb: 'Powers come before multiplying, after brackets.' },
-  { name: 'Nested', slug: 'nested', blurb: 'Brackets inside brackets. Work from the inside out.' },
+  { name: 'Parentheses First', slug: 'brackets-first', blurb: 'Whatever is in parentheses goes first, whatever it is.' },
+  { name: 'Powers Too', slug: 'powers-too', blurb: 'Powers come before multiplying, after parentheses.' },
+  { name: 'Nested', slug: 'nested', blurb: 'Parentheses inside parentheses. Work from the inside out.' },
   {
     name: 'All Together', slug: 'all-together',
     blurb: 'Everything mixed, with no warning which rule bites. Clear this '

@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring helpers for straight lines: exact slopes, and where a
+ * Catalog authoring helpers for straight lines: exact slopes, and where a
  * line crosses the edge of the plane it is drawn on.
  *
  * NOT part of the running application -- the generators that draw lines
@@ -65,7 +65,7 @@ export function clip(m, b, span) {
 export function lineText(m, b, { ascii = false } = {}) {
   const neg = ascii ? '-' : '−';
   const mr = ratio(m.n, m.d), br = ratio(b.n, b.d);
-  // In running text a fractional slope is bracketed -- "1/2x" reads as one
+  // In running text a fractional slope is in parentheses -- "1/2x" reads as one
   // over 2x -- while the ASCII form is what the parser and the preview take.
   const size = mr.d === 1 ? String(Math.abs(mr.n))
     : ascii ? `${Math.abs(mr.n)}/${mr.d}` : `(${Math.abs(mr.n)}/${mr.d})`;

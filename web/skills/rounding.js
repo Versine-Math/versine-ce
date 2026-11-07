@@ -1,10 +1,10 @@
 /**
  * Rounding, and estimating with it.
  *
- * The catalogue could compute exactly in six notations and had no way to say
+ * The catalog could compute exactly in six notations and had no way to say
  * "about". That is a real hole rather than a missing convenience: an estimate
  * is how you find out whether an exact answer is plausible, and a student
- * with no habit of estimating has no defence against a slipped decimal point
+ * with no habit of estimating has no defense against a slipped decimal point
  * or a division done upside down. Every other skill here produces answers;
  * this is the one that checks them.
  *
@@ -35,7 +35,7 @@ export const LEVELS = [
   {
     name: 'Exact, or Close Enough?', slug: 'exact-or-close-enough', kind: 'strategy',
     blurb: 'Some questions want the number. Some only want the size of it.',
-    // The judgement only exists once an estimate can actually be produced,
+    // The judgment only exists once an estimate can actually be produced,
     // and what it is weighed against is exact decimal arithmetic.
     dependsOn: [{ skill: 'decimals', level: 2 }],
   },

@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for exponential functions.
+ * Catalog authoring tool: builds the problem library for exponential functions.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -90,7 +90,7 @@ const baseText = (b, asFraction = false) => ((asFraction || !decimal(b, 6)) && b
 function model(a, b, { exp = 'x', fraction = false, letter = 'x' } = {}) {
   const base = baseText(b, fraction);
   const e = exp.replace('x', letter);
-  // After a number the base is bracketed, so 3(2)^x is not read as 32^x.
+  // After a number the base is in parentheses, so 3(2)^x is not read as 32^x.
   const power = `${base.startsWith('(') || num(a) === 1 || num(a) === -1 ? base : `(${base})`}^${e}`;
   if (num(a) === 1) return power;
   return `${num(a) === -1 ? '-' : said(a).replace('−', '-')}${power}`;
@@ -385,7 +385,7 @@ function asymptote(rng) {
   const askLine = rng.chance(0.6);
   const f = (x) => num(a) * num(b) ** x + k;
   const flat = num(b) > 1 ? 'to the left' : 'to the right';
-  // The line in two halves, labelled on the side the curve has left, so the
+  // The line in two halves, labeled on the side the curve has left, so the
   // label never sits on the curve where it hugs the line.
   const steep = num(b) > 1 ? SPAN : -SPAN;
   const line = [{ kind: 'segment', from: [-steep, k], to: [0, k], tone: MARK, dashed: true },
@@ -418,7 +418,7 @@ const four = (x) => minus(Number(x.toFixed(4)));
 
 // requiem: catalogue/content/e-met-before-ln
 // e is met as what compounding more and more often tends to: $1 at 100%
-// compounded n times is (1 + 1/n)ⁿ, which climbs towards 2.71828... and no
+// compounded n times is (1 + 1/n)ⁿ, which climbs toward 2.71828... and no
 // further. Continuous growth at rate r is then a·e^(rt), its rate read off
 // the exponent and its yearly factor e^r, a little more than 1 + r.
 function continuous(rng) {
@@ -441,7 +441,7 @@ function continuous(rng) {
         answer,
         visual: null,
         explain: `Compounded ${n === 1 ? 'once' : `${n} times`} a year, each time multiplies by 1 + ${r / 100}${n === 1 ? '' : `/${n}`}, ${n * t} time${n * t === 1 ? '' : 's'} in all: `
-          + `${P} × (1 + ${r / 100}${n === 1 ? '' : `/${n}`})${n * t === 1 ? '' : ` to the power ${n * t}`} ≈ ${four(x)}.`
+          + `${P} × (1 + ${r / 100}${n === 1 ? '' : `/${n}`})${n * t === 1 ? '' : ` to the power of ${n * t}`} ≈ ${four(x)}.`
           + (kind === 'bernoulli' ? ' The more often it is compounded, the closer this comes to e = 2.71828..., and it never passes it.' : '')
           + ` So ${kind === 'bernoulli' ? '' : '$'}${roundedText(answer.value.n, places)}.`,
       };
@@ -460,7 +460,7 @@ function continuous(rng) {
         answer,
         visual: null,
         explain: `Compounded continuously, more often than any number of times a year, it grows as P · e to the power rt, with r = ${r / 100} and t = ${t}: `
-          + `${P} × e to the power ${minus(+((r * t) / 100).toFixed(4))} ≈ ${four(x)}. So $${roundedText(answer.value.n, 2)}.`,
+          + `${P} × e to the power of ${minus(+((r * t) / 100).toFixed(4))} ≈ ${four(x)}. So $${roundedText(answer.value.n, 2)}.`,
       };
     }
   }
@@ -477,7 +477,7 @@ function continuous(rng) {
         text: `continuous rate: ${src}`,
         answer: answerOf(Q(pct)),
         visual: null,
-        explain: `In a · e to the power kt, k is the continuous rate: here k = ${minus(k)}, ${up ? 'positive, so growth' : 'negative, so decay'}, at ${pct}%.`,
+        explain: `In a · e to the power of kt, k is the continuous rate: here k = ${minus(k)}, ${up ? 'positive, so growth' : 'negative, so decay'}, at ${pct}%.`,
       };
     }
     if (kind === 'factor') {
@@ -489,7 +489,7 @@ function continuous(rng) {
         text: `continuous factor: ${src} to 4 dp`,
         answer,
         visual: null,
-        explain: `One more t multiplies by e to the power ${minus(k)}, whatever t was: e to the power ${minus(k)} ≈ ${four(x)}. `
+        explain: `One more t multiplies by e to the power of ${minus(k)}, whatever t was: e to the power of ${minus(k)} ≈ ${four(x)}. `
           + `${up ? `That is ${(100 * (x - 1)).toFixed(2)}% a step, a little more than the ${pct}% rate, since the growth is added on all the time.` : `That is a fall of ${(100 * (1 - x)).toFixed(2)}% a step, a little less than ${pct}%.`}`
           + ` So ${roundedText(answer.value.n, 4)}.`,
       };
@@ -503,7 +503,7 @@ function continuous(rng) {
       text: `continuous value: ${src} at ${t} to the nearest whole`,
       answer,
       visual: null,
-      explain: `Put t = ${t} in the exponent: ${minus(k)} × ${t} = ${minus(+(k * t).toFixed(4))}, and ${a} × e to the power ${minus(+(k * t).toFixed(4))} ≈ ${four(x)}. So ${roundedText(answer.value.n, 0)}.`,
+      explain: `Put t = ${t} in the exponent: ${minus(k)} × ${t} = ${minus(+(k * t).toFixed(4))}, and ${a} × e to the power of ${minus(+(k * t).toFixed(4))} ≈ ${four(x)}. So ${roundedText(answer.value.n, 0)}.`,
     };
   }
 }

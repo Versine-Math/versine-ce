@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for factoring II.
+ * Catalog authoring tool: builds the problem library for factoring II.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -43,8 +43,8 @@ function times(...polys) {
 
 /**
  * A product written out, ASCII and pretty: a monomial in front, if any, then
- * each factor in a bracket, a repeated one as a square. Also every other way
- * the same product is finished -- a square written as two brackets.
+ * each factor in parentheses, a repeated one as a square. Also every other way
+ * the same product is finished -- a square written as two parentheses.
  */
 function product(front, factors, v) {
   const counted = [];
@@ -78,7 +78,7 @@ const problem = (poly, v, front, factors, explain) => {
   };
 };
 
-/** Two brackets (px + q)(rx + s) with no common factor in either. */
+/** Two parentheses (px + q)(rx + s) with no common factor in either. */
 function brackets(rng, leads) {
   const a = rng.pick(leads);
   const ps = [];
@@ -97,7 +97,7 @@ function trial(rng) {
   const b = poly[1][0], c = poly[2][0];
   const first = (k) => (k === 1 ? v : `${k}${v}`);
   return problem(poly, v, null, [linear(p, q), linear(r, s)].sort((x, y) => y[0][0] - x[0][0]),
-    `${pretty([[a, 2]], v)} can only come from ${first(Math.max(p, r))} × ${first(Math.min(p, r))}, so the brackets start (${first(Math.max(p, r))} …)(${first(Math.min(p, r))} …). `
+    `${pretty([[a, 2]], v)} can only come from ${first(Math.max(p, r))} × ${first(Math.min(p, r))}, so the parentheses start (${first(Math.max(p, r))} …)(${first(Math.min(p, r))} …). `
     + `The last numbers multiply to ${minus(c)}; try each pair in each order until the outside and inside products add to ${pretty([[b, 1]], v)}: `
     + `${first(p)} × ${signed(s)} and ${minus(q)} × ${first(r)} give ${pretty([[p * s, 1]], v)} and ${pretty([[q * r, 1]], v)}, which make ${pretty([[b, 1]], v)}.`);
 }
@@ -109,7 +109,7 @@ function ac(rng) {
   if (poly[0][1] !== 2 || poly.length !== 3) return ac(rng);
   const [[a], [b], [c]] = poly;
   // The pair is p·s and q·r, in whichever order lets the first two terms
-  // and the last two share a bracket.
+  // and the last two share parentheses.
   const split = [[p * s, q * r], [q * r, p * s]].map(([m, n]) => {
     const G1 = gcd(a, m), B = [a / G1, m / G1], g2 = n / B[0];
     return { m, n, G1, B, g2, ok: Number.isInteger(g2) && g2 * B[1] === c };
@@ -121,7 +121,7 @@ function ac(rng) {
     `a × c = ${a} × ${signed(c)} = ${minus(a * c)}. Two numbers that multiply to ${minus(a * c)} and add to ${minus(b)}: ${minus(m)} and ${minus(n)}. `
     + `Split the middle with them: ${pretty([[a, 2], [m, 1], [n, 1], [c, 0]], v)}. `
     + `Group in pairs: ${head}(${pretty(linear(B[0], B[1]), v)}) ${g2 < 0 ? '−' : '+'} ${Math.abs(g2)}(${pretty(linear(B[0], B[1]), v)}). `
-    + `The bracket is shared, and comes out.`);
+    + `The factor in parentheses is shared, and comes out.`);
 }
 
 function completely(rng) {
@@ -138,7 +138,7 @@ function completely(rng) {
     const A = a === 1 ? v : `${a}${v}`;
     return problem(poly, v, null, factors,
       `No common factor, but it is a difference of squares: (${pretty([[a * a, 2]], v)})² − ${b * b}², which is `
-      + `(${pretty([[a * a, 2], [b * b, 0]], v)})(${pretty([[a * a, 2], [-b * b, 0]], v)}). The second bracket is a difference of squares again, `
+      + `(${pretty([[a * a, 2], [b * b, 0]], v)})(${pretty([[a * a, 2], [-b * b, 0]], v)}). The second set of parentheses is a difference of squares again, `
       + `(${A} + ${b})(${A} − ${b}). The first, a sum of squares, does not factor.`);
   }
   let factors, inside;
@@ -165,7 +165,7 @@ function completely(rng) {
 function grouping(rng) {
   const v = rng.pick(LETTERS);
   const a = rng.pick([1, 1, 1, 2, 3]), p = rng.nonZero(-9, 9), q = rng.nonZero(-9, 9), c = rng.pick([1, 1, 2]);
-  // The quadratic bracket must not factor again: a sum, or a difference that is not of squares.
+  // The quadratic parentheses must not factor again: a sum, or a difference that is not of squares.
   if (gcd(a, p) !== 1 || gcd(c, q) !== 1 || (p < 0 && isSquare(-p) && isSquare(a))) return grouping(rng);
   const quad = [[a, 2], [p, 0]], lin = linear(c, q);
   const poly = times(quad, lin);
@@ -188,7 +188,7 @@ function cubes(rng) {
   const A = a === 1 ? v : `${a}${v}`;
   return problem(poly, v, null, [lin, quad],
     `${pretty([[a ** 3, 3]], v)} is ${a === 1 ? `${v}³` : `(${A})³`} and ${b ** 3} is ${b}³: a ${plus ? 'sum' : 'difference'} of cubes. `
-    + `The first bracket keeps the sign, (${A} ${plus ? '+' : '−'} ${b}). The second squares both, with their product between `
+    + `The first set of parentheses keeps the sign, (${A} ${plus ? '+' : '−'} ${b}). The second squares both, with their product between `
     + `at the opposite sign: ${pretty(quad, v)}. It does not factor again.`);
 }
 

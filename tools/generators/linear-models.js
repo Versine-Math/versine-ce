@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for linear models.
+ * Catalog authoring tool: builds the problem library for linear models.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -17,7 +17,7 @@ import { previewOf } from '../../web/ui/express.js';
 import { ratio, show, lineText } from '../lines.js';
 import { LAST_LEVEL, PAR_SECONDS } from '../../web/skills/linear-models.js';
 
-/** An equation for a sentence: one unbroken piece of maths among the words. */
+/** An equation for a sentence: one unbroken piece of math among the words. */
 const terms = (src) => [T.math(previewOf(src).terms)];
 const whole = (n) => ({ n, d: 1 });
 const lineAnswer = (m, b) => ({ type: 'linear', value: { m: ratio(m, 1), b: ratio(b, 1) } });
@@ -118,7 +118,7 @@ const READINGS = [
   { id: 'carGallons', x: 'hours', y: 'gallons of gas left', rate: [-3, -2], start: [12, 16],
     say: (a, b) => `A car has ${a[1]} gallons of gas left after ${count(a[0], 'hour')} of driving, and ${b[1]} gallons after ${count(b[0], 'hour')}.` },
   { id: 'hire', x: 'days', y: 'cost in dollars', rate: [15, 40], start: [10, 50],
-    say: (a, b) => `Hiring a bike costs ${money(a[1])} for ${count(a[0], 'day')} and ${money(b[1])} for ${count(b[0], 'day')}.` },
+    say: (a, b) => `Renting a bike costs ${money(a[1])} for ${count(a[0], 'day')} and ${money(b[1])} for ${count(b[0], 'day')}.` },
 ];
 
 function fromReadings(rng) {
@@ -257,7 +257,7 @@ function compare(rng) {
 
 /**
  * A journey drawn as distance from home against time: three straight
- * pieces, labelled A, B and C. The question picks out one by its shape.
+ * pieces, labeled A, B and C. The question picks out one by its shape.
  */
 function graphStory(rng, want = rng.int(0, 2)) {
   // Which part answers is chosen first and kept through every redraw, so
@@ -303,7 +303,7 @@ function graphStory(rng, want = rng.int(0, 2)) {
   return {
     prompt: [T.prose(`The graph shows a walker's distance from home, in ${unit.long}, over ${pts[3][0]} hours. `
       + { fastest: 'In which part are they going fastest?', stopped: 'In which part have they stopped?',
-        returning: 'In which part are they heading back towards home?' }[ask])],
+        returning: 'In which part are they heading back toward home?' }[ask])],
     text: `story graph ${ask}: ${pts.map(([x, y]) => `(${x}, ${y})`).join(' ')}`,
     answer: { type: 'choice', value: name, options },
     visual: {

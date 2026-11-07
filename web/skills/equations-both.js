@@ -22,8 +22,8 @@ export const LEVELS = [
     blurb: 'The letter appears twice. Collect it on one side before undoing anything.' },
   { name: 'Gather Then Undo', slug: 'gather-then-undo',
     blurb: 'Numbers on both sides too. Gather each kind, then finish as before.' },
-  { name: 'Brackets First', slug: 'brackets-first',
-    blurb: 'A bracket on one side, the unknown on both. Open it, then gather.' },
+  { name: 'Parentheses First', slug: 'brackets-first',
+    blurb: 'Parentheses on one side, the unknown on both. Clear them, then gather.' },
   { name: 'Answers That Are Not Whole', slug: 'answers-that-are-not-whole',
     blurb: 'Gather, undo, and it will not divide evenly. A fraction is an answer: leave it exact.' },
   {
@@ -36,7 +36,7 @@ export const LEVELS = [
   },
   {
     name: 'Which Side?', slug: 'which-side', kind: 'strategy',
-    blurb: 'Collect the unknowns left or right? One choice avoids a negative.',
+    blurb: 'Combine the unknowns left or right? One choice avoids a negative.',
     dependsOn: [{ skill: 'equations', level: 2 }],
   },
   { name: 'All Together', slug: 'all-together',
@@ -64,7 +64,7 @@ export default {
 
   lesson(problem) {
     // The strategy level carries no visual, so it falls back to the
-    // sentences of `explain` -- which for a judgement question is the
+    // sentences of `explain` -- which for a judgment question is the
     // whole of the argument anyway.
     if (problem.visual?.kind !== 'evalmodel') return null;
     const { lines, rules } = problem.visual;

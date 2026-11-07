@@ -15,7 +15,7 @@
  *   addLink({ label, route, roles })  a link in the top bar, for those roles
  *   setGatePolicy(policy)      decide which skills a student may open
  *   setLockNote(note)          say, in the extension's words, why a skill is locked
- *   setTeacherPractise(action) relabel the console's Practise button and change what it does
+ *   setTeacherPractise(action) relabel the console's Practice button and change what it does
  *
  * A module is an ES module whose default export receives { extensions, api,
  * state, go, rerender, el, mount }. One that fails to load is reported on the
@@ -57,7 +57,7 @@ export const extensions = {
   /**
    * requiem: server/extensions/teacher-practise
    * `action` is `{ label, run }`: the teacher console shows `label` where it
-   * says Practise, and a tap calls `run()` instead of opening the map.
+   * says Practice, and a tap calls `run()` instead of opening the map.
    */
   setTeacherPractise(action) { sockets.teacherPractise = action; },
 };
@@ -73,7 +73,7 @@ export function lockNoteFor(skillId, blockers) {
   return sockets.lockNote ? sockets.lockNote({ skillId, blockers }) ?? null : null;
 }
 
-/** What the console's Practise button says and does: an extension's, or null for the map. */
+/** What the console's Practice button says and does: an extension's, or null for the map. */
 export function teacherPractise() {
   return sockets.teacherPractise;
 }

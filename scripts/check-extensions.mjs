@@ -39,7 +39,7 @@ check(ext.hasCustomSignIn() === false, 'with no extension, the PIN-account scree
 check(ext.screenFor('billing') === undefined, 'with no extension, no extra screens');
 check(ext.linksFor('teacher').length === 0, 'with no extension, no extra links');
 check(SKILLS.every((s) => ext.lockNoteFor(s.id, ['x']) === null), 'with no extension, locks read as the gate says');
-check(ext.teacherPractise() === null, 'with no extension, the console\'s Practise opens the map');
+check(ext.teacherPractise() === null, 'with no extension, the console\'s Practice opens the map');
 
 // A missing or unreadable list is no list.
 await ext.loadExtensions({}, async () => ({ ok: false }));
@@ -66,7 +66,7 @@ check(ext.linksFor('student').length === 0, 'a link for teachers is not shown to
 
 // requiem: server/extensions/gate-policy
 const locked = SKILLS.find((s) => lockedBy(s.id, progress).length);
-check(locked, 'the catalogue has a skill the gate keeps closed');
+check(locked, 'the catalog has a skill the gate keeps closed');
 ext.extensions.setGatePolicy(({ blockers }) => blockers);
 check(same(ext.blockersFor(locked.id, progress), lockedBy(locked.id, progress)),
   'a policy returning the blockers keeps the gate');
@@ -83,9 +83,9 @@ check(ext.lockNoteFor(first.id, ['x']) === null, 'a note returning null keeps th
 // requiem: server/extensions/teacher-practise
 let ran = 0;
 ext.extensions.setTeacherPractise({ label: 'Hand over', run: () => { ran += 1; } });
-const practise = ext.teacherPractise();
-practise.run();
-check(practise.label === 'Hand over' && ran === 1, 'setTeacherPractise relabels Practise and runs its action');
+const practice = ext.teacherPractise();
+practice.run();
+check(practice.label === 'Hand over' && ran === 1, 'setTeacherPractise relabels Practice and runs its action');
 
 if (fail.length) {
   console.log(`${fail.length} extension check(s) failed:`);

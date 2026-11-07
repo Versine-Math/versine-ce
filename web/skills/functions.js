@@ -24,7 +24,7 @@ export const LEVELS = [
   { name: 'The Vertical Line Test', slug: 'the-vertical-line-test',
     blurb: 'On a graph, one input is one vertical line. Does any of them meet it twice?' },
   { name: 'Function Notation', slug: 'function-notation',
-    blurb: 'f(4) means: put 4 in for x and work out what comes out.' },
+    blurb: 'f(4) means: put 4 in for x and calculate what comes out.' },
   { name: 'Reading f off a Graph', slug: 'reading-f-off-a-graph',
     blurb: 'f(3) is the height of the graph at x = 3.' },
   { name: 'Solving f(x) = k', slug: 'solving-f-x-equals-k',
@@ -32,7 +32,7 @@ export const LEVELS = [
   { name: 'Domain and Range', slug: 'domain-and-range',
     blurb: 'The domain is every x the graph uses. The range is every y it reaches.' },
   { name: 'What f(a) = b Means', slug: 'what-f-a-equals-b-means',
-    blurb: 'The number in the brackets is the input. The number after the equals is the output.' },
+    blurb: 'The number in the parentheses is the input. The number after the equals is the output.' },
   { name: 'All Together', slug: 'all-together',
     blurb: 'Everything mixed. Clear this against the clock to finish the skill for the day.' },
 ];

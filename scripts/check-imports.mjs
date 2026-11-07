@@ -2,7 +2,7 @@
  * Every module of the browser app loads: it parses, and every import it
  * makes resolves to a file that exports that name.
  *
- * The other checks import the engine, the maths and a few UI modules, but
+ * The other checks import the engine, the math and a few UI modules, but
  * nothing ever loads the app's screens outside a browser -- so a screen
  * importing a name that no longer exists passed every check and reached the
  * browser as a blank page. That happened: rating.js lost an export map.js
@@ -12,7 +12,7 @@
  * it, and screens reach for the DOM, the network and the router at load. The
  * forms matched are the ones this codebase writes -- named and default
  * imports, and exports declared on a function, class or binding -- and a
- * form it does not recognise is reported rather than silently skipped, so
+ * form it does not recognize is reported rather than silently skipped, so
  * the check cannot quietly stop covering a file.
  *
  * Usage: node scripts/check-imports.mjs

@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring helper: the things the probability skills draw from
+ * Catalog authoring helper: the things the probability skills draw from
  * and the events asked about them.
  *
  * A source is a list of equally likely outcomes with the words for it: the

@@ -28,7 +28,7 @@ function render() {
   // run in a skill the student cannot see. `skillScreen` renders the lock and
   // says what to finish first, so every route lands on the same explanation.
   //
-  // Teachers are exempt: they are inspecting the catalogue, not working
+  // Teachers are exempt: they are inspecting the catalog, not working
   // through it, and they have no progress of their own to unlock anything.
   if (state.me.role !== 'teacher'
       && ['skill', 'mode', 'play'].includes(r.name)

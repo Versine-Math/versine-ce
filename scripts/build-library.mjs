@@ -1,5 +1,5 @@
 /**
- * Materialise every level's problem space into a library.
+ * Materialize every level's problem space into a library.
  *
  * The point is not speed. It is that a drilling platform does not need to
  * *solve* anything: if the problems and their acceptable answers are written
@@ -82,15 +82,15 @@ function fingerprint() {
 
 const { SKILLS, validateGraph } = await import(join(ROOT, 'web/engine/registry.js'));
 
-// The catalogue's own rules come first, and a cycle in the dependency graph is
+// The catalog's own rules come first, and a cycle in the dependency graph is
 // the one fault that makes everything downstream meaningless: there is no
 // order to lay the skills out in and no way for a student to open any of them.
-// Refuse here rather than write 52 MB of libraries for a catalogue that cannot
+// Refuse here rather than write 52 MB of libraries for a catalog that cannot
 // be rendered. The deploy gate checks this too, but a fault should be caught
 // by the tool that could have introduced it, not only by the one that ships.
 const graphProblems = validateGraph();
 if (graphProblems.length) {
-  console.error(`${graphProblems.length} problem(s) in the catalogue graph; nothing was built:`);
+  console.error(`${graphProblems.length} problem(s) in the catalog graph; nothing was built:`);
   for (const p of graphProblems) console.error('  ' + p);
   process.exit(1);
 }
@@ -134,7 +134,7 @@ const DEFAULT_CAP = capArg > -1 ? Number(args[capArg + 1]) : 1000;
 /** Draws to make before accepting that a level's space has been exhausted. */
 const PATIENCE = 40000;
 
-/** A level with fewer problems than this is memorisable rather than drillable. */
+/** A level with fewer problems than this is memorizable rather than drillable. */
 const FLOOR = 50;
 
 /** Stable numeric seed from a level's identity, so rebuilds are reproducible. */
@@ -235,7 +235,7 @@ for (const skill of SKILLS) {
 }
 
 // The presentation vocabulary, written out so the Python deploy gate can
-// validate catalogue items against it without needing a JavaScript runtime.
+// validate catalog items against it without needing a JavaScript runtime.
 // One source of truth: the renderers declare it, this exports it.
 const schemasJson = JSON.stringify({
   visuals: Object.fromEntries(Object.entries(VISUALS).map(([k, v]) => [k, v.schema])),
@@ -250,7 +250,7 @@ if (!existsSync(schemasPath) || readFileSync(schemasPath, 'utf8') !== schemasJso
 }
 
 // The order of a skill's levels, keyed by slug. The server has no way to read
-// the catalogue -- it is JavaScript and the server is Python -- so the one
+// the catalog -- it is JavaScript and the server is Python -- so the one
 // thing it needs from it, which level follows which, is published here.
 const order = {};
 for (const skill of SKILLS) order[skill.id] = skill.levels.map((l) => l.slug);

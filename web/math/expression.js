@@ -4,14 +4,14 @@ import { minus } from '../ui/dom.js';
  * Small arithmetic expressions, and the step-by-step story of evaluating one.
  *
  * An expression is a nested array of numbers and operator strings, where a
- * nested array is a bracketed group:
+ * nested array is a group in parentheses:
  *
  *     [3, '+', 4, '×', 2]          →  3 + 4 × 2
  *     [[3, '+', 4], '×', 2]        →  (3 + 4) × 2
  *
  * `evaluate` doesn't just return the answer — it returns every rewrite along
  * the way, and which rule justified it. That sequence *is* the lesson for this
- * skill, so it has to come out of the maths rather than be written by hand.
+ * skill, so it has to come out of the math rather than be written by hand.
  */
 
 const PRECEDENCE = { '^': 3, '×': 2, '÷': 2, '+': 1, '−': 1 };
@@ -58,7 +58,7 @@ export function render(node, top = true) {
 }
 
 /**
- * Perform exactly one reduction: innermost bracket first, then the
+ * Perform exactly one reduction: innermost parentheses first, then the
  * highest-precedence operator, leftmost when tied.
  * @returns {{node:Array, rule:string}|null} null when fully reduced
  */
@@ -70,14 +70,14 @@ function reduceOnce(node) {
     if (item.length === 1) {                       // a stray (7)
       const next = node.slice();
       next[i] = item[0];
-      return { node: next, rule: 'brackets' };
+      return { node: next, rule: 'parentheses' };
     }
     const inner = reduceOnce(item);
     if (inner) {
       const next = node.slice();
       // Unwrap in the same step: a student writes "7 × 2", never "(7) × 2".
       next[i] = inner.node.length === 1 ? inner.node[0] : inner.node;
-      return { node: next, rule: 'brackets' };
+      return { node: next, rule: 'parentheses' };
     }
   }
 

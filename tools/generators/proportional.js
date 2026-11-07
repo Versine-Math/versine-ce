@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for proportional
+ * Catalog authoring tool: builds the problem library for proportional
  * relationships.
  *
  * NOT part of the running application. Nothing here is served to a browser

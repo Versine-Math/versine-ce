@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for the laws of sines
+ * Catalog authoring tool: builds the problem library for the laws of sines
  * and cosines.
  *
  * NOT part of the running application. Nothing here is served to a browser
@@ -334,8 +334,8 @@ const LAW_PROOFS = {
   cosines: {
     goal: 'p^2 = q^2 + r^2 - 2*q*r*cos(P)',
     steps: [
-      ['q^2 = x^2 + h^2', 'Pythagoras in right triangle PDR', []],
-      ['p^2 = (r - x)^2 + h^2', 'Pythagoras in right triangle QDR, where DQ = r − x', [
+      ['q^2 = x^2 + h^2', 'The Pythagorean theorem in right triangle PDR', []],
+      ['p^2 = (r - x)^2 + h^2', 'The Pythagorean theorem in right triangle QDR, where DQ = r − x', [
         ['p^2 = (r + x)^2 + h^2', 'p^2 = (r - x)^2 - h^2', 'p^2 = (r + x)^2 - h^2']]],
       ['p^2 = r^2 - 2*r*x + x^2 + h^2', 'Square out (r − x)²', [
         ['p^2 = r^2 + 2*r*x + x^2 + h^2', 'p^2 = r^2 - r*x + x^2 + h^2', 'p^2 = r^2 + r*x + x^2 + h^2'],

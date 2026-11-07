@@ -172,7 +172,7 @@ class RunIn(BaseModel):
     skill_id: str
     level: int
     # The level's identity. `level` is its position, which is only meaningful
-    # against a particular version of the catalogue; the slug survives levels
+    # against a particular version of the catalog; the slug survives levels
     # being inserted above it. Optional so an older client still submits.
     level_slug: str | None = None
     duration: int = 0            # the clock this run actually used, in seconds
@@ -284,7 +284,7 @@ def set_cookie(response: Response, token: str) -> None:
 def create_profile(body: NewProfileIn, response: Response):
     """Anyone at the login screen can make themselves a student profile.
 
-    No auth: a kid shouldn't have to find a parent to start practising. Only
+    No auth: a kid shouldn't have to find a parent to start practicing. Only
     students can be created this way, so nobody can grant themselves the
     teacher role (and with it the power to delete other people's accounts).
     """
@@ -346,7 +346,7 @@ def submit_run(body: RunIn, user=Depends(current_user)):
     ceiling = max(s.answered, 1) * 800
     points = max(0, min(s.points, ceiling))
     mode_is_trial = body.mode_id == "trial"
-    # Fall back to the catalogue order when an older client sends no slug.
+    # Fall back to the catalog order when an older client sends no slug.
     slug = body.level_slug
     if slug is None:
         order = db.level_order().get(body.skill_id, [])
@@ -403,9 +403,9 @@ def submit_run(body: RunIn, user=Depends(current_user)):
 
         # A passed Mastery Check unlocks the next level.
         #
-        # Which level is "next" comes from the catalogue order published in the
+        # Which level is "next" comes from the catalog order published in the
         # library manifest, not from adding one to an index: an index is only
-        # meaningful against the version of the catalogue that produced it.
+        # meaningful against the version of the catalog that produced it.
         unlocked = None
         if s.passed:
             row = conn.execute(
@@ -418,7 +418,7 @@ def submit_run(body: RunIn, user=Depends(current_user)):
             mastered_slugs = json.loads(row["mastered_slugs"] or "[]")
             if slug and slug not in mastered_slugs:
                 mastered_slugs.append(slug)
-            # Keep the list in catalogue order, so it reads the way the map does.
+            # Keep the list in catalog order, so it reads the way the map does.
             if order:
                 mastered_slugs = [x for x in order if x in set(mastered_slugs)]
 
@@ -493,8 +493,8 @@ def report_contributions(body: ContributionsIn, user=Depends(current_user)):
     """Keep the best each skill has ever contributed to this student's Level.
 
     The browser computes contributions -- they rest on reference paces in the
-    JavaScript catalogue the server cannot read -- and reports them here; the
-    server keeps the maximum. A skill the catalogue does not have, or a value
+    JavaScript catalog the server cannot read -- and reports them here; the
+    server keeps the maximum. A skill the catalog does not have, or a value
     that is not a finite, non-negative number under a generous ceiling, is
     ignored rather than refused, so one bad entry never loses the rest.
     """
@@ -548,7 +548,7 @@ def activity(skill_id: str, user=Depends(current_user)):
     """Per-day history for one skill, for the streak strip.
 
     Two different things are tracked per day, and the difference matters:
-    *practised* means any attempt at all, *completed* means the last level
+    *practiced* means any attempt at all, *completed* means the last level
     was cleared in a Time Trial. The streak counts completed days only -- that
     is what "done for the day" means for a skill.
     """
@@ -575,7 +575,7 @@ def activity(skill_id: str, user=Depends(current_user)):
             (user["id"], skill_id, level_count, level_count),
         )]
 
-        practised = [r["day"] for r in conn.execute(
+        practiced = [r["day"] for r in conn.execute(
             "SELECT DISTINCT local_day(at) day FROM attempts WHERE user_id = ? AND skill_id = ?",
             (user["id"], skill_id),
         )]
@@ -606,7 +606,7 @@ def activity(skill_id: str, user=Depends(current_user)):
         "days": recent,
         "currentStreak": current,
         "bestStreak": best,
-        "practiceDays": len(practised),
+        "practiceDays": len(practiced),
         "completedDays": len(completed),
         "doneToday": today in done,
         "levelCount": level_count,

@@ -6,7 +6,7 @@ import { trialSettings } from './modes.js';
  *
  * Deliberately *not* accumulated experience. XP in games measures how long
  * you have played, not what you can do, and it can only ever go up — which
- * misrepresents a real skill, because arithmetic you stop practising genuinely
+ * misrepresents a real skill, because arithmetic you stop practicing genuinely
  * does get slower and less accurate.
  *
  * So Level is computed from present ability, and it can fall:
@@ -15,7 +15,7 @@ import { trialSettings } from './modes.js';
  *     contribution = weight × quality
  *   Level = floor(sum of contributions) + 1
  *
- * Roughly, your Level is "how many levels' worth of maths you can currently do
+ * Roughly, your Level is "how many levels' worth of math you can currently do
  * well", counting harder material for more.
  *
  * Note what is *absent*: time. The Level never drifts down because a student
@@ -63,7 +63,7 @@ export function qualityOf(accuracy, medianSeconds, allowedSeconds) {
 }
 
 /**
- * @param {object[]} skills           the skill catalogue
+ * @param {object[]} skills           the skill catalog
  * @param {object} progress           /api/progress payload
  * @param {object[]} levelStats       per-level accuracy/pace, from the server
  * @returns {{level:number, rating:number, ceiling:number, rows:object[]}}

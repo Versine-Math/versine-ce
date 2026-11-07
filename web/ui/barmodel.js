@@ -22,7 +22,7 @@ import { nths } from '../math/frac.js';
  * @property {Frac} a
  * @property {Frac} b
  * @property {'+'|'−'} op
- * @property {number} common     the lowest common denominator
+ * @property {number} common     the least common denominator
  * @property {Frac} left         a rewritten over `common`
  * @property {Frac} right        b rewritten over `common`
  * @property {Frac} [result]     withheld until an answer is committed

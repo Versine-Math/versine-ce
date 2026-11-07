@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for exponents.
+ * Catalog authoring tool: builds the problem library for exponents.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -13,7 +13,7 @@ import * as T from '../terms.js';
 import { LEVELS, LAST_LEVEL, PAR_SECONDS } from '../../web/skills/exponents.js';
 
 /**
- * Bases wide enough that a level is not memorisable, capped by the size of the
+ * Bases wide enough that a level is not memorizable, capped by the size of the
  * result rather than the size of the base: the difficulty here is the rule,
  * and 12² is not a harder rule than 2², only a slightly harder multiplication.
  */
@@ -33,7 +33,7 @@ const sup = (n) => String(n).split('').map((c) => SUP[c] ?? c).join('');
 const power = (b, e) => `${b}${sup(e)}`;
 
 /** 2 × 2 × 2, so that a rule about exponents is visibly a rule about factors. */
-const spelt = (b, e) => (e === 0 ? '1' : Array.from({ length: e }, () => b).join(' × '));
+const spelled = (b, e) => (e === 0 ? '1' : Array.from({ length: e }, () => b).join(' × '));
 
 /**
  * What a power is, asked both ways.
@@ -52,12 +52,12 @@ function value(rng) {
   if (rng.chance(0.45)) {
     // Backwards: given the factors, write the power.
     return {
-      prompt: [T.num(spelt(b, e), 1), T.op('='), T.pow(b, null, 2)],
-      text: `${spelt(b, e)} = ${b}^?`,
+      prompt: [T.num(spelled(b, e), 1), T.op('='), T.pow(b, null, 2)],
+      text: `${spelled(b, e)} = ${b}^?`,
       answer: { type: 'int', value: e },
       visual: {
         kind: 'evalmodel',
-        lines: [spelt(b, e), `${b} used ${e} times`, power(b, e)],
+        lines: [spelled(b, e), `${b} used ${e} times`, power(b, e)],
         rules: ['count the factors', 'write it as a power'],
         hint: 'How many times does the base appear?',
       },
@@ -71,11 +71,11 @@ function value(rng) {
     answer: { type: 'int', value: v },
     visual: {
       kind: 'evalmodel',
-      lines: [power(b, e), spelt(b, e), String(v)],
+      lines: [power(b, e), spelled(b, e), String(v)],
       rules: [`${b} multiplied by itself ${e} times`, 'work it out'],
       hint: 'How many times is the base multiplied by itself?',
     },
-    explain: `${power(b, e)} means ${spelt(b, e)}. That comes to ${v}.`,
+    explain: `${power(b, e)} means ${spelled(b, e)}. That comes to ${v}.`,
   };
 }
 
@@ -90,7 +90,7 @@ function rule(rng, which) {
     prompt = [T.pow(b, a, 1), T.op('×'), T.pow(b, c, 2), T.op('='), T.pow(b, null, 3)];
     text = `${b}^${a} × ${b}^${c} = ${b}^?`;
     lines = [`${power(b, a)} × ${power(b, c)}`,
-             `(${spelt(b, a)}) × (${spelt(b, c)})`,
+             `(${spelled(b, a)}) × (${spelled(b, c)})`,
              power(b, answer)];
     rules = ['write out the factors', `count them: ${a} + ${c} = ${answer}`];
     why = `Multiplying puts all the factors in one pile: ${a} of them and ${c} more `
@@ -100,7 +100,7 @@ function rule(rng, which) {
     prompt = [T.pow(b, a, 1), T.op('÷'), T.pow(b, c, 2), T.op('='), T.pow(b, null, 3)];
     text = `${b}^${a} ÷ ${b}^${c} = ${b}^?`;
     lines = [`${power(b, a)} ÷ ${power(b, c)}`,
-             `(${spelt(b, a)}) ÷ (${spelt(b, c)})`,
+             `(${spelled(b, a)}) ÷ (${spelled(b, c)})`,
              `${c} pairs cancel`,
              power(b, answer)];
     rules = ['write out the factors', `each factor below cancels one above`,
@@ -117,8 +117,8 @@ function rule(rng, which) {
              Array.from({ length: c }, () => power(b, a)).join(' × '),
              power(b, answer)];
     rules = [`${power(b, a)} multiplied by itself ${c} times`,
-             `${c} lots of ${a} factors: ${a} × ${c} = ${answer}`];
-    why = `Raising to the power ${c} means ${c} copies of ${power(b, a)}, and each copy `
+             `${c} groups of ${a} factors: ${a} × ${c} = ${answer}`];
+    why = `Raising to the power of ${c} means ${c} copies of ${power(b, a)}, and each copy `
       + `brings ${a} factors. ${a} × ${c} = ${answer}, so the exponents multiply.`;
   }
 
@@ -161,7 +161,7 @@ function zeroOrNegative(rng) {
     visual: {
       kind: 'evalmodel',
       lines: [power(b, `−${e}`), `1 ÷ ${power(b, e)}`, `1/${denom}`],
-      rules: ['a negative exponent is one over the positive one', 'work out the bottom'],
+      rules: ['a negative exponent is one over the positive one', 'calculate the bottom'],
       hint: 'What does a negative exponent do?',
     },
     explain: `A negative exponent means one over the positive one: ${power(b, `−${e}`)} `
@@ -191,7 +191,7 @@ const SITUATIONS = {
       const a = big(rng), c = big(rng);
       return {
         text: `You need to multiply ${power(b, a)} by ${power(b, c)}.`,
-        why: `${power(b, a)} alone has ${digits(b, a)} digits, far too many to work out by hand. Kept as `
+        why: `${power(b, a)} alone has ${digits(b, a)} digits, far too many to calculate by hand. Kept as `
           + `powers, the exponents just add: ${power(b, a + c)}.`,
       };
     },
@@ -251,7 +251,7 @@ const SITUATIONS = {
 };
 
 function whichForm(rng) {
-  // Weighted towards work out, whose small-number situations repeat and are
+  // Weighted toward work out, whose small-number situations repeat and are
   // dropped as duplicates, so that the built level comes out near half and half.
   const want = rng.chance(0.3) ? 'keep' : 'work out';
   const b = want === 'keep' ? rng.pick([2, 3, 4, 5]) : rng.int(2, 10);
@@ -264,7 +264,7 @@ function whichForm(rng) {
       value: want,
       options: rng.shuffle([
         { id: 'keep', label: 'Leave it as a power', note: 'one base and an exponent, like 3⁴' },
-        { id: 'work out', label: 'Work out the value', note: 'a plain number, like 81' },
+        { id: 'work out', label: 'Calculate the value', note: 'a plain number, like 81' },
       ]),
     },
     visual: null,

@@ -65,7 +65,7 @@ export function lessonFor(skill, level, problem) {
 /**
  * A fresh worked example for this level, taken from its library.
  *
- * Deliberately drawn from the same reviewed problems a student practises on,
+ * Deliberately drawn from the same reviewed problems a student practices on,
  * rather than made up on the spot: a walkthrough that demonstrates a problem
  * the level cannot actually produce teaches the wrong thing.
  */

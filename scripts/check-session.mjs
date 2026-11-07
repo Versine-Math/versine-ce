@@ -210,7 +210,7 @@ for (const skill of SKILLS) {
 }
 
 // A vertex form is judged as written: the same terms in another order are
-// right, and the same quadratic multiplied out is not the form asked for.
+// right, and the same quadratic expanded is not the form asked for.
 {
   const expr = getType('expr');
   const want = expr.parse('-(x - 5)^2 - 4').value;
@@ -477,8 +477,8 @@ for (const skill of SKILLS) {
 // requiem: play/answers/plus-minus-only-when-touching
 // requiem: catalogue/content/complex-judged-exactly
 // The complex box reads what students type: plus a negative with a space
-// apart, ± only with the signs touching, capitals, one outer bracket, each
-// root named, +/-, a minus before a bracket, a bracketed signed coefficient.
+// apart, ± only with the signs touching, capitals, one outer pair of parentheses, each
+// root named, +/-, a minus before parentheses, a signed coefficient in parentheses.
 // Touching +- on a question with one answer is asked again, not marked.
 {
   const skill = SKILLS.find((s) => s.id === 'complex');
@@ -601,7 +601,7 @@ for (const skill of SKILLS) {
 // requiem: play/answers/vector-typed-in-angle-brackets
 // The vector box reads <a, b> and the angle brackets themselves, each
 // component a whole number, a fraction or a decimal compared exactly, and
-// ai + bj; a pair in round brackets is a point, so it is asked again with
+// ai + bj; a pair in parentheses is a point, so it is asked again with
 // the hint to use angle brackets, not marked; and the order of the
 // components matters.
 {
@@ -619,7 +619,7 @@ for (const skill of SKILLS) {
   }
   if (!box.parse('(3, -4)').hint?.includes('angle brackets')) fail.push('vector: (3, −4) was not told to use angle brackets');
   // requiem: play/answers/vector-unit-form-any-order
-  // ai + bj in any order, a sign given twice, and a coefficient in brackets.
+  // ai + bj in any order, a sign given twice, and a coefficient in parentheses.
   for (const raw of ['-4j+3i', '-4j + 3i', '3i + -4j', '3i+(-4)j', '(3)i - (4)j', '3i - (+4)j']) {
     const r = box.parse(raw);
     if (!r.ok || !box.equals(r.value, want)) fail.push(`vector: "${raw}" was not read as ⟨3, −4⟩`);

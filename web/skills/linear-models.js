@@ -8,7 +8,7 @@
  * what the standards mean by interpreting a function, and it is the reason
  * linear equations are taught at all.
  *
- * From Two Readings is the level that makes this modelling rather than
+ * From Two Readings is the level that makes this modeling rather than
  * substitution: two measurements are all anyone ever has, and the line
  * comes from them.
  *

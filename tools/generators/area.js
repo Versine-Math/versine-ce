@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for area and circles.
+ * Catalog authoring tool: builds the problem library for area and circles.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -152,7 +152,7 @@ function triangleArea(rng) {
 // requiem: catalogue/content/height-drawn-clear-of-slants
 /**
  * A trapezoid's height, dashed down from the middle of the top side, where
- * it is furthest from both slanted sides, and labelled where nothing else is.
+ * it is furthest from both slanted sides, and labeled where nothing else is.
  */
 function trapezoidHeight(k, a, c, h, p, label, others, tone = GIVEN) {
   const top = k([p + c / 2, h]), foot = k([p + c / 2, 0]);
@@ -205,7 +205,7 @@ function trapezoid(rng) {
 // ── Circles ─────────────────────────────────────────────────────────────
 
 const R = 3.6;
-/** A circle, its center, and its radius or its diameter drawn and labelled. */
+/** A circle, its center, and its radius or its diameter drawn and labeled. */
 function circleMarks(label, diameter) {
   const marks = [circlePath([0, 0], R), { kind: 'point', at: [0, 0], tone: LINE }];
   if (diameter) {
@@ -549,7 +549,7 @@ function missing(rng) {
     answer: dec(c),
     visual: figure(marks, [sideLabel(P[2], P[3], `${c} ${u}`, mid, null, 1.1)]),
     explain: `Area = ½ × (sum of the parallel sides) × height. Twice the area is ${f(2 * A)}, and ${f(2 * A)} ÷ ${h} = ${a + c} is the two parallel sides together. `
-      + `Take away the one you know: ${a + c} − ${a} = ${c}. (${a + c} is both sides, not the missing one.) Check: ½ × (${a} + ${c}) × ${h} = ${f(A)}. So ${c} ${u}.`,
+      + `Subtract the one you know: ${a + c} − ${a} = ${c}. (${a + c} is both sides, not the missing one.) Check: ½ × (${a} + ${c}) × ${h} = ${f(A)}. So ${c} ${u}.`,
   };
 }
 

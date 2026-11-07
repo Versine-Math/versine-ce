@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for rational-expr.
+ * Catalog authoring tool: builds the problem library for rational-expr.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -8,7 +8,7 @@
  * Run via: node scripts/build-library.mjs
  *
  * Every `text` is the question's expression in ASCII with every fraction
- * bracketed, so scripts/check-answers.py can evaluate it and compare it with
+ * in parentheses, so scripts/check-answers.py can evaluate it and compare it with
  * the answer by value, and then ask whether the answer is finished: nothing
  * left that cancels.
  */
@@ -37,7 +37,7 @@ function collect(poly) {
 }
 const times = (a, b) => collect(a.flatMap(([c, p]) => b.map(([d, q]) => [c * d, p + q])));
 const X = (c) => [[1, 1], [c, 0]];
-/** (x + 3), (x − 2), x: one linear factor, bracketed unless it is x. */
+/** (x + 3), (x − 2), x: one linear factor, in parentheses unless it is x. */
 const fac = (c, fancy = true) => (c === 0 ? 'x' : `(${write(X(c), fancy)})`);
 const prod = (cs) => cs.reduce((acc, c) => times(acc, X(c)), [[1, 0]]);
 const distinct = (...xs) => new Set(xs).size === xs.length;
@@ -53,7 +53,7 @@ const over = (n, d) => `(${n})/(${d})`;
 // requiem: play/answers/equivalent-judged-by-value
 // Judged by value and then by being finished, so every finished way of
 // writing the answer is right and no list of them is kept: the denominator
-// factored or multiplied out, the minus on top, in front or underneath.
+// factored or expanded, the minus on top, in front or underneath.
 const valueAnswer = (key) => ({ type: 'equivalent', value: key, requireSimplest: true });
 
 /** A polynomial at a number. */
@@ -71,16 +71,16 @@ function divideOut(poly, c) {
 // requiem: catalogue/content/rational-answer-finished-by-value
 /**
  * num over the product of (x + c) for each c in den, every factor the two
- * share cancelled: the finished answer, and what was cancelled.
+ * share canceled: the finished answer, and what was canceled.
  */
 function lowest(num, den) {
   let top = collect(num);
   const under = [];
-  const cancelled = [];
+  const canceled = [];
   for (const c of den) {
-    if (top.length && valueOf(top, -c) === 0) { top = divideOut(top, c); cancelled.push(c); } else under.push(c);
+    if (top.length && valueOf(top, -c) === 0) { top = divideOut(top, c); canceled.push(c); } else under.push(c);
   }
-  return { top, under, cancelled };
+  return { top, under, canceled };
 }
 /** Linear factors side by side, x first: x(x + 2), not (x + 2)x. */
 const factors = (cs, fancy = true) => [...cs].sort((a, b) => (a === 0 ? -1 : b === 0 ? 1 : 0)).map((c) => fac(c, fancy)).join('');
@@ -279,7 +279,7 @@ function common(rng) {
       answer: valueAnswer(key),
       visual: null,
       explain: `The denominators match, so combine the numerators over ${fac(c)}: `
-        + `${minusIt ? `(${pretty(n1)}) − (${pretty(n2)}), where the minus takes away every term of the second, = ` : `(${pretty(n1)}) + (${pretty(n2)}) = `}${pretty(collect([[A, 1], [B, 0]]))}. `
+        + `${minusIt ? `(${pretty(n1)}) − (${pretty(n2)}), where the minus subtracts every term of the second, = ` : `(${pretty(n1)}) + (${pretty(n2)}) = `}${pretty(collect([[A, 1], [B, 0]]))}. `
         + `Then simplify: ${why}. So ${out}.`,
     };
   }
@@ -331,9 +331,9 @@ function unlike(rng) {
     const up1 = missing(d1, all), up2 = missing(d2, all);
     const num = collect([...times(n1, poly(up1)), ...times([[minusIt ? -1 : 1, 0]], times(n2, poly(up2)))]);
     if (!num.length) continue;
-    const { top, under, cancelled } = lowest(num, all);
+    const { top, under, canceled } = lowest(num, all);
     // A top that shares a factor with the bottom leaves a last cancel: a few of those, not most.
-    if (cancelled.length && rng.chance(0.7)) continue;
+    if (canceled.length && rng.chance(0.7)) continue;
     const key = quotientText(top, under);
     const f1 = over(write(n1), write(prod(d1))), f2 = over(write(n2), write(prod(d2)));
     const allShown = factors(all);
@@ -353,8 +353,8 @@ function unlike(rng) {
       explain: `${factored.length ? `Factor the denominators: ${factored.join(' and ')}. ` : ''}`
         + `The common denominator is ${allShown}${shared ? ': the factor both denominators have is needed only once, so it is less than their product' : ', the two denominators multiplied, since they share no factor'}. `
         + `Multiply each fraction up to it: ${by1 ? `the first top times ${by1}` : 'the first is over it already'}, ${by2 ? `the second top times ${by2}` : 'the second is over it already'}. `
-        + `Combine the numerators${minusIt ? ', the minus taking away all of the second' : ''}: ${scaled(n1, by1)} ${minusIt ? '−' : '+'} ${scaled(n2, by2)} = ${pretty(num)}. `
-        + `${cancelled.length ? `That top has the factor ${cancelled.map((c) => fac(c)).join('')} too, which cancels. ` : ''}`
+        + `Combine the numerators${minusIt ? ', the minus subtracting all of the second' : ''}: ${scaled(n1, by1)} ${minusIt ? '−' : '+'} ${scaled(n2, by2)} = ${pretty(num)}. `
+        + `${canceled.length ? `That top has the factor ${canceled.map((c) => fac(c)).join('')} too, which cancels. ` : ''}`
         + `So ${quotientText(top, under, true)}.`,
     };
   }
@@ -515,7 +515,7 @@ function opposite(rng) {
       text: `rational: ${src}`,
       answer: valueAnswer(key),
       visual: null,
-      explain: `Factor first: ${work}. (Cancelling them to 1, as if they were the same factor, is the usual slip.) So ${outShow}.`,
+      explain: `Factor first: ${work}. (Canceling them to 1, as if they were the same factor, is the usual slip.) So ${outShow}.`,
     };
   }
 }

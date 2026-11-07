@@ -92,7 +92,7 @@ export function drawNumberLine(svg, spec, {
   svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
   while (svg.firstChild) svg.removeChild(svg.firstChild);
 
-  // ── Arrowhead markers, one pair per step colour ──────────────────────────
+  // ── Arrowhead markers, one pair per step color ──────────────────────────
   const defs = node('defs');
   RAW_COLORS.forEach((color, i) => {
     for (const [id, points] of [
@@ -120,14 +120,14 @@ export function drawNumberLine(svg, spec, {
   const tickStep = span > 40 ? every : 1;
   for (let n = Math.ceil(min / tickStep) * tickStep; n <= max; n += tickStep) {
     const x = xOf(n);
-    const labelled = n % every === 0;
+    const labeled = n % every === 0;
     const zero = n === 0;
     svg.append(node('line', {
-      x1: x, y1: axisY - (labelled ? 9 : 5), x2: x, y2: axisY + (labelled ? 9 : 5),
-      stroke: zero ? 'var(--axis-zero)' : labelled ? 'var(--axis-major)' : 'var(--axis)',
-      'stroke-width': zero ? 2.5 : labelled ? 2 : 1.5,
+      x1: x, y1: axisY - (labeled ? 9 : 5), x2: x, y2: axisY + (labeled ? 9 : 5),
+      stroke: zero ? 'var(--axis-zero)' : labeled ? 'var(--axis-major)' : 'var(--axis)',
+      'stroke-width': zero ? 2.5 : labeled ? 2 : 1.5,
     }));
-    if (labelled) {
+    if (labeled) {
       const t = node('text', {
         x, y: axisY + 27, 'text-anchor': 'middle',
         class: zero ? 'nl-label nl-label--zero' : 'nl-label',

@@ -24,7 +24,7 @@ export const LEVELS = [
     // A cosine and a sine eliminate to an ellipse in standard form.
     dependsOn: [{ skill: 'conics', level: 2 }] },
   { name: 'Parametric Motion', slug: 'parametric-motion',
-    blurb: 'A thrown ball: across at v cos θ, up at v sin θ from its height, and gravity takes 16t² feet off in t seconds. It lands where y = 0.',
+    blurb: 'A thrown ball: across at v cos θ, up at v sin θ from its height, and gravity subtracts 16t² feet in t seconds. It lands where y = 0.',
     // The two speeds are a velocity's components, and the landing time is a
     // root of the height.
     dependsOn: [{ skill: 'vectors', level: 2 }, { skill: 'quadratic-formula', level: 2 }] },

@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for quadrilaterals.
+ * Catalog authoring tool: builds the problem library for quadrilaterals.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -159,7 +159,7 @@ function paraAngles(rng) {
       visual: draw([...outline(P), ...cornerNames(P, NAMES), label(v, deg(val)), ...askMark(t)], [answerAt(P, `∠${t} = ${deg(want)}`)]),
       explain: opp
         ? `∠${t} is opposite ∠${v}, and opposite angles of a parallelogram are equal. (180 − ${val} would be the angle next to it.) So ∠${t} = ${deg(want)}.`
-        : `∠${t} is next to ∠${v}. Adjacent angles of a parallelogram add to 180°, since they are co-interior angles between a pair of `
+        : `∠${t} is next to ∠${v}. Adjacent angles of a parallelogram add to 180°, since they are same-side interior angles between a pair of `
           + `parallel sides: 180 − ${val} = ${want}. (Only opposite angles are equal.) So ∠${t} = ${deg(want)}.`,
     };
   }
@@ -174,7 +174,7 @@ function paraAngles(rng) {
     const s = mode === 'opposite' ? solve(e1, e2) : solve([e1[0] + e2[0], e1[1] + e2[1]], [0, 180]);
     const setUp = mode === 'opposite'
       ? `Opposite angles of a parallelogram are equal, and ∠${v} is opposite ∠${u}: ${s.work} `
-      : `∠${v} and ∠${u} are next to each other, and adjacent angles of a parallelogram add to 180° (co-interior angles between parallel sides): `
+      : `∠${v} and ∠${u} are next to each other, and adjacent angles of a parallelogram add to 180° (same-side interior angles between parallel sides): `
         + `(${ex(e1)}) + (${ex(e2)}) = 180 gathers to ${s.work} `;
     let then = `Check: ${mode === 'opposite' ? `both come to ${Vv}°` : `${putX(e1, x)} = ${Vv} and ${putX(e2, x)} = ${Vu}, which add to 180`}. `;
     if (ask !== 'x') {
@@ -408,7 +408,7 @@ const FACT = {
   'pair-par': 'one pair of opposite sides is parallel',
   'pair-opp-ang': 'one pair of opposite angles is equal',
   'base-ang': 'the two angles at one of the parallel sides are equal',
-  'one-diag-bis': 'one diagonal cuts the other in half, but not the other way round',
+  'one-diag-bis': 'one diagonal cuts the other in half, but not the other way around',
 };
 const SHAPES = [
   { id: 'square', label: 'Square' }, { id: 'rectangle', label: 'Rectangle' }, { id: 'rhombus', label: 'Rhombus' },
@@ -421,7 +421,7 @@ const SCENARIOS = [
   [['opp-eq'], 'parallelogram', `A diagonal cuts it into two triangles with three equal sides each, congruent by SSS; their equal angles make opposite sides parallel, ${P_IS}. Nothing more is fixed.`],
   [['diag-bis'], 'parallelogram', `The vertical angles where the diagonals cross give two pairs of congruent triangles (SAS), whose equal angles make opposite sides parallel, ${P_IS}. Nothing makes it more.`],
   [['pair-eq-par'], 'parallelogram', `A diagonal splits it into two triangles congruent by SAS, so the other pair of sides is equal and parallel too, ${P_IS}. Nothing more is fixed.`],
-  [['opp-ang'], 'parallelogram', `The angles are x, y, x and y around, adding to 360°, so x + y = 180°: co-interior angles adding to 180° make opposite sides parallel, ${P_IS}.`],
+  [['opp-ang'], 'parallelogram', `The angles are x, y, x and y around, adding to 360°, so x + y = 180°: same-side interior angles adding to 180° make opposite sides parallel, ${P_IS}.`],
   [['opp-par', 'right'], 'rectangle', 'In a parallelogram neighboring angles add to 180° and opposite ones match, so one right angle makes all four right: a rectangle. No side is said to equal its neighbor, so not necessarily a square.'],
   [['opp-par', 'diag-eq'], 'rectangle', 'A parallelogram with equal diagonals is a rectangle: the triangles each diagonal cuts off are congruent (SSS), so neighboring angles are equal, and adding to 180° each is 90°. Not necessarily a square.'],
   [['diag-bis', 'diag-eq'], 'rectangle', 'Diagonals that bisect each other make a parallelogram, and equal diagonals make that parallelogram a rectangle. They are not said to be perpendicular, so not necessarily a square.'],
@@ -446,7 +446,7 @@ const SCENARIOS = [
   [['adj-eq'], 'none', 'Two equal neighboring sides is true of a kite and of a rhombus, and of shapes that are neither: nothing is certain.'],
   [['right', 'diag-eq'], 'none', 'A(0, 0), B(4, 0), C(3, 4), D(0, 3) has a right angle at A and diagonals AC = BD = 5, yet no parallel sides: not enough.'],
   [['pair-opp-ang'], 'none', 'A kite has one pair of opposite angles equal, and so does a parallelogram: either fits, so neither is certain.'],
-  [['pair-par', 'pair-opp-ang'], 'parallelogram', 'The parallel pair makes the angles along each of the other two sides co-interior, adding to 180°. So the neighbors of the two equal angles are each 180° minus an equal angle, and equal too: both pairs of opposite angles are equal, so it is a parallelogram. Nothing more is fixed.'],
+  [['pair-par', 'pair-opp-ang'], 'parallelogram', 'The parallel pair makes the angles along each of the other two sides same-side interior, adding to 180°. So the neighbors of the two equal angles are each 180° minus an equal angle, and equal too: both pairs of opposite angles are equal, so it is a parallelogram. Nothing more is fixed.'],
   [['opp-eq', 'right'], 'rectangle', 'Equal opposite sides make a parallelogram, and in a parallelogram one right angle makes all four right: a rectangle. No side is said to equal its neighbor, so not necessarily a square.'],
   [['diag-bis', 'right'], 'rectangle', 'Diagonals that bisect each other make a parallelogram, and in a parallelogram one right angle makes all four right: a rectangle. Not necessarily a square.'],
   [['opp-ang', 'right'], 'rectangle', 'Equal opposite angles make a parallelogram; the right angle’s opposite is right too, and the other two are 180° − 90° = 90°: a rectangle. Not necessarily a square.'],
@@ -554,7 +554,7 @@ function isoTrap(rng) {
   const label = (v, l, tone = GIVEN) => cornerText(...at4(P, idx(v)), l, tone);
   const base = [...outline(P), ...cornerNames(P, NAMES), ...ticks(P[0], P[3], 1), ...ticks(P[1], P[2], 1)];
   const bases = 'In an isosceles trapezoid the angles at each base are equal: ∠A = ∠B and ∠C = ∠D. ';
-  const intro = `${bases}And AB ∥ DC makes ∠A and ∠D co-interior, so they add to 180°. `;
+  const intro = `${bases}And AB ∥ DC makes ∠A and ∠D same-side interior, so they add to 180°. `;
   if (rng.chance(0.55)) {
     const v = rng.pick([...NAMES]), t = rng.pick([...NAMES].filter((u) => u !== v));
     const gv = val(v), want = val(t);
@@ -581,9 +581,9 @@ function isoTrap(rng) {
       answer: { type: 'int', value: x },
       visual: draw([...base, ...angleLabel(P, v, sized(e1)), ...angleLabel(P, u, sized(e2))], [answerAt(P, `x = ${x}`)]),
       explain: `${bases}${equal ? `∠${v} and ∠${u} share a base, so they are equal: ${s.work}`
-        : `∠${v} and ∠${u} are at the two ends of leg ${v}${u}, and AB ∥ DC makes them co-interior, so they add to 180°: (${ex(e1)}) + (${ex(e2)}) = 180 gathers to ${s.work}`} `
+        : `∠${v} and ∠${u} are at the two ends of leg ${v}${u}, and AB ∥ DC makes them same-side interior, so they add to 180°: (${ex(e1)}) + (${ex(e2)}) = 180 gathers to ${s.work}`} `
         + `Check: ${putX(e1, x)} = ${val(v)} and ${putX(e2, x)} = ${val(u)}. `
-        + `${equal ? '(Adding them to 180° would treat them as co-interior; they are base angles.)' : '(Setting them equal would make them base angles; they are on one leg.)'} So x = ${x}.`,
+        + `${equal ? '(Adding them to 180° would treat them as same-side interior; they are base angles.)' : '(Setting them equal would make them base angles; they are on one leg.)'} So x = ${x}.`,
     };
   }
 }
@@ -691,7 +691,7 @@ function triangleMidsegment(rng) {
         const total = sides[0] + sides[1] + sides[2];
         if (a + b <= cc + 2 || total % 2) continue;
         // requiem: catalogue/content/labelled-figures-to-scale
-        // Drawn from its own three sides, so the side labelled longest is drawn longest.
+        // Drawn from its own three sides, so the side labeled longest is drawn longest.
         const Q = turned(fromSides(sides[0], sides[1], sides[2], 4.8).map((q) => q.map(r2)), rng.int(-12, 12)), cq = centroid(Q);
         const corner = (i) => { const [u, v] = [Q[(i + 1) % 3], Q[(i + 2) % 3]].map((q) => dirTo(Q[i], q)); return Math.abs(((u - v + 540) % 360) - 180); };
         if (Math.min(corner(0), corner(1), corner(2)) < 22) continue;
@@ -724,8 +724,8 @@ function triangleMidsegment(rng) {
       visual: draw([...base, cornerText(P[1], P[0], P[2], deg(angB)), ...arcs(D, kind === 'ADE' ? P[0] : P[1], E, 1, ASKED),
         cornerText(D, kind === 'ADE' ? P[0] : P[1], E, '?', ASKED)], [answerAt(P, `∠${kind} = ${deg(want)}`)]),
       explain: `${fact}AB crosses the parallel lines DE and BC, so ${kind === 'ADE'
-        ? `∠ADE and ∠ABC are corresponding angles, and equal: ∠ADE = ${angB}°. (They are not co-interior: both open towards C’s side, on the same side of AB.)`
-        : `∠BDE and ∠ABC are co-interior angles between them, and add to 180°: ∠BDE = 180 − ${angB} = ${want}°. (Equal would be ∠ADE, the corresponding angle.)`} `
+        ? `∠ADE and ∠ABC are corresponding angles, and equal: ∠ADE = ${angB}°. (They are not same-side interior: both open toward C’s side, on the same side of AB.)`
+        : `∠BDE and ∠ABC are same-side interior angles between them, and add to 180°: ∠BDE = 180 − ${angB} = ${want}°. (Equal would be ∠ADE, the corresponding angle.)`} `
         + `So ∠${kind} = ${deg(want)}.`,
     };
   }
@@ -802,7 +802,7 @@ function verify(rng) {
   const want = rng.pick(['square', 'rectangle', 'rhombus', 'parallelogram', 'parallelogram', 'trapezoid', 'kite', 'none']);
   for (;;) {
     let P = shapeFor(rng, want);
-    // Start the lettering at any corner, either way round.
+    // Start the lettering at any corner, either way around.
     const k = rng.int(0, 3);
     P = [0, 1, 2, 3].map((i) => P[(i + k) % 4]);
     if (rng.chance(0.5)) P = [P[0], P[3], P[2], P[1]];

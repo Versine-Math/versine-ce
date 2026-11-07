@@ -11,7 +11,7 @@
  * and asking for it keeps every answer a single box, the same as Powers &
  * Exponent Rules asking for the exponent rather than the value.
  *
- * Tidy It Up is its own level, ahead of the arithmetic, because multiplying
+ * Clean It Up is its own level, ahead of the arithmetic, because multiplying
  * 3 × 10⁴ by 5 × 10² lands on 15 × 10⁶, and putting that right is the step
  * students skip. Met first on its own it is an idea; met first in the middle
  * of a product it is a trap.
@@ -36,17 +36,17 @@ export const LEVELS = [
     blurb: 'Read one back. The power says how far the point slides, and which way.',
     dependsOn: [{ skill: 'decimals', level: 0 }],
   },
-  { name: 'Tidy It Up', slug: 'tidy-it-up',
+  { name: 'Clean It Up', slug: 'tidy-it-up',
     blurb: 'Forty-five is not a digit. Move a ten from the front into the power.' },
   { name: 'Which Is Bigger', slug: 'which-is-bigger',
     blurb: 'The power decides first. The front number only breaks a tie.' },
   {
     name: 'Multiplying and Dividing', slug: 'multiplying-and-dividing',
-    blurb: 'Front numbers together, powers together, then tidy what you get.',
+    blurb: 'Front numbers together, powers together, then clean up what you get.',
     dependsOn: [{ skill: 'exponents', level: 2 }, { skill: 'decimals', level: 3 }],
   },
   {
-    name: 'Adding and Taking Away', slug: 'adding-and-taking-away',
+    name: 'Adding and Subtracting', slug: 'adding-and-taking-away',
     blurb: 'No rule for this. Match the powers first, then it is ordinary decimals.',
     dependsOn: [{ skill: 'decimals', level: 2 }],
   },

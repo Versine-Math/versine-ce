@@ -5,7 +5,7 @@
  * Every area here comes back to the rectangle. A parallelogram is one with a
  * triangle moved from one end to the other, so it is base times height, and
  * the height is measured at right angles to the base, never along the slanted side --
- * the slip the level is built around, with the slanted side labelled too. A
+ * the slip the level is built around, with the slanted side labeled too. A
  * triangle is half the parallelogram on the same base and height, even when
  * its height falls outside it; a trapezoid is the average of its parallel
  * sides times the height.

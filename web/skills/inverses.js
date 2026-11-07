@@ -30,7 +30,7 @@ export const LEVELS = [
     // One output from two inputs is the horizontal form of the vertical line test.
     dependsOn: [{ skill: 'functions', level: 1 }, { skill: 'quadratic-graphs', level: 1 }] },
   { name: 'Graph Reflection', slug: 'graph-reflection',
-    blurb: 'The graph of f⁻¹ is the graph of f reflected in y = x: the point (a, b) becomes (b, a).',
+    blurb: 'The graph of f⁻¹ is the graph of f reflected over y = x: the point (a, b) becomes (b, a).',
     dependsOn: [{ skill: 'functions', level: 3 }] },
   { name: 'All Together', slug: 'all-together',
     blurb: 'Everything mixed. Clear this against the clock to finish the skill for the day.' },
@@ -50,7 +50,7 @@ export default {
   name: 'Inverse Functions',
   category: 'functions',
   glyph: 'f⁻¹',
-  blurb: 'Undoing a function: its values, its formula, checking by composing, cutting a parabola to half, and the graph reflected in y = x.',
+  blurb: 'Undoing a function: its values, its formula, checking by composing, cutting a parabola to half, and the graph reflected over y = x.',
   answerInput: 'expr',
   // Notation and graphs from functions; composing from composition; cube
   // roots from roots. Logarithms is not among them: log_b x as the inverse

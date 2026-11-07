@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS attempts (
 CREATE INDEX IF NOT EXISTS idx_attempts_user_skill ON attempts(user_id, skill_id);
 
 -- The Time Trial clock, per student per level. Seeded from how fast they
--- practised, then nudged after every trial. Never hand-set.
+-- practiced, then nudged after every trial. Never hand-set.
 CREATE TABLE IF NOT EXISTS level_clocks (
     user_id    INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     skill_id   TEXT    NOT NULL,
@@ -206,15 +206,15 @@ def ensure_column(conn: sqlite3.Connection, table: str, column: str, decl: str) 
         conn.execute(f"ALTER TABLE {table} ADD COLUMN {column} {decl}")
 
 
-# ── The catalogue, as much of it as the server needs ─────────────────────────
-# The catalogue is JavaScript and this is Python, so the server cannot read it.
+# ── The catalog, as much of it as the server needs ─────────────────────────
+# The catalog is JavaScript and this is Python, so the server cannot read it.
 # What it needs is only the order of each skill's levels, which the library
 # build publishes into the manifest.
 LIBRARY_DIR = Path(os.environ.get("VERSINE_LIBRARY", Path(__file__).parent.parent / "web" / "library"))
 
 
 def level_order() -> dict[str, list[str]]:
-    """{skill_id: [slug, ...]} in catalogue order, or empty if unavailable."""
+    """{skill_id: [slug, ...]} in catalog order, or empty if unavailable."""
     return _manifest().get("order", {})
 
 
@@ -311,8 +311,8 @@ def done_today(conn: sqlite3.Connection, user_id: int) -> set[str]:
     """Skills finished for the day.
 
     A skill counts as done only once its last level -- the mixed review that draws on
-    every earlier level -- has been cleared in a Time Trial today. Practising
-    an easy level all afternoon does not tick the box.
+    every earlier level -- has been cleared in a Time Trial today. Practicing
+    an easy level all afternoon does not check the box.
     """
     rows = conn.execute(
         """SELECT DISTINCT r.skill_id
@@ -342,7 +342,7 @@ def get_progress(conn: sqlite3.Connection, user_id: int) -> dict:
 
     Positions are re-derived from slugs on the way out, every time.
 
-    A level index is only meaningful against the version of the catalogue that
+    A level index is only meaningful against the version of the catalog that
     produced it, which is why `mastered_slugs` and `level_slug` exist -- but
     the index columns were being served as stored, so inserting a level into a
     skill silently reattributed a student's history. A real record read
@@ -352,7 +352,7 @@ def get_progress(conn: sqlite3.Connection, user_id: int) -> dict:
     was reading them.
 
     The index columns are now a cache of the last write, and the slugs are the
-    record. Anything that has to be true across a catalogue change reads this.
+    record. Anything that has to be true across a catalog change reads this.
     """
     finished = done_today(conn, user_id)
     order = level_order()

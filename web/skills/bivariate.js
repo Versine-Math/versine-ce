@@ -8,7 +8,7 @@
  * mean what they meant in linear-models: a rate and a starting value. What
  * is new is that the points miss it, by a residual, actual minus predicted,
  * and that r measures how closely they keep to it. The traps are taking a
- * strong negative r as weak, reading a residual the wrong way round, and
+ * strong negative r as weak, reading a residual the wrong way around, and
  * believing a correlation from an observational study shows a cause.
  */
 

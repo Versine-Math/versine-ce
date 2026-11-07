@@ -2,7 +2,7 @@
 """
 The server, exercised against a real database.
 
-Every other check in this directory validates the *catalogue* -- the problems,
+Every other check in this directory validates the *catalog* -- the problems,
 their answers, their pictures, the play loop. None of them touches the thing
 that stores a student's work, and two faults lived there undetected until
 somebody opened the database by hand:
@@ -36,7 +36,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 
-# Unlike its neighbours this check cannot be stdlib-only: it imports the
+# Unlike its neighbors this check cannot be stdlib-only: it imports the
 # server, and the server is a FastAPI app. Stubbing the framework out would
 # mean testing a drawing of it -- the request models do validation that is
 # itself under test here.
@@ -45,7 +45,7 @@ ROOT = Path(__file__).resolve().parent.parent
 # framework, and if there is no venv either, skip rather than fail. That is
 # the same bargain `update.sh` already strikes for the JavaScript checks --
 # a machine without the runtime still gets every check that does not need it,
-# and a missing tool must never be reported as a broken catalogue.
+# and a missing tool must never be reported as a broken catalog.
 #
 # This has to come before anything is created on disk: `execv` replaces the
 # process, so a temp directory made above here would be abandoned by it and
@@ -62,7 +62,7 @@ except ImportError:
 WORK = Path(tempfile.mkdtemp(prefix="versine-check-"))
 
 # db.py reads both of these at import time, so they have to be set first. The
-# library directory is fabricated per test, which is what lets a catalogue
+# library directory is fabricated per test, which is what lets a catalog
 # change be simulated rather than argued about.
 os.environ["VERSINE_DB"] = str(WORK / "test.db")
 os.environ["VERSINE_LIBRARY"] = str(WORK / "library")
@@ -113,19 +113,19 @@ def raises(status, fn, *a, **kw):
     raise Failed(f"expected HTTP {status}, but the call succeeded")
 
 
-def catalogue(order: dict[str, list[str]], graph: dict | None = None) -> None:
+def catalog(order: dict[str, list[str]], graph: dict | None = None) -> None:
     """Publish a level order (and what builds on what), as the library build does."""
     with open(WORK / "library" / "manifest.json", "w", encoding="utf-8") as fh:
         json.dump({"order": order, "graph": graph or {}}, fh)
 
 
 def fresh(order: dict[str, list[str]] | None = None, graph: dict | None = None):
-    """A brand-new database, and a catalogue to read it against."""
+    """A brand-new database, and a catalog to read it against."""
     path = WORK / "test.db"
     for suffix in ("", "-wal", "-shm"):
         Path(str(path) + suffix).unlink(missing_ok=True)
     db.DB_PATH = path
-    catalogue(order if order is not None else {}, graph)
+    catalog(order if order is not None else {}, graph)
     db.init_db()
     auth._failures.clear()
     db.DAY_ZONE.set(None)                          # review tests pin it to UTC
@@ -160,7 +160,7 @@ def record(user, skill="alpha"):
         return db.get_progress(conn, user["id"])["skills"].get(skill, {})
 
 
-# ── A catalogue that changes underneath stored progress ──────────────────────
+# ── A catalog that changes underneath stored progress ──────────────────────
 # The class of fault that prompted this file. Slugs are the record; positions
 # are re-derived on every read.
 
@@ -170,10 +170,10 @@ def _():
     user = make_user()
     run(user, level=0, slug="one", passed=True, levels=3)
     run(user, level=1, slug="two", passed=True, levels=3)
-    equal(record(user)["mastered"], [0, 1], "mastered before the catalogue changed")
+    equal(record(user)["mastered"], [0, 1], "mastered before the catalog changed")
 
     # A level arrives in the middle, exactly as "Above and Below Zero" did.
-    catalogue({"alpha": ["one", "inserted", "two", "three"]})
+    catalog({"alpha": ["one", "inserted", "two", "three"]})
     after = record(user)
     equal(after["mastered"], [0, 2], "mastered after the insert")
     check(1 not in after["mastered"],
@@ -188,7 +188,7 @@ def _():
     run(user, level=1, slug="two", passed=True, levels=2)
     equal(record(user)["mastered"], [0, 1], "both levels cleared")
 
-    catalogue({"alpha": ["one", "inserted", "two"]})
+    catalog({"alpha": ["one", "inserted", "two"]})
     after = record(user)
     # The gate asks whether the LAST level is cleared. Under stale indices this
     # read as [0, 1] against a three-level skill: unfinished, and a student
@@ -202,7 +202,7 @@ def _():
     user = make_user()
     run(user, level=0, slug="one", passed=True, levels=3)
     run(user, level=1, slug="two", passed=True, levels=3)
-    catalogue({"alpha": ["one", "two", "inserted", "three"]})
+    catalog({"alpha": ["one", "two", "inserted", "three"]})
     after = record(user)
     check(after["level"] >= 2,
           f"level fell to {after['level']}; a level added behind them locked them out")
@@ -218,7 +218,7 @@ def _():
     equal(after["level"], max(after["mastered"]), "level against furthest cleared")
 
 
-@test("progress falls back to stored positions when the catalogue is unreadable")
+@test("progress falls back to stored positions when the catalog is unreadable")
 def _():
     fresh({"alpha": ["one", "two"]})
     user = make_user()
@@ -227,15 +227,15 @@ def _():
     # than reporting everything as uncleared.
     (WORK / "library" / "manifest.json").unlink()
     equal(record(user)["mastered"], [0], "mastered with no manifest")
-    catalogue({"alpha": ["one", "two"]})
+    catalog({"alpha": ["one", "two"]})
 
 
-@test("a skill missing from the catalogue keeps its stored positions")
+@test("a skill missing from the catalog keeps its stored positions")
 def _():
     fresh({"alpha": ["one", "two"]})
     user = make_user()
     run(user, level=0, slug="one", passed=True, levels=2)
-    catalogue({"beta": ["x"]})              # alpha is gone from the manifest
+    catalog({"beta": ["x"]})              # alpha is gone from the manifest
     equal(record(user)["mastered"], [0], "mastered for an unknown skill")
 
 
@@ -328,7 +328,7 @@ def _():
     equal([r["level_slug"] for r in rows], ["two", "two"], "attempt slugs")
 
 
-@test("mastered slugs are kept in catalogue order, not the order they were cleared")
+@test("mastered slugs are kept in catalog order, not the order they were cleared")
 def _():
     fresh({"alpha": ["one", "two", "three"]})
     user = make_user()
@@ -343,7 +343,7 @@ def _():
     equal(slugs, ["one", "two"], "mastered slugs")
 
 
-@test("a run with no slug falls back to the catalogue position")
+@test("a run with no slug falls back to the catalog position")
 def _():
     fresh({"alpha": ["one", "two"]})
     user = make_user()
@@ -372,7 +372,7 @@ def _():
     fresh({"alpha": ["one", "two"]})
     user = make_user()
     run(user, level=1, slug="two", mode="practice", passed=True, levels=2)
-    check(not record(user)["doneToday"], "practice ticked the daily box")
+    check(not record(user)["doneToday"], "practice checked the daily box")
 
 
 @test("a failed trial on the last level does not finish the skill")
@@ -380,7 +380,7 @@ def _():
     fresh({"alpha": ["one", "two"]})
     user = make_user()
     run(user, level=1, slug="two", passed=False, levels=2)
-    check(not record(user)["doneToday"], "a failed trial ticked the daily box")
+    check(not record(user)["doneToday"], "a failed trial checked the daily box")
 
 
 @test("yesterday's clearance does not count as done today")
@@ -472,7 +472,7 @@ def _():
     equal(row["role"], "student", "role of a self-made profile")
 
 
-@test("a profile is refused an icon or colour that is not on the list")
+@test("a profile is refused an icon or color that is not on the list")
 def _():
     fresh()
     resp = Response()
@@ -616,7 +616,7 @@ def _():
     a = make_user(name="a")
     b = make_user(name="b")
     run(a, level=0, slug="one", solved=9, passed=True, levels=2)
-    equal(record(a)["solved"], 9, "the student who practised")
+    equal(record(a)["solved"], 9, "the student who practiced")
     equal(record(b).get("solved", 0), 0, "the student who did not")
 
 
@@ -707,7 +707,7 @@ def _():
 
 # ── What the console and the streak strip read ───────────────────────────────
 
-@test("the teacher console sees students, and does not list teachers as pupils")
+@test("the teacher console sees students, and does not list teachers as students")
 def _():
     fresh({"alpha": ["one"]})
     teacher = make_user(name="grown-up", role="teacher")
@@ -735,15 +735,15 @@ def _():
     equal([r["name"] for r in board], ["bo", "ana"], "leaderboard order")
 
 
-@test("the streak strip separates days practised from days completed")
+@test("the streak strip separates days practiced from days completed")
 def _():
     fresh({"alpha": ["one", "two"]})
     user = make_user()
-    # Practised without finishing the skill.
+    # Practiced without finishing the skill.
     run(user, level=0, slug="one", levels=2, passed=True,
         attempts=[api.AttemptIn(prompt="q", expected="a", correct=True, ms=1000)])
     act = api.activity(skill_id="alpha", user=user)
-    equal(act["practiceDays"], 1, "days practised")
+    equal(act["practiceDays"], 1, "days practiced")
     equal(act["completedDays"], 0, "days completed")
     check(not act["doneToday"], "not finished, but reported done")
 
@@ -1058,7 +1058,7 @@ def _():
 
 
 # requiem: review/migrate-reads-slugs
-@test("finished is read from slugs against today's catalogue, not the integer list")
+@test("finished is read from slugs against today's catalog, not the integer list")
 def _():
     user = review_world()
     finish(user, "base")
@@ -1067,7 +1067,7 @@ def _():
     check(review(user) is not None, "a skill finished by its slugs has a review")
 
     # A level inserted into the skill means it is no longer finished.
-    catalogue({**REVIEW_ORDER, "base": ["b1", "bx", "b2"]}, REVIEW_GRAPH)
+    catalog({**REVIEW_ORDER, "base": ["b1", "bx", "b2"]}, REVIEW_GRAPH)
     equal(review(user), None, "review after the skill grew a level")
 
 
@@ -1182,5 +1182,5 @@ if failures:
         print(f"  ✗ {f}")
     sys.exit(1)
 
-print(f"server: {len(TESTS)} checks passed — progress across catalogue changes, runs, "
+print(f"server: {len(TESTS)} checks passed — progress across catalog changes, runs, "
       "identity, clocks, the console and the schema")

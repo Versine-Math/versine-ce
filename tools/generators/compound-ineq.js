@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for compound-ineq.
+ * Catalog authoring tool: builds the problem library for compound-ineq.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -215,7 +215,7 @@ function andOr(rng) {
     if (rng.chance(0.15)) { b = a; if (opA === opB) opB = opA.length === 1 ? `${opA}=` : opA[0]; }
     else if (a === b) b += rng.pick([2, 3, -2, -3]);
   } else {
-    // Pointing towards each other: a lower bound (x > lo) and an upper one
+    // Pointing toward each other: a lower bound (x > lo) and an upper one
     // (x < hi). "and" keeps the stretch between, or nothing if they miss;
     // "or" with the rays overlapping covers the whole line.
     let lo = Math.min(a, b), hi = Math.max(a, b);
@@ -248,7 +248,7 @@ function andOr(rng) {
   };
 }
 
-/** A set, and the bracket slips students make writing it. */
+/** A set, and the parentheses slips students make writing it. */
 function intervalNotation(rng) {
   const shape = rng.pick(['between', 'between', 'ray', 'or']);
   const [lo, hi] = bothEnds(rng);
@@ -260,7 +260,7 @@ function intervalNotation(rng) {
   // requiem: catalogue/content/decoys-cross-two-slips
   // Two slips crossed rather than one slip three ways: the key, each slip
   // alone, and both together, so the key is not the option nearest the rest.
-  // The slips: an end's bracket the wrong way round (≤ read as <), infinity
+  // The slips: an end's parentheses the wrong way around (≤ read as <), infinity
   // given a square bracket, and a ray read the wrong way (x > 3 for x < 3).
   // Infinity has no inequality, so it is a slip only when the notation is
   // what is chosen.
@@ -282,7 +282,7 @@ function intervalNotation(rng) {
       text: `inequality for: ${ascii(parts)}`,
       answer: { type: 'choice', value: written(parts), options: rng.shuffle(labels).map((label) => ({ id: label, label })) },
       visual: null,
-      explain: `A square bracket keeps its end in (≤ or ≥); a round one leaves it out (< or >). So ${right} is ${written(parts)}.`,
+      explain: `A square bracket keeps its end in (≤ or ≥); a parenthesis leaves it out (< or >). So ${right} is ${written(parts)}.`,
     };
   }
   return {
@@ -290,8 +290,8 @@ function intervalNotation(rng) {
     text: `interval for: ${ascii(parts)}`,
     answer: { type: 'choice', value: right, options: rng.shuffle(labels).map((label) => ({ id: label, label })) },
     visual: null,
-    explain: `≤ and ≥ keep the end in: a square bracket. < and > leave it out: a round one. `
-      + `${parts.some((p) => p.lo === null || p.hi === null) ? 'An end at ∞ is never a number you reach, so it always takes a round bracket. ' : ''}`
+    explain: `≤ and ≥ keep the end in: a square bracket. < and > leave it out: a parenthesis. `
+      + `${parts.some((p) => p.lo === null || p.hi === null) ? 'An end at ∞ is never a number you reach, so it always takes a parenthesis. ' : ''}`
       + `So ${written(parts)} is ${right}.`,
   };
 }

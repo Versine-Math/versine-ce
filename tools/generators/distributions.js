@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for distributions.
+ * Catalog authoring tool: builds the problem library for distributions.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -53,7 +53,7 @@ function percentOf(part, whole) {
 // What a data set measures, in both systems where it has units, with a
 // range its values are drawn from.
 // `step` is the box plots' tick step: every five-number value is a multiple
-// of it, so it sits on a labelled tick. `u` is the spread of a data list.
+// of it, so it sits on a labeled tick. `u` is the spread of a data list.
 const MEASURES = [
   { what: 'test scores', unit: 'points', of: (v) => `${said(v)}\u00a0points`, lo: 40, hi: 100, step: 5, u: 3 },
   { what: 'commute times', unit: 'minutes', of: (v) => `${said(v)}\u00a0minutes`, lo: 5, hi: 60, step: 5, u: 3 },
@@ -72,7 +72,7 @@ const axisTitle = (M) => `${M.what.replace(/ (at|of a) .*$/, '').replace(/^\w/, 
 // requiem: catalogue/content/box-plot-values-on-ticks
 /**
  * Five increasing values inside M's range, each a multiple of M.step so it
- * sits on a labelled tick, all within `win` (a stretch of tick positions,
+ * sits on a labeled tick, all within `win` (a stretch of tick positions,
  * [first, last]), spanning at least `least` steps. Two different values are
  * then always a whole step or more apart.
  */
@@ -367,7 +367,7 @@ function histLevel(rng, keep = {}) {
     text: `histogram percent from ${asc(lo)} to ${asc(hi)}: ${histAsc(start, w, counts)}${P.rounded ? ' to 1 dp' : ''}`,
     answer: { ...P.answer, percent: true },
     visual: draw(Array.from({ length: j - i }, (_, n) => i + n)),
-    explain: `${j - i === 1 ? 'That bar holds' : `Those bars hold ${counts.slice(i, j).join(' + ')} =`} ${part} of the ${counts.join(' + ')} = ${N} values: ${part} ÷ ${N} × 100 = ${P.rounded ? `${((100 * part) / N).toFixed(3)}…, which is ${P.shown} to 1 dp` : P.shown}. `
+    explain: `${j - i === 1 ? 'That bar holds' : `Those bars hold ${counts.slice(i, j).join(' + ')} =`} ${part} of the ${counts.join(' + ')} = ${N} values: ${part} ÷ ${N} × 100 = ${P.rounded ? `${((100 * part) / N).toFixed(3)}…, which is ${P.shown} to 1 decimal place` : P.shown}. `
       + `(The whole is every value, all the bars together.) So ${P.shown}%.`,
   };
 }
@@ -375,7 +375,7 @@ function histLevel(rng, keep = {}) {
 // ── Shape and center ────────────────────────────────────────────────────
 
 /** The mean and median as lines on a histogram, one line when they meet. */
-// Both are estimates, each value taken at its bar's midpoint, and labelled so.
+// Both are estimates, each value taken at its bar's midpoint, and labeled so.
 const centerLines = (mean, median) => (Math.abs(mean - median) < 1e-9 ? [[mean, 'mean ≈ median']]
   : [[mean, `mean ≈ ${said(Math.round(mean * 10) / 10)}`], [median, `median ≈ ${said(median)}`]]);
 const ESTIMATE = 'The dashed lines are estimates, taking each value at the middle of its bar.';

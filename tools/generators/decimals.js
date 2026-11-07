@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for decimals.
+ * Catalog authoring tool: builds the problem library for decimals.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -104,7 +104,7 @@ function addSub(rng) {
   const d = 10 ** places;
   const a = dec(rng.int(1, 40 * d) , places);
   const plus = rng.chance(0.6);
-  // Subtraction may take away more than there was. Every other skill now
+  // Subtraction may subtract more than there was. Every other skill now
   // lets a difference cross zero, and a decimal is no different about it.
   const b = dec(plus ? rng.int(1, 40 * d) : rng.int(1, 40 * d), places);
   const value = dec(plus ? a.n + b.n : a.n - b.n, places);
@@ -184,7 +184,7 @@ function toFraction(rng) {
 // (an exact quotient that terminates stays a decimal), so does "add", and a
 // fraction in the question does not mean keep the fraction: one measured
 // with a ruler is measured as a decimal. With eight fixed templates a
-// student learnt the eight answers in a sitting and stopped reading.
+// student learned the eight answers in a sitting and stopped reading.
 const SITUATIONS = [
   { text: 'You need the exact value of {n}/{odd} of something.', want: 'fraction',
     why: '{n}/{odd} has no terminating decimal, so any decimal for it is close and not equal.' },
@@ -225,7 +225,7 @@ const SIDES = {
 
 /**
  * The situations carry numbers so that the level is not six problems a student
- * memorises in one sitting -- the same reason the other strategy levels
+ * memorizes in one sitting -- the same reason the other strategy levels
  * interpolate. The numbers are chosen to keep each argument true: the
  * "exact" cases use denominators with no terminating decimal.
  */
@@ -301,7 +301,7 @@ function whichForm(rng) {
     answer: {
       type: 'choice', value: want,
       options: rng.shuffle([
-        { id: 'fraction', label: 'Use a fraction', note: 'exact, and tidy to compute with' },
+        { id: 'fraction', label: 'Use a fraction', note: 'exact, and clean to compute with' },
         { id: 'decimal', label: 'Use a decimal', note: 'easy to compare and to measure' },
       ]),
     },

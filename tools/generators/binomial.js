@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for binomial.
+ * Catalog authoring tool: builds the problem library for binomial.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -9,7 +9,7 @@
  *
  * Every `text` carries the binomial and its power in ASCII, (2x - 3)^5, or a
  * row's opening numbers, or a probability story's n, p and count, so
- * scripts/check-answers.py can multiply the brackets out one at a time,
+ * scripts/check-answers.py can multiply the parentheses out one at a time,
  * build Pascal's triangle by adding, and list every run of successes and
  * failures, none of which is the C(n, k) this file uses.
  */
@@ -77,7 +77,7 @@ function polyAscii(map) {
   }).join('');
 }
 
-/** A monomial in prose, its sign kept, bracketed for a power unless a lone letter: (2x), (−3), x. */
+/** A monomial in prose, its sign kept, in parentheses for a power unless a lone letter: (2x), (−3), x. */
 const piece = (m) => {
   const body = `${m.c < 0 ? '−' : ''}${pretty(monoAscii(m))}`;
   return /^[xy]$/.test(body) ? body : `(${body})`;
@@ -148,7 +148,7 @@ function pascal(rng) {
   if (kind === 'power') {
     const n = rng.int(3, 20), r = row(n);
     return {
-      prompt: [T.prose(`Multiplied out, (a + b)ⁿ has the coefficients ${r.slice(0, 3).map(commas).join(', ')}, …. What is n?`)],
+      prompt: [T.prose(`Expanded, (a + b)ⁿ has the coefficients ${r.slice(0, 3).map(commas).join(', ')}, …. What is n?`)],
       text: `pascal power: begins ${r.slice(0, 3).join(', ')}`,
       answer: intAnswer(n),
       visual: null,
@@ -158,24 +158,24 @@ function pascal(rng) {
   const n = rng.int(3, 8), k = rng.int(1, n - 1), r = row(n);
   const term = `a${n - k === 1 ? '' : sup(n - k)}b${k === 1 ? '' : sup(k)}`;
   return {
-    prompt: [T.prose(`Use Pascal's triangle: what is the coefficient of ${term} in (a + b)${sup(n)} multiplied out?`)],
+    prompt: [T.prose(`Use Pascal's triangle: what is the coefficient of ${term} in (a + b)${sup(n)} expanded?`)],
     text: `coefficient: ${powerAscii(n - k, 0).replace(/x/g, 'a')}${powerAscii(0, k).replace(/y/g, 'b')} in (a + b)^${n}`,
     answer: intAnswer(r[k]),
     visual: triangle(n, k),
-    explain: `Row ${n} of Pascal's triangle is ${r.join(', ')}: the coefficients of a${sup(n)}, a${sup(n - 1)}b, … , b${sup(n)} in turn. ${term} has b to the power ${k}, so it is number ${k + 1} along, the two above it added: ${row(n - 1)[k - 1]} + ${row(n - 1)[k]} = ${r[k]}. So the coefficient is ${r[k]}.`,
+    explain: `Row ${n} of Pascal's triangle is ${r.join(', ')}: the coefficients of a${sup(n)}, a${sup(n - 1)}b, … , b${sup(n)} in turn. ${term} has b to the power of ${k}, so it is number ${k + 1} along, the two above it added: ${row(n - 1)[k - 1]} + ${row(n - 1)[k]} = ${r[k]}. So the coefficient is ${r[k]}.`,
   };
 }
 
 // --- Coefficients by Combinations --------------------------------------------------
 
 /**
- * n(n − 1)…(n − j + 1)/j! cancelled before anything is multiplied: each
+ * n(n − 1)…(n − j + 1)/j! canceled before anything is multiplied: each
  * factor of j! (2 and up) is matched to a factor on top that it divides,
  * one top factor taking several when they fit (12/(4 × 3)). Every j that
  * Coefficients by Combinations asks has such a matching; a draw without one
  * throws, so it is found when the library is built.
  */
-function cancelled(n, j) {
+function canceled(n, j) {
   const top = Array.from({ length: j }, (_, i) => n - i);
   const bottom = Array.from({ length: j - 1 }, (_, i) => j - i); // j, …, 2
   const taken = top.map(() => []);
@@ -190,7 +190,7 @@ function cancelled(n, j) {
     }
     return false;
   };
-  if (!fit(0)) throw new Error(`no cancelling for C(${n}, ${j})`);
+  if (!fit(0)) throw new Error(`no canceling for C(${n}, ${j})`);
   const steps = top.map((f, t) => {
     if (!taken[t].length) return null;
     const under = taken[t].reduce((a, b) => a * b, 1);
@@ -217,13 +217,13 @@ function combos(rng) {
     }
     // requiem: catalogue/content/choose-cancels-the-smaller
     // C(16, 14) is worked as C(16, 2) = (16 × 15)/(2 × 1), never as
-    // 16 × 15 × … × 3 over 14!: the smaller of k and n − k, cancelled
+    // 16 × 15 × … × 3 over 14!: the smaller of k and n − k, canceled
     // before anything is multiplied.
     const j = Math.min(k, n - k);
     // Five factors over 5! at most: C(15, 7) is past what cancels by hand,
     // with no factor on top that 6 × 4 divides.
     if (j > 5) return combos(rng);
-    const { top, steps, left } = cancelled(n, j);
+    const { top, steps, left } = canceled(n, j);
     const swap = j === k ? '' : ` Choosing ${k} to take is choosing ${j} to leave, so C(${n}, ${k}) = C(${n}, ${j}).`;
     const leftover = left.length > 1 ? `${left.join(' × ')} = ${commas(C(n, k))}` : `${commas(C(n, k))}`;
     return {
@@ -240,7 +240,7 @@ function combos(rng) {
   if (kind === 'one') {
     const asked = powerAscii(k, 0);
     return {
-      prompt: [T.prose('What is the coefficient of'), drawn(asked), T.prose('in'), drawn(`(x + 1)^${n}`), T.prose('multiplied out?')],
+      prompt: [T.prose('What is the coefficient of'), drawn(asked), T.prose('in'), drawn(`(x + 1)^${n}`), T.prose('expanded?')],
       text: `coefficient: ${asked} in (x + 1)^${n}`,
       answer: intAnswer(C(n, k)),
       visual: null,
@@ -249,7 +249,7 @@ function combos(rng) {
   }
   const asked = powerAscii(n - k, k);
   return {
-    prompt: [T.prose('What is the coefficient of'), drawn(asked), T.prose('in'), drawn(`(x + y)^${n}`), T.prose('multiplied out?')],
+    prompt: [T.prose('What is the coefficient of'), drawn(asked), T.prose('in'), drawn(`(x + y)^${n}`), T.prose('expanded?')],
     text: `coefficient: ${asked} in (x + y)^${n}`,
     answer: intAnswer(C(n, k)),
     visual: null,
@@ -289,21 +289,21 @@ function given(rng) {
     const px = m1.px * (n - k), py = m2.py * k;
     if (kind === 'nth') {
       return {
-        prompt: [T.prose('When'), drawn(src), T.prose(`is multiplied out in descending powers of x, what is the coefficient of its ${ORD[k + 1]} term?`)],
+        prompt: [T.prose('When'), drawn(src), T.prose(`is expanded in descending powers of x, what is the coefficient of its ${ORD[k + 1]} term?`)],
         text: `term number: ${k + 1} of ${src}`,
         answer: intAnswer(coef),
         visual: null,
-        explain: `The terms run C(${n}, 0), C(${n}, 1), …, the power of ${piece(m2)} rising from 0, so the ${ORD[k + 1]} term has it to the power ${k}: C(${n}, ${k})${piece(m1)}${sup(n - k)}${piece(m2)}${sup(k)}. `
+        explain: `The terms run C(${n}, 0), C(${n}, 1), …, the power of ${piece(m2)} rising from 0, so the ${ORD[k + 1]} term has it to the power of ${k}: C(${n}, ${k})${piece(m1)}${sup(n - k)}${piece(m2)}${sup(k)}. `
           + `${said}. So the coefficient is ${commas(coef)}.`,
       };
     }
     const asked = powerAscii(px, py);
     return {
-      prompt: [T.prose('What is the coefficient of'), drawn(asked), T.prose('in'), drawn(src), T.prose('multiplied out?')],
+      prompt: [T.prose('What is the coefficient of'), drawn(asked), T.prose('in'), drawn(src), T.prose('expanded?')],
       text: `coefficient: ${asked} in ${src}`,
       answer: intAnswer(coef),
       visual: null,
-      explain: `${pretty(asked)} comes from the term with ${piece(m2)} to the power ${k}${kind === 'square' ? `, since (x²)${sup(n - k)} = x${sup(2 * (n - k))}` : ''}: C(${n}, ${k})${piece(m1)}${sup(n - k)}${piece(m2)}${sup(k)}. `
+      explain: `${pretty(asked)} comes from the term with ${piece(m2)} to the power of ${k}${kind === 'square' ? `, since (x²)${sup(n - k)} = x${sup(2 * (n - k))}` : ''}: C(${n}, ${k})${piece(m1)}${sup(n - k)}${piece(m2)}${sup(k)}. `
         + `Its number is ${said}, signs and all. So the coefficient is ${commas(coef)}.`,
     };
   }
@@ -389,11 +389,11 @@ function constant(rng) {
       const src = binAscii(m1, m2, n);
       const each = `${p1 === 1 ? '' : p1}(${n} − k) − ${-p2 === 1 ? '' : -p2}k`;
       return {
-        prompt: [T.prose('Multiplied out in descending powers of x,'), drawn(src), T.prose('has one constant term. Counting from the first term, which term is it? Give its number: 1 for the first.')],
+        prompt: [T.prose('Expanded in descending powers of x,'), drawn(src), T.prose('has one constant term. Counting from the first term, which term is it? Give its number: 1 for the first.')],
         text: `constant term number: ${src}`,
         answer: intAnswer(k + 1),
         visual: null,
-        explain: `The term with ${piece(m2)} to the power k has x to the power ${each} = ${p1 * n} − ${p1 - p2 === 1 ? '' : p1 - p2}k, which is 0 when k = ${k}. `
+        explain: `The term with ${piece(m2)} to the power of k has x to the power of ${each} = ${p1 * n} − ${p1 - p2 === 1 ? '' : p1 - p2}k, which is 0 when k = ${k}. `
           + `k counts up from 0 at the first term, so k = ${k} is term ${k + 1}. So it is term ${k + 1}.`,
       };
     }
@@ -409,12 +409,12 @@ function constant(rng) {
     const named = power === 0 ? 'the constant term' : `the coefficient of x${power === 1 ? '' : sup(power)}`;
     return {
       prompt: power === 0
-        ? [T.prose('What is the constant term of'), drawn(src), T.prose('multiplied out?')]
-        : [T.prose('What is the coefficient of'), drawn(xp), T.prose('in'), drawn(src), T.prose('multiplied out?')],
+        ? [T.prose('What is the constant term of'), drawn(src), T.prose('expanded?')]
+        : [T.prose('What is the coefficient of'), drawn(xp), T.prose('in'), drawn(src), T.prose('expanded?')],
       text: `coefficient: ${power === 0 ? 'x^0' : xp} in ${src}`,
       answer: intAnswer(coef),
       visual: null,
-      explain: `The term with ${piece(m2)} to the power k has x to the power ${each} = ${p1 * n} − ${p1 - p2 === 1 ? '' : p1 - p2}k, which is ${minus(power)} when k = ${k}. `
+      explain: `The term with ${piece(m2)} to the power of k has x to the power of ${each} = ${p1 * n} − ${p1 - p2 === 1 ? '' : p1 - p2}k, which is ${minus(power)} when k = ${k}. `
         + `That term is ${rawTerm(m1, m2, n, k)}, and its number is ${said}. So ${named} is ${commas(coef)}.`,
     };
   }

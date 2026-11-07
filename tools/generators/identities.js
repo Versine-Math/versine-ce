@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for identities.
+ * Catalog authoring tool: builds the problem library for identities.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -30,7 +30,7 @@ const FN = {
   sec: (x) => 1 / Math.cos(x), csc: (x) => 1 / Math.sin(x), cot: (x) => Math.cos(x) / Math.sin(x), sqrt: Math.sqrt,
 };
 
-/** x^n as JavaScript, the base found by matching brackets: (a)^2 → ((a)**2). */
+/** x^n as JavaScript, the base found by matching parentheses: (a)^2 → ((a)**2). */
 function powers(s) {
   let i;
   while ((i = s.indexOf('^')) > -1) {
@@ -65,7 +65,7 @@ const SUP = { 2: '²', 3: '³', 4: '⁴' };
 const FNS = '(sin|cos|tan|sec|csc|cot)';
 /** The expression as the student reads it: sin²θ + cos²θ, 2 sin θ cos θ, sin(π/2 − θ). */
 function pretty(s, angle = null) {
-  // A single token goes bare, sin π; a compound one keeps its brackets, sin(π/2 − θ).
+  // A single token goes bare, sin π; a compound one keeps its parentheses, sin(π/2 − θ).
   let out = s.replace(new RegExp(`${FNS}\\(pi\\)`, 'g'), '$1 π').replace(/pi/g, 'π');
   out = out.replace(new RegExp(`${FNS}\\(t\\)\\^(\\d)`, 'g'), (_, f, n) => `${f}${SUP[n]}θ`);
   out = out.replace(new RegExp(`${FNS}\\((\\d+)\\*t\\)\\^(\\d)`, 'g'), (_, f, k, n) => `${f}${SUP[n]}${k}θ`);
@@ -123,7 +123,7 @@ const AXES = {
   recip: (e) => e.replace(/\b(sin|cos|tan|cot|sec|csc)\(/g, (_, f) => `${RECIPROCAL[f]}(`),
   square: (e) => (/\)\^2/.test(e) ? e.replace(/\)\^2/g, ')') : e.replace(/(\b(?:sin|cos|tan|cot|sec|csc)\([^()]*\))(?!\^)/g, '$1^2')),
   sign: (e) => {
-    // A top-level + or −, outside every bracket.
+    // A top-level + or −, outside all parentheses.
     let depth = 0;
     for (let i = 1; i < e.length - 2; i++) {
       if (e[i] === '(') depth++;
@@ -158,7 +158,7 @@ function crossedChoices(rng, expr, answer, targeted, pairs = AXIS_PAIRS) {
   return null;
 }
 
-/** Whether an expression has a + or − outside every bracket, a sum and not one term. */
+/** Whether an expression has a + or − outside all parentheses, a sum and not one term. */
 const isSum = (e) => {
   let depth = 0;
   for (let i = 0; i < e.length; i++) {
@@ -357,17 +357,17 @@ const PY_BANK = [
   ['K*sin(t)^2 + K*cos(t)^2', 'K', 'sin²θ + cos²θ = 1 for every θ', 'The squares add to 1 whatever θ is; they do not add to 2.'],
   ['K*sec(t)^2 - K*tan(t)^2', 'K', '1 + tan²θ = sec²θ, so sec²θ − tan²θ = 1', 'The difference is 1, not 0: sec²θ is always 1 more than tan²θ.'],
   ['K*csc(t)^2 - K*cot(t)^2', 'K', '1 + cot²θ = csc²θ, so csc²θ − cot²θ = 1', 'The difference is 1, not −1.'],
-  ['K*(1 - cos(t))*(1 + cos(t))', 'K*sin(t)^2', 'Multiplying out gives 1 − cos²θ, which is sin²θ', 'A difference of squares: (1 − cos θ)(1 + cos θ) = 1 − cos²θ.'],
-  ['K*(1 - sin(t))*(1 + sin(t))', 'K*cos(t)^2', 'Multiplying out gives 1 − sin²θ, which is cos²θ', 'A difference of squares: (1 − sin θ)(1 + sin θ) = 1 − sin²θ.'],
-  ['K*cos(t)^2 - K', '-K*sin(t)^2', 'cos²θ = 1 − sin²θ, so cos²θ − 1 = −sin²θ', 'This is 1 − cos²θ the other way round, so it is negative.'],
+  ['K*(1 - cos(t))*(1 + cos(t))', 'K*sin(t)^2', 'Expanding gives 1 − cos²θ, which is sin²θ', 'A difference of squares: (1 − cos θ)(1 + cos θ) = 1 − cos²θ.'],
+  ['K*(1 - sin(t))*(1 + sin(t))', 'K*cos(t)^2', 'Expanding gives 1 − sin²θ, which is cos²θ', 'A difference of squares: (1 − sin θ)(1 + sin θ) = 1 − sin²θ.'],
+  ['K*cos(t)^2 - K', '-K*sin(t)^2', 'cos²θ = 1 − sin²θ, so cos²θ − 1 = −sin²θ', 'This is 1 − cos²θ the other way around, so it is negative.'],
   ['K*sin(t)^2 - K', '-K*cos(t)^2', 'sin²θ = 1 − cos²θ, so sin²θ − 1 = −cos²θ', 'The order matters: sin²θ − 1 is the negative of 1 − sin²θ.'],
   ['K*tan(t)^2 - K*sec(t)^2', '-K', 'sec²θ = 1 + tan²θ, so tan²θ − sec²θ = −1', 'tan²θ is the smaller, so the difference is −1.'],
   // requiem: catalogue/content/fixed-menu-key-moves
-  // The same identities the other way round, so −tan²θ and −cot²θ are keys
+  // The same identities the other way around, so −tan²θ and −cot²θ are keys
   // as well as sign slips.
   ['K - K*sec(t)^2', '-K*tan(t)^2', '1 + tan²θ = sec²θ, so 1 − sec²θ = −tan²θ', 'sec²θ is the larger, so 1 − sec²θ is negative.'],
   ['K - K*csc(t)^2', '-K*cot(t)^2', '1 + cot²θ = csc²θ, so 1 − csc²θ = −cot²θ', 'csc²θ is the larger, so 1 − csc²θ is negative.'],
-  ['K*(sec(t) - 1)*(sec(t) + 1)', 'K*tan(t)^2', 'Multiplying out gives sec²θ − 1, which is tan²θ', 'A difference of squares first, then the identity.'],
+  ['K*(sec(t) - 1)*(sec(t) + 1)', 'K*tan(t)^2', 'Expanding gives sec²θ − 1, which is tan²θ', 'A difference of squares first, then the identity.'],
   ['K*cos(t)^2*(1 + tan(t)^2)', 'K', '1 + tan²θ = sec²θ, and cos²θ sec²θ = 1', 'A function times its reciprocal is 1.'],
 ];
 const PY_POOL = ['K', '-K', 'K*sin(t)^2', 'K*cos(t)^2', 'K*tan(t)^2', 'K*sec(t)^2', 'K*csc(t)^2', 'K*cot(t)^2', '-K*sin(t)^2', '-K*cos(t)^2', '-K*tan(t)^2', '-K*cot(t)^2', '0'];
@@ -390,7 +390,7 @@ function pythagorean(rng) {
       // The roots box, as for every number on this level, so the box says nothing about the answer.
       answer: rootAnswer('x', v, 1, 1),
       visual: null,
-      explain: `Group the squares: ${words.replace(/θ/g, `${deg}°`)} = ${v}. (The angle does not matter; working out sin ${deg}° on a calculator and squaring only adds rounding.) So ${v}.`,
+      explain: `Group the squares: ${words.replace(/θ/g, `${deg}°`)} = ${v}. (The angle does not matter; calculating sin ${deg}° on a calculator and squaring only adds rounding.) So ${v}.`,
     };
   }
   // One ratio, and its partner through an identity.
@@ -716,20 +716,20 @@ const DA_BANK = [
   ['2 - 4*sin(t)^2', '2*cos(2*t)', '2 − 4 sin²θ = 2(1 − 2 sin²θ) = 2 cos 2θ', 'Take out the 2 first.'],
   ['cos(2*t) + 2*sin(t)^2', '1', 'cos 2θ = 1 − 2 sin²θ, so adding 2 sin²θ leaves 1', 'Choose the form of cos 2θ that matches the rest.'],
   // requiem: catalogue/content/fixed-menu-key-moves
-  // The forms of cos 2θ the other way round, so −cos 2θ is a key and not
+  // The forms of cos 2θ the other way around, so −cos 2θ is a key and not
   // only ever the sign slip.
   ['sin(t)^2 - cos(t)^2', '-cos(2*t)', 'cos 2θ = cos²θ − sin²θ, and this is its negative', 'Cosine squared comes first in cos 2θ; the other order is −cos 2θ.'],
-  ['2*sin(t)^2 - 1', '-cos(2*t)', 'cos 2θ = 1 − 2 sin²θ, and this is its negative', 'The sine form of cos 2θ is 1 − 2 sin²θ; turned round, it is −cos 2θ.'],
-  ['1 - 2*cos(t)^2', '-cos(2*t)', 'cos 2θ = 2 cos²θ − 1, and this is its negative', 'The cosine form of cos 2θ is 2 cos²θ − 1; turned round, it is −cos 2θ.'],
+  ['2*sin(t)^2 - 1', '-cos(2*t)', 'cos 2θ = 1 − 2 sin²θ, and this is its negative', 'The sine form of cos 2θ is 1 − 2 sin²θ; turned around, it is −cos 2θ.'],
+  ['1 - 2*cos(t)^2', '-cos(2*t)', 'cos 2θ = 2 cos²θ − 1, and this is its negative', 'The cosine form of cos 2θ is 2 cos²θ − 1; turned around, it is −cos 2θ.'],
   // Squares of the double angle, so a squared option is a key and not only
   // ever the dropped-or-added-square slip.
   ['4*sin(t)^2*cos(t)^2', 'sin(2*t)^2', '4 sin²θ cos²θ = (2 sin θ cos θ)² = (sin 2θ)²', 'Every factor is squared, so the double angle comes out squared.'],
   ['1 - 4*sin(t)^2*cos(t)^2', 'cos(2*t)^2', '4 sin²θ cos²θ = sin²2θ, and 1 − sin²2θ = cos²2θ', 'Spot (2 sin θ cos θ)² first, then use sin² + cos² = 1 on the angle 2θ.'],
-  ['(cos(t)^2 - sin(t)^2)^2', 'cos(2*t)^2', 'cos²θ − sin²θ = cos 2θ, and the whole is squared', 'The bracket is cos 2θ; the square outside stays.'],
+  ['(cos(t)^2 - sin(t)^2)^2', 'cos(2*t)^2', 'cos²θ − sin²θ = cos 2θ, and the whole is squared', 'The expression in parentheses is cos 2θ; the square outside stays.'],
 ];
 const DA_POOL = ['sin(2*t)', 'cos(2*t)', '-cos(2*t)', 'sin(2*t)^2', 'cos(2*t)^2', 'tan(2*t)', '2*sin(t)', '2*cos(t)', 'sin(t)', 'cos(t)', '2*sin(2*t)', '2*cos(2*t)', 'sin(t)^2', 'sin(4*t)', 'sin(6*t)', 'cos(6*t)', '1', 'cos(t) - sin(t)', '3*sin(2*t)', '3*cos(2*t)', '2*tan(t)'];
 
-// The formulas the other way round: which expansion is the double angle.
+// The formulas the other way around: which expansion is the double angle.
 const DA_FORMS = [
   ['cos(2*t)', '1 - 2*sin(t)^2', 'cos 2θ = cos²θ − sin²θ, and cos²θ = 1 − sin²θ makes it 1 − 2 sin²θ', 'The sine form subtracts 2 sin²θ from 1; 1 + 2 sin²θ is more than 1.'],
   ['cos(2*t)', '2*cos(t)^2 - 1', 'cos 2θ = cos²θ − sin²θ, and sin²θ = 1 − cos²θ makes it 2 cos²θ − 1', 'The cosine form is 2 cos²θ − 1, not 1 − 2 cos²θ, which is its negative.'],
@@ -765,7 +765,7 @@ function doubleAngle(rng) {
       answer: rootAnswer('x', v.n, v.d, v.r),
       visual: null,
       explain: `This is the double-angle formula for ${fn} 2θ with θ = ${radians ? piText(q.n, q.d) : `${deg}°`}, so it equals ${fnText(fn, 2 * deg, radians)} = ${vText}. `
-        + `(Recognize the pattern instead of working out ${fn === 'tan' ? 'tan' : 'sin and cos'} of ${radians ? piText(q.n, q.d) : `${deg}°`}, which are not special values.) So ${pretty(e, shown)} = ${vText}.`,
+        + `(Recognize the pattern instead of calculating ${fn === 'tan' ? 'tan' : 'sin and cos'} of ${radians ? piText(q.n, q.d) : `${deg}°`}, which are not special values.) So ${pretty(e, shown)} = ${vText}.`,
     };
   }
   const given = rng.pick(['sin', 'cos', 'tan']);
@@ -796,7 +796,7 @@ const IS_IDENTITY = [
   ['1 + tan(t)^2', 'sec(t)^2', 'It is sin²θ + cos²θ = 1 divided through by cos²θ'],
   ['1 + cot(t)^2', 'csc(t)^2', 'It is sin²θ + cos²θ = 1 divided through by sin²θ'],
   ['sec(t)^2 - tan(t)^2', '1', 'It is 1 + tan²θ = sec²θ with tan²θ taken to the other side'],
-  ['(1 - cos(t))*(1 + cos(t))', 'sin(t)^2', 'Multiplied out it is 1 − cos²θ, which is sin²θ'],
+  ['(1 - cos(t))*(1 + cos(t))', 'sin(t)^2', 'Expanded it is 1 − cos²θ, which is sin²θ'],
   ['tan(t)', 'sin(t)/cos(t)', 'It is the quotient identity: tangent is y/x, sine over cosine'],
   ['cot(t)', 'cos(t)/sin(t)', 'It is the quotient identity: cotangent is x/y, cosine over sine'],
   ['sec(t)', '1/cos(t)', 'Secant is defined as the reciprocal of cosine'],
@@ -895,7 +895,7 @@ function atAngle(l, r, d) {
  */
 function identityOrNot(rng) {
   const flip = rng.chance(0.5);
-  // Either way round, except that a bare number stays on the right: 1 = sin²θ + cos²θ reads backwards.
+  // Either way around, except that a bare number stays on the right: 1 = sin²θ + cos²θ reads backwards.
   const side = (l, r) => (flip && !/^-?\d+$/.test(r) ? [r, l] : [l, r]);
   if (rng.chance(0.25)) {
     for (;;) {
@@ -983,13 +983,13 @@ const PROOFS = [
   ['tan(t)*sin(t) + cos(t)', 'sec(t)', [['(sin(t)/cos(t))*sin(t) + cos(t)', 'tan θ = sin θ/cos θ'], ['sin(t)^2/cos(t) + cos(t)', 'multiply the sines'], ['(sin(t)^2 + cos(t)^2)/cos(t)', 'a common denominator, cos θ'], ['1/cos(t)', 'sin²θ + cos²θ = 1'], ['sec(t)', '1/cos θ = sec θ']]],
   ['(sec(t) - 1)*(sec(t) + 1)', 'tan(t)^2', [['sec(t)^2 - 1', 'a difference of squares'], ['tan(t)^2', 'sec²θ − 1 = tan²θ']]],
   ['1/(1 - sin(t)) + 1/(1 + sin(t))', '2*sec(t)^2', [['((1 + sin(t)) + (1 - sin(t)))/((1 - sin(t))*(1 + sin(t)))', 'a common denominator'], ['2/(1 - sin(t)^2)', 'add the tops, multiply the bottoms'], ['2/cos(t)^2', '1 − sin²θ = cos²θ'], ['2*sec(t)^2', '1/cos²θ = sec²θ']]],
-  ['cos(2*t)', '2*cos(t)^2 - 1', [['cos(t)^2 - sin(t)^2', 'cos 2θ = cos²θ − sin²θ'], ['cos(t)^2 - (1 - cos(t)^2)', 'sin²θ = 1 − cos²θ'], ['2*cos(t)^2 - 1', 'collect the cos²θ']]],
+  ['cos(2*t)', '2*cos(t)^2 - 1', [['cos(t)^2 - sin(t)^2', 'cos 2θ = cos²θ − sin²θ'], ['cos(t)^2 - (1 - cos(t)^2)', 'sin²θ = 1 − cos²θ'], ['2*cos(t)^2 - 1', 'combine the cos²θ']]],
   ['sin(t)^2*sec(t)^2 + 1', 'sec(t)^2', [['sin(t)^2/cos(t)^2 + 1', 'sec θ = 1/cos θ'], ['tan(t)^2 + 1', 'sin θ/cos θ = tan θ'], ['sec(t)^2', '1 + tan²θ = sec²θ']]],
   ['(1 - cos(2*t))/sin(2*t)', 'tan(t)', [['(1 - (1 - 2*sin(t)^2))/sin(2*t)', 'cos 2θ = 1 − 2 sin²θ'], ['(2*sin(t)^2)/sin(2*t)', 'the 1s cancel'], ['(2*sin(t)^2)/(2*sin(t)*cos(t))', 'sin 2θ = 2 sin θ cos θ'], ['sin(t)/cos(t)', 'cancel 2 sin θ'], ['tan(t)', 'sin θ/cos θ = tan θ']]],
   ['sin(t)*cot(t)', 'cos(t)', [['sin(t)*(cos(t)/sin(t))', 'cot θ = cos θ/sin θ'], ['cos(t)', 'the sin θ cancels']]],
   ['(1 + cot(t)^2)*sin(t)^2', '1', [['csc(t)^2*sin(t)^2', '1 + cot²θ = csc²θ'], ['(1/sin(t)^2)*sin(t)^2', 'csc θ = 1/sin θ'], ['1', 'the sin²θ cancels']]],
   ['sec(t)*sin(t)*cot(t)', '1', [['(1/cos(t))*sin(t)*(cos(t)/sin(t))', 'sec θ = 1/cos θ and cot θ = cos θ/sin θ'], ['1', 'the sin θ and the cos θ cancel']]],
-  ['cos(t)^2 - sin(t)^2', '1 - 2*sin(t)^2', [['(1 - sin(t)^2) - sin(t)^2', 'cos²θ = 1 − sin²θ'], ['1 - 2*sin(t)^2', 'collect the sin²θ']]],
+  ['cos(t)^2 - sin(t)^2', '1 - 2*sin(t)^2', [['(1 - sin(t)^2) - sin(t)^2', 'cos²θ = 1 − sin²θ'], ['1 - 2*sin(t)^2', 'combine the sin²θ']]],
   ['tan(t)/sec(t)', 'sin(t)', [['(sin(t)/cos(t))/sec(t)', 'tan θ = sin θ/cos θ'], ['(sin(t)/cos(t))*cos(t)', 'dividing by sec θ multiplies by cos θ'], ['sin(t)', 'the cos θ cancels']]],
   ['(1 + sin(t))*(1 - sin(t))', 'cos(t)^2', [['1 - sin(t)^2', 'a difference of squares'], ['cos(t)^2', '1 − sin²θ = cos²θ']]],
   ['sin(t)^4 - cos(t)^4', 'sin(t)^2 - cos(t)^2', [['(sin(t)^2 - cos(t)^2)*(sin(t)^2 + cos(t)^2)', 'a difference of squares'], ['(sin(t)^2 - cos(t)^2)*1', 'sin²θ + cos²θ = 1'], ['sin(t)^2 - cos(t)^2', 'times 1 changes nothing']]],
@@ -1010,7 +1010,7 @@ const PROOFS = [
   ['cos(a - b)', 'cos(a)*cos(b) + sin(a)*sin(b)', [
     ['(2 - ((cos(a - b) - 1)^2 + sin(a - b)^2))/2', 'the chord from (1, 0) to the point at angle α − β, squared, is 2 − 2 cos(α − β); solve that for the cosine'],
     ['(2 - ((cos(a) - cos(b))^2 + (sin(a) - sin(b))^2))/2', 'turn both ends of the chord by β: the chord from the point at β to the point at α is just as long'],
-    ['(2 - (cos(a)^2 + sin(a)^2 + cos(b)^2 + sin(b)^2 - 2*cos(a)*cos(b) - 2*sin(a)*sin(b)))/2', 'square out both brackets and regroup'],
+    ['(2 - (cos(a)^2 + sin(a)^2 + cos(b)^2 + sin(b)^2 - 2*cos(a)*cos(b) - 2*sin(a)*sin(b)))/2', 'Square both expressions in parentheses and regroup'],
     ['(2 - (2 - 2*cos(a)*cos(b) - 2*sin(a)*sin(b)))/2', 'sin²α + cos²α = 1, and the same for β'],
     ['cos(a)*cos(b) + sin(a)*sin(b)', 'the 2s cancel, then halve']]],
   ['cos(a + b)', 'cos(a)*cos(b) - sin(a)*sin(b)', [['cos(a - (-b))', 'α + β = α − (−β)'], ['cos(a)*cos(-b) + sin(a)*sin(-b)', 'cos(α − β) = cos α cos β + sin α sin β, with −β for β'], ['cos(a)*cos(b) - sin(a)*sin(b)', 'cos(−β) = cos β and sin(−β) = −sin β']]],
@@ -1038,7 +1038,7 @@ function slips(e) {
   swap('sin', 'cos'); swap('cos', 'sin'); swap('tan', 'cot'); swap('cot', 'tan'); swap('sec', 'csc'); swap('csc', 'sec');
   swap(')^2', ')'); swap('2*', ''); swap('1 - ', '1 + ');
   // requiem: catalogue/content/identity-decoys-are-misconceptions
-  // A minus in front negates the whole line, bracketed when it is a sum
+  // A minus in front negates the whole line, in parentheses when it is a sum
   // (−(1 − cos²θ), not −1 − cos²θ). A 2 in front is a slip only on a single
   // term, merged into its number (4 csc²θ, not 2·2 csc²θ); put in front of a
   // sum or a fraction it read as 2·1 + cos 2θ or 2 (…)/2, which no one writes.

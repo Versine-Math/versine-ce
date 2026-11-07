@@ -1,4 +1,4 @@
-# Catalogue plan
+# Catalog plan
 
 The skills still to build, from finishing pre-algebra to being ready for
 calculus, and where each one came from. Researched October 2026 against
@@ -55,7 +55,7 @@ Visuals for function graphs, triangles and circles (the plane already exists).
 
 ## Phase 0 — finish pre-algebra
 
-**Built.** Every skill and level below is in the catalogue, with its library
+**Built.** Every skill and level below is in the catalog, with its library
 built and its answers re-derived by `scripts/check-answers.py`.
 
 Levels added to existing skills:
@@ -68,7 +68,7 @@ Levels added to existing skills:
 
 | Skill (category) | Levels as built | Covers |
 |---|---|---|
-| `sci-notation` (Powers) | Big Numbers · Small Numbers · Back to Standard · Tidy It Up · Which Is Bigger · Multiplying & Dividing · Adding & Taking Away · All Together | 8.EE.3–4, TEKS 8.2C |
+| `sci-notation` (Powers) | Big Numbers · Small Numbers · Back to Standard · Clean It Up · Which Is Bigger · Multiplying & Dividing · Adding & Subtracting · All Together | 8.EE.3–4, TEKS 8.2C |
 | `real-numbers` (Powers) | Ends or Repeats · Repeating Into Fractions · Rational or Not · Which Is Bigger · Pin It Down (√n to 1 dp) · Sums & Products · All Together | 8.NS.1–2, N-RN.3, TEKS 8.2A,B,D |
 | `evaluate` (Expressions) | Substitute a Number · Substitute a Negative · Formulas · Words Into Symbols · Which Expression Fits · Equivalent or Not · All Together | 6.EE.2–4, 7.EE.2, A-SSE.1 |
 | `proportional` (Ratio) | Is It Proportional · The Constant · Using y = kx · Reading the Graph · Proportional or Not: Graphs · Converting Units · All Together | 7.RP.2, 6.RP.3d, 8.EE.5, TEKS A.2D |
@@ -142,7 +142,7 @@ between the right answer and the rule-for-rule slips) and All Together; and
 `rational-exponents`, as The Half Power · Other Roots · Root, Then Power ·
 Negative Fractional Powers · Radical to Power · Rules With Fractions · Combine
 First (strategy, on real-numbers' Sums and Products); and `polynomials`, with
-Taking Away for subtracting and All Together; and `factoring`, with Which
+Subtracting for subtracting and All Together; and `factoring`, with Which
 Pattern? (strategy, on polynomials' Special Products) and All Together; and
 `factoring-2`, as ax² + bx + c · The AC Method · Factor Completely · Grouping
 Four Terms · Sums and Differences of Cubes · All Together; and `quadratic-eq`,
@@ -206,7 +206,7 @@ Similar is asked inside Which Transformation?, beside naming the move, since
 both sort moves by what they keep.
 `coord-geometry` is built, as Midpoint · Perimeter on a Grid · Partition in
 a Ratio · Area on a Grid · Slopes in Shapes · Classify a Triangle · Complete
-the Parallelogram · All Together. The distance formula is practised as
+the Parallelogram · All Together. The distance formula is practiced as
 perimeters, since a lone distance is pythagoras's Distance Between Points
 level; classifying triangles and completing a parallelogram are where
 slopes and lengths prove things about a shape (G-GPE.4).
@@ -648,8 +648,8 @@ technique of their own that calculus and physics use. Magnitude & Direction buil
 theorem's distance and trig ratios' Missing Angle, with angles past 90° from
 the unit circle's reference angles; From Magnitude & Direction on trig
 ratios' Missing Side. A vector is typed in its own box as <3, −4>, read as
-⟨3, −4⟩, with 3i − 4j read too and a round-bracket pair asked again as a
-point, in any order and with bracketed coefficients. Every direction is
+⟨3, −4⟩, with 3i − 4j read too and a pair in parentheses asked again as a
+point, in any order and with coefficients in parentheses. Every direction is
 counterclockwise from the positive x-axis, 0° to 360°, or a bearing
 clockwise from north, and every question says which; a quarter of
 Resultants is on bearings and depends on trig ratios' Elevation &

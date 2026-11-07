@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for vectors.
+ * Catalog authoring tool: builds the problem library for vectors.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -41,10 +41,10 @@ const pt = (x, y) => `(${minus(x)}, ${minus(y)})`;
 const ptA = (x, y) => `(${x}, ${y})`;
 const vectorAnswer = (a, b) => ({ type: 'vector', value: { x: asQ(a), y: asQ(b) } });
 const pairAnswer = (x, y) => ({ type: 'pair', value: { x: Q(x), y: Q(y) } });
-/** x − y written out with brackets round a negative: 4 − (−2). */
+/** x − y written out with parentheses around a negative: 4 − (−2). */
 const less = (x, y) => `${minus(x)} − ${y < 0 ? `(${minus(y)})` : y}`;
 const more = (x, y) => `${minus(x)} + ${y < 0 ? `(${minus(y)})` : y}`;
-/** x² written with brackets round a negative: (−3.5)². */
+/** x² written with parentheses around a negative: (−3.5)². */
 const sq = (x) => (four(x) < 0 ? `(${at4(x)})²` : `${at4(x)}²`);
 
 // --- Drawing ----------------------------------------------------------------------
@@ -60,7 +60,7 @@ const arrow = (from, to, tone = LINE, extra = {}) => [{ kind: 'segment', from, t
 function plane(win, marks, answer) {
   return { kind: 'plane', xRange: [win.x0, win.x1], yRange: [win.y0, win.y1], grid: 1, marks, answer };
 }
-/** The two legs of an arrow, dashed, labelled with how far across and how far up. */
+/** The two legs of an arrow, dashed, labeled with how far across and how far up. */
 function legs(from, to) {
   const corner = [to[0], from[1]];
   return [

@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for coords.
+ * Catalog authoring tool: builds the problem library for coords.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -109,17 +109,17 @@ function distance(rng) {
 }
 
 /**
- * The gradient of the line through two points.
+ * The slope of the line through two points.
  *
  * This is the join between Coordinates and Ratio, and it is the reason the
  * ratio skill was worth building before any geometry. Rise over run is a unit
  * rate -- how much it goes up for each one along -- so a student who has done
  * Unit Rate already owns the arithmetic and only has to see that the picture
  * is the same picture. The explain says so in those words rather than
- * introducing "gradient" as a new idea with a new formula.
+ * introducing "slope" as a new idea with a new formula.
  *
  * Whole-number gradients only, and the run is never zero. A vertical line has
- * no gradient at all, which is a genuinely interesting fact and an unfair
+ * no slope at all, which is a genuinely interesting fact and an unfair
  * thing to meet in a timed drill.
  */
 function steepness(rng) {
@@ -135,7 +135,7 @@ function steepness(rng) {
 
   return {
     prompt: [T.prose(`What is the slope of the line through ${pt(from)} and ${pt(to)}?`)],
-    text: `gradient (${from[0]},${from[1]}) to (${to[0]},${to[1]})`,
+    text: `slope (${from[0]},${from[1]}) to (${to[0]},${to[1]})`,
     answer: { type: 'int', value: m },
     visual: {
       kind: 'plane', ...RANGE,
@@ -147,7 +147,7 @@ function steepness(rng) {
     },
     explain: `Along, it moves ${run}. Up, it moves ${minus(y2)} − ${signed(y1)} = ${minus(rise)}`
       + `${rise < 0 ? ', negative because the line falls as you go right' : ''}. `
-      + 'The slope (also called the gradient) is how far it rises for each one along, a unit rate: '
+      + 'The slope is how far it rises for each one along, a unit rate: '
       + `${minus(rise)} ÷ ${run} = ${minus(m)}.`,
   };
 }

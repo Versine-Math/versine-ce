@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for probability.
+ * Catalog authoring tool: builds the problem library for probability.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -194,7 +194,7 @@ function listSpace(rng) {
     ? (l) => l.filter((o) => o.split('').join('') === o.split('').sort().join(''))
     : (l) => l.filter((o) => o.startsWith(STEPS[steps[0]].out[0]));
   const kept = sliceA(all);
-  // A neighbour pair both kept by A: the first written again where the
+  // A neighbor pair both kept by A: the first written again where the
   // second goes. (Leaving one out instead would make the whole list the
   // longest option every time; the level's other question asks for the
   // missing one.)

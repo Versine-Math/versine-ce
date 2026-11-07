@@ -66,11 +66,11 @@ class Review:
 
 def finished_skills(conn: sqlite3.Connection, user_id: int,
                     order: dict[str, list[str]]) -> set[str]:
-    """Skills whose every level, as the catalogue stands now, is mastered.
+    """Skills whose every level, as the catalog stands now, is mastered.
 
     requiem: review/migrate-reads-slugs -- read from the slugs against the
     deployed order, never the integer list or level_count, both of which can
-    be stale after a catalogue change.
+    be stale after a catalog change.
     """
     done = set()
     for row in conn.execute(

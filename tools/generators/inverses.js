@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for inverses.
+ * Catalog authoring tool: builds the problem library for inverses.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -159,7 +159,7 @@ function undoValue(rng) {
       visual: { kind: 'table', cols: ['x', 'f(x)'], rows: xs.map((v, j) => [minus(v), minus(f[j])]),
         workingCol: 'read', working: xs.map((v) => (v === x ? `f(${minus(x)}) = ${minus(c)}` : '')) },
       explain: `f⁻¹(${minus(c)}) is the input that f sends to ${minus(c)}. Find ${minus(c)} in the f(x) column: it is in the row x = ${minus(x)}, since f(${minus(x)}) = ${minus(c)}. `
-        + `${isX ? `(Reading the row x = ${minus(c)} gives f(${minus(c)}), the other way round.) ` : ''}So f⁻¹(${minus(c)}) = ${minus(x)}.`,
+        + `${isX ? `(Reading the row x = ${minus(c)} gives f(${minus(c)}), the other way around.) ` : ''}So f⁻¹(${minus(c)}) = ${minus(x)}.`,
     };
   }
   if (shape === 'steps') return undoSteps(rng);
@@ -366,13 +366,13 @@ function restrict(rng) {
       visual: null,
       explain: `The vertex is at x = ${minus(h)}, and the parabola takes each height twice, once each side of it: f(${minus(h - 1)}) = f(${minus(h + 1)}). `
         + `A domain with no input on one side of ${minus(h)} gives each output once: ${label(all[0])}. `
-        + `The others reach both sides of the vertex: ${minus(-h)} has the sign of ${sqF(h)} turned round, and ${minus(k)} is the vertex's height, not its x.`,
+        + `The others reach both sides of the vertex: ${minus(-h)} has the sign of ${sqF(h)} turned around, and ${minus(k)} is the vertex's height, not its x.`,
     };
   }
   // formula: which is f⁻¹(x)?
   // requiem: catalogue/content/decoys-cross-two-slips
   // Two slips crossed: the other sign of the root (the inverse of the other
-  // half), and either h and k swapped or both shifts turned round -- alone
+  // half), and either h and k swapped or both shifts turned around -- alone
   // and together.
   const sign = right ? '' : '-', other = right ? '-' : '';
   const swap = rng.chance(0.5);
@@ -412,7 +412,7 @@ function reflect(rng) {
       answer: { type: 'pair', value: { x: { n: b, d: 1 }, y: { n: a, d: 1 } } },
       visual: null,
       explain: `${said ? `f(${minus(a)}) = ${minus(b)} puts (${minus(a)}, ${minus(b)}) on the graph of f, and ` : ''}f⁻¹ sends ${minus(b)} back to ${minus(a)}, so f⁻¹(${minus(b)}) = ${minus(a)}: the coordinates swap. `
-        + `Reflected in y = x, (${minus(a)}, ${minus(b)}) becomes (${minus(b)}, ${minus(a)}).`,
+        + `Reflected over y = x, (${minus(a)}, ${minus(b)}) becomes (${minus(b)}, ${minus(a)}).`,
     };
   }
   for (;;) {
@@ -442,7 +442,7 @@ function reflect(rng) {
         { kind: 'point', at: [k, x0], tone: ASKED, label: `(${minus(k)}, ${minus(x0)})` },
       ] }),
       explain: `f⁻¹(${minus(k)}) is the input where f's height is ${minus(k)}. Go across from ${minus(k)} on the y-axis to the graph: it is there at x = ${minus(x0)}, since f(${minus(x0)}) = ${minus(k)}. `
-        + `On the graph of f⁻¹, the reflection in y = x, that point is (${minus(k)}, ${minus(x0)}). (Reading f(${minus(k)}) instead, up from ${minus(k)} on the x-axis, is the usual slip.) So f⁻¹(${minus(k)}) = ${minus(x0)}.`,
+        + `On the graph of f⁻¹, the reflection over y = x, that point is (${minus(k)}, ${minus(x0)}). (Reading f(${minus(k)}) instead, up from ${minus(k)} on the x-axis, is the usual slip.) So f⁻¹(${minus(k)}) = ${minus(x0)}.`,
     };
   }
 }

@@ -1,5 +1,5 @@
 /**
- * Reveal discipline, enforced across the whole catalogue.
+ * Reveal discipline, enforced across the whole catalog.
  *
  * No visual may show the answer before one has been committed. That rule has
  * held by care and review; this checks it by machine. Every problem in every

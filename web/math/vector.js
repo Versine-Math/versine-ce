@@ -5,7 +5,7 @@
  * its key guide says: <3, -4> is ⟨3, −4⟩. Each component is a whole number,
  * a fraction or a decimal, compared exactly, so ⟨3/5, −4/5⟩ and
  * ⟨0.6, −0.8⟩ are one vector. The unit-vector form 3i − 4j is read too,
- * since a textbook writes it that way as often. A pair in round brackets,
+ * since a textbook writes it that way as often. A pair in parentheses,
  * (3, −4), is a point: it is refused with the hint to use angle brackets,
  * and not marked, because it answers in the wrong notation rather than with
  * the wrong vector.
@@ -38,7 +38,7 @@ const ANGLE = /^[<⟨〈]\s*([^,<>⟨⟩〈〉]+?)\s*,\s*([^,<>⟨⟩〈〉]+?)\
 /**
  * ai + bj in any order and any spelling a student reaches for: 3i − 4j,
  * −4j + 3i, 3i + −4j, 3i + (−4)j, (3/5)i + (4/5)j, i − j, 2j. Each term is
- * a sign (or two, + − read as −), a coefficient bare or in brackets, and
+ * a sign (or two, + − read as −), a coefficient bare or in parentheses, and
  * i or j; each letter at most once, and an absent one is 0.
  */
 // requiem: play/answers/vector-unit-form-any-order
@@ -82,7 +82,7 @@ export function parseVector(raw) {
   const u = unitForm(s.toLowerCase());
   if (u) return { ok: true, value: u, texts: [fracText(u.x), fracText(u.y)], decimal: /\./.test(s) };
   if (/^\(.*\)$/.test(s) && s.split(',').length === 2) {
-    return { ok: false, hint: 'A vector is written in angle brackets, not round ones: type <3, −4> for ⟨3, −4⟩.' };
+    return { ok: false, hint: 'A vector is written in angle brackets, not parentheses: type <3, −4> for ⟨3, −4⟩.' };
   }
   if (/^[<⟨〈][^,]*[>⟩〉]$/.test(s) || /^[<⟨〈].*,.*,.*[>⟩〉]$/.test(s)) {
     return { ok: false, hint: 'A vector here has two components with a comma between, like <3, −4>.' };

@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for coordinate
+ * Catalog authoring tool: builds the problem library for coordinate
  * geometry.
  *
  * NOT part of the running application. Nothing here is served to a browser
@@ -36,7 +36,7 @@ const trip = (dx, dy) => [dx ? `${num(Math.abs(dx))} ${dx > 0 ? 'right' : 'left'
   .filter(Boolean).join(' and ') || 'nowhere';
 /** A decimal answer for a whole number or a half. */
 const decimal = (v) => ({ type: 'decimal', value: Number.isInteger(v) ? { n: v, d: 1 } : { n: Math.round(v * 10), d: 10 } });
-/** A number to multiply or divide by, bracketed when negative. */
+/** A number to multiply or divide by, in parentheses when negative. */
 const br = (v) => (v < 0 ? `(${num(v)})` : num(v));
 const pt = ([x, y]) => `(${num(x)}, ${num(y)})`;
 const ascii = ([x, y]) => `(${x}, ${y})`;
@@ -160,7 +160,7 @@ function perimeter(rng, exact = rng.chance(0.4)) {
     const legs = P.flatMap((p, i) => {
       const Q = q(i);
       if (p[0] === Q[0] || p[1] === Q[1]) return [];
-      // The legs go on the shape's side of the slanted side, so its length, labelled outside, stays clear of them.
+      // The legs go on the shape's side of the slanted side, so its length, labeled outside, stays clear of them.
       const c = centroid(P), far = (k) => Math.hypot(k[0] - c[0], k[1] - c[1]);
       const k = [[Q[0], p[1]], [p[0], Q[1]]].sort((u, v) => far(u) - far(v))[0];
       return [[p, k], [k, Q]].filter(([A, B]) => !along(A, B)).map(([A, B]) => seg(A, B, GIVEN, { dashed: true }));
@@ -171,8 +171,8 @@ function perimeter(rng, exact = rng.chance(0.4)) {
       answer,
       visual: { ...PLANE, marks: [polygon(P), ...corners(P)], answer: [...legs, ...labels] },
       explain: `Each side is the distance between its corners: √(run² + rise²) for a slanted one. ${work.map(([, w]) => w).join('; ')}. `
-        + `Together ${whole ? `${work.map(([L]) => L).join(' + ')} = ${total}` : `about ${(Math.round(total * 1000) / 1000).toFixed(3)}, which is ${shown} to 1 dp — round only at the end`}. `
-        + `(Adding the run and the rise of a slanted side walks round the corner, not along the side.) So ${shown}.`,
+        + `Together ${whole ? `${work.map(([L]) => L).join(' + ')} = ${total}` : `about ${(Math.round(total * 1000) / 1000).toFixed(3)}, which is ${shown} to 1 decimal place — round only at the end`}. `
+        + `(Adding the run and the rise of a slanted side walks around the corner, not along the side.) So ${shown}.`,
     };
   }
 }
@@ -224,7 +224,7 @@ function areaTriangle(rng) {
     const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
     const box = (x1 - x0) * (y1 - y0);
     const cuts = P.map((p, i) => { const q = P[(i + 1) % 3]; return (Math.abs(q[0] - p[0]) * Math.abs(q[1] - p[1])) / 2; });
-    // The box method takes away one right triangle per side; check it says what the shoelace says.
+    // The box method subtracts one right triangle per side; check it says what the shoelace says.
     if (Math.abs(box - cuts.reduce((s, c) => s + c, 0) - A2 / 2) > 1e-9) continue;
     const A = A2 / 2;
     const cornerOf = (p, q) => {
@@ -244,7 +244,7 @@ function areaTriangle(rng) {
       explain: `Put the triangle in the smallest box with level and upright sides: ${x1 - x0} by ${y1 - y0}, area ${box}. `
         + `Each slanted side cuts a right triangle off a corner of the box, half its run times its rise: ${cuts.filter((c) => c > 0).map(num).join(', ')}. `
         + `What is left is the triangle: ${box} − ${cuts.filter((c) => c > 0).map(num).join(' − ')} = ${num(A)}. `
-        + `(With slanted sides there is no base and height to read off the grid; the box gets round that.) So ${num(A)}.`,
+        + `(With slanted sides there is no base and height to read off the grid; the box gets around that.) So ${num(A)}.`,
     };
   }
 }
@@ -349,7 +349,7 @@ function classify(rng, want = rng.pick(KINDS).id) {
     const rightWords = v !== null
       ? `At ${NAMES[v]} the sides have slopes ${slope(P[v], P[(v + 1) % 3])} and ${slope(P[v], P[(v + 2) % 3])}, `
         + `${[slope(P[v], P[(v + 1) % 3]), slope(P[v], P[(v + 2) % 3])].includes('undefined') ? 'one level and one upright' : 'multiplying to −1'}: a right angle. `
-      : `And the largest, ${sorted[2]}, is not the other two added (${sorted[0]} + ${sorted[1]} = ${sorted[0] + sorted[1]}), so by Pythagoras there is no right angle. `;
+      : `And the largest, ${sorted[2]}, is not the other two added (${sorted[0]} + ${sorted[1]} = ${sorted[0] + sorted[1]}), so by the Pythagorean theorem there is no right angle. `;
     return {
       prompt: [T.prose(`Triangle ABC has ${listed(P)}. Which is it?`)],
       text: `classify triangle: ${P.map(ascii).join(', ')}`,

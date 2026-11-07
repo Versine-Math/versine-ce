@@ -20,9 +20,9 @@
  * you find a common denominator to see it. Teach it with the picture, then
  * ask for it again once the picture is gone.
  *
- * Crossing Zero takes away more than there was, which is the first
+ * Crossing Zero subtracts more than there was, which is the first
  * time in the fractions strand that a negative appears at all — the integer
- * skills teach the sign rules and then nothing else in the catalogue used
+ * skills teach the sign rules and then nothing else in the catalog used
  * them, so the arithmetic was quietly being taught as a thing that only
  * happens to whole numbers.
  */
@@ -54,10 +54,10 @@ export const LEVELS = [
     // no picture until the answer is in.
     dependsOn: [{ skill: 'factors', level: 4 }],
   },
-  { name: 'Taking Away', slug: 'taking-away', blurb: 'Subtraction, same rules.' },
+  { name: 'Subtracting', slug: 'taking-away', blurb: 'Subtraction, same rules.' },
   {
     name: 'Crossing Zero', slug: 'crossing-zero',
-    blurb: 'Take away more than you had. The answer is a negative fraction.',
+    blurb: 'Subtract more than you had. The answer is a negative fraction.',
     // The arithmetic is int-addsub's, done on numerators.
     dependsOn: [{ skill: 'int-addsub', level: 2 }],
   },

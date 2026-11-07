@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring helper for the trigonometry skills: degree-based trig,
+ * Catalog authoring helper for the trigonometry skills: degree-based trig,
  * calculator answers rounded safely, exact answers with a root, and the
  * triangles they are drawn on.
  *
@@ -171,7 +171,7 @@ export const angleText = (deg, radians) => (radians ? piText(deg, 180) : `${Stri
 
 /**
  * f θ as written: sin 210°, cos π, cos(7π/6), tan(−π/4), sin(−45°). A single
- * token goes bare, a fraction or a minus sign in brackets.
+ * token goes bare, a fraction or a minus sign in parentheses.
  */
 export const fnText = (fn, deg, radians) => {
   const a = angleText(deg, radians);

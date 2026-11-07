@@ -34,7 +34,7 @@ export function defineType(type) {
 
 /**
  * Every answer type that exists, published so the deploy gate can check a
- * catalogue row against it rather than keeping its own list. The gate had a
+ * catalog row against it rather than keeping its own list. The gate had a
  * hardcoded set once and declared four thousand correct problems broken the
  * first time a type was added.
  */
@@ -47,7 +47,7 @@ export function getType(id) {
   return t;
 }
 
-/** Normalise the various dashes a keyboard or a copy-paste can produce. */
+/** Normalize the various dashes a keyboard or a copy-paste can produce. */
 const normalize = (raw) =>
   String(raw).trim().replace(/[−–—]/g, '-').replace(/\s+/g, '');
 
@@ -113,7 +113,7 @@ defineType({
    * student answer "0 7/4" to the question "what is 7/4 as a mixed number".
    */
   parse(raw) {
-    // The shared normaliser strips whitespace; here the space between the
+    // The shared normalizer strips whitespace; here the space between the
     // whole and the fraction is the only thing separating them.
     const text = String(raw).trim().replace(/[−–—]/g, '-').replace(/\s+/g, ' ');
     if (!text) return { ok: false };
@@ -141,7 +141,7 @@ defineType({
 
     if (d === 0) return { ok: false };
     if (n >= d) {
-      return { ok: false, hint: `${n}/${d} is still top-heavy — take another whole out of it.` };
+      return { ok: false, hint: `${n}/${d} is still improper — take another whole out of it.` };
     }
     return { ok: true, value: { n: whole * d + n, d } };
   },
@@ -233,7 +233,7 @@ defineType({
    */
   /**
    * The value carried is what a person would write -- "2x + 6" -- not the
-   * canonical form. Canonicalising happens in the comparison instead, so the
+   * canonical form. Canonicalizing happens in the comparison instead, so the
    * answer shown on reveal is legible rather than `((2*x)+6)`.
    */
   parse(raw) {
@@ -264,7 +264,7 @@ defineType({
    * opt-in a level takes when the form is not the point. Where `expr` would
    * refuse x/2 − 3/2 for (x − 3)/2, this accepts it, and 0.5x − 1.5, and
    * (1/2)(x − 3): each is the same function, written in a finished form.
-   * Equal but unfinished -- 2/4 left in, a factor left uncancelled, like
+   * Equal but unfinished -- 2/4 left in, a factor left uncanceled, like
    * terms not collected, the question copied back -- is told so, as a
    * fraction not in lowest terms is. web/math/equivalent.js has both tests.
    *
@@ -369,7 +369,7 @@ function lineText({ m, b }, letter) {
 }
 
 /**
- * Written as mx + b: at most one x term and one number, and no bracket but
+ * Written as mx + b: at most one x term and one number, and no parentheses but
  * one around a number alone -- (3/2)x is a slope written out, (x + 2) is
  * work not done yet.
  */
@@ -455,7 +455,7 @@ defineType({
    * 3 + 4(n − 1) is the form the formula hands a student, and 4n − 1 is
    * that form tidied; both give 3, 7, 11, …, and a level asking for the
    * rule is asking whether the student can produce the sequence, not
-   * whether they expanded the bracket. So the rule is evaluated exactly,
+   * whether they distributed. So the rule is evaluated exactly,
    * the same way a line is, and stored as its m and b. A rule with a
    * square or a power of n is refused as not an arithmetic rule, with a
    * hint, rather than marked as a wrong one.
@@ -585,7 +585,7 @@ defineType({
   },
   // requiem: play/answers/set-complement-told
   // Where it is defined, typed for where it is not: right numbers, the
-  // other way round. A level can say it in its own words.
+  // other way around. A level can say it in its own words.
   missHint: (v, spec) => (isComplement(v, spec.value)
     ? spec.complementHint ?? 'That is every number the answer leaves out: the question asks for the others.' : null),
   // A level asking for the simplest form means the conditions combined.
@@ -733,7 +733,7 @@ defineType({
    * A vector in component form, ⟨a, b⟩, typed with < and > since angle
    * brackets are on no keyboard. Each component is compared exactly, so
    * ⟨3/5, −4/5⟩ and ⟨0.6, −0.8⟩ agree, and 3i − 4j is read as ⟨3, −4⟩.
-   * (3, −4) in round brackets is a point, refused with the hint to use
+   * (3, −4) in parentheses is a point, refused with the hint to use
    * angle brackets rather than marked. web/math/vector.js has every form.
    *
    * The preview draws the vector in angle brackets as typed, fractions

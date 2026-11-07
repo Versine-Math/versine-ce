@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for rational-functions.
+ * Catalog authoring tool: builds the problem library for rational-functions.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -208,7 +208,7 @@ function horizontal(rng) {
     for (const o of pool) if (!seen.has(o[0]) && decoys.length < 3) { seen.add(o[0]); decoys.push(o); }
     if (decoys.length < 3) continue;
     const explain = `Compare the degrees: the top has degree ${n} and the bottom ${d}. `
-      + (n < d ? 'The bottom grows faster, so f falls towards 0 far out: the asymptote is y = 0.'
+      + (n < d ? 'The bottom grows faster, so f falls toward 0 far out: the asymptote is y = 0.'
         : n === d ? `They match, so far out f is close to the ratio of the leading coefficients, ${ratioWork(a, b, ratio)}: the asymptote is y = ${qShow(ratio)}.`
           : 'The top grows faster, so f does not level off: there is no horizontal asymptote.')
       + (n === d ? ' The constant terms do not decide it: they matter only near x = 0.' : '');
@@ -249,7 +249,7 @@ function holes(rng) {
       answer: { type: 'pair', value: { x: { n: a, d: 1 }, y } },
       visual: null,
       explain: `${asF || kind === 'number' ? '' : 'Factor first. '}The top and the bottom share the factor ${fac(a, true)}, so it cancels, leaving ${left}, `
-        + `but f is still undefined at x = ${minus(a)}. The hole is at that x, at the height the cancelled form gives there: ${yShow}. So the hole is (${minus(a)}, ${yShow}).`,
+        + `but f is still undefined at x = ${minus(a)}. The hole is at that x, at the height the canceled form gives there: ${yShow}. So the hole is (${minus(a)}, ${yShow}).`,
     };
   }
 }
@@ -406,12 +406,12 @@ const valueAt = (F, x) => {
   const { tops, bots } = sides(F);
   return F.k * tops.reduce((acc, r) => acc * (x - r), 1) / bots.reduce((acc, r) => acc * (x - r), 1);
 };
-/** f with the hole's factor cancelled, which gives the hole its height. */
-const cancelled = (F, x) => F.k * F.zs.reduce((acc, r) => acc * (x - r), 1) / F.ps.reduce((acc, r) => acc * (x - r), 1);
+/** f with the hole's factor canceled, which gives the hole its height. */
+const canceled = (F, x) => F.k * F.zs.reduce((acc, r) => acc * (x - r), 1) / F.ps.reduce((acc, r) => acc * (x - r), 1);
 const levelOf = (F) => (F.zs.length === F.ps.length ? F.k : 0);
 const way = (y) => (y > 0 ? 'up' : 'down');
 /** Which way f goes just left and just right of each asymptote. */
-const turns = (F) => [...F.ps].sort((p, q) => p - q).map((v) => [v, way(cancelled(F, v - 1e-6)), way(cancelled(F, v + 1e-6))]);
+const turns = (F) => [...F.ps].sort((p, q) => p - q).map((v) => [v, way(canceled(F, v - 1e-6)), way(canceled(F, v + 1e-6))]);
 const features = (F) => JSON.stringify([[...F.zs].sort((p, q) => p - q), F.h, turns(F), levelOf(F)]);
 const holeHeight = (F) => {
   const { zs, ps, k, h } = F;
@@ -532,7 +532,7 @@ function match(rng) {
     const opts = all.map(formula);
     const level = levelOf(F);
     const read = [
-      F.zs.length ? `It crosses the x-axis at ${listOr(F.zs)}, so ${factored(F.zs, 1, true)} is on top.` : 'It never crosses the x-axis, so once anything shared has cancelled, the top is never 0.',
+      F.zs.length ? `It crosses the x-axis at ${listOr(F.zs)}, so ${factored(F.zs, 1, true)} is on top.` : 'It never crosses the x-axis, so once anything shared has canceled, the top is never 0.',
       `It breaks at x = ${listOr([...F.ps].sort((p, q) => p - q))}, shooting off the grid, so ${factored(F.ps, 1, true)} is on the bottom; `
         + `${turns(F).map(([v, l, r]) => `at x = ${minus(v)} it goes ${l} on the left and ${r} on the right`).join(', and ')}.`,
       F.h === null ? '' : `The open circle at x = ${minus(F.h)} is a hole: ${fac(F.h, true)} is on the top and the bottom, and cancels.`,

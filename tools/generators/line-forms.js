@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for forms of a line.
+ * Catalog authoring tool: builds the problem library for forms of a line.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -18,7 +18,7 @@ import { LAST_LEVEL, PAR_SECONDS } from '../../web/skills/line-forms.js';
 
 const pt = ([x, y]) => `(${minus(x)}, ${minus(y)})`;
 const ptPlain = ([x, y]) => `(${x}, ${y})`;
-/** An equation for a sentence: one unbroken piece of maths among the words. */
+/** An equation for a sentence: one unbroken piece of math among the words. */
 const terms = (src) => [T.math(previewOf(src).terms)];
 const whole = (n) => ({ n, d: 1 });
 // requiem: play/answers/line-form-asked-is-checked
@@ -46,11 +46,11 @@ function slope(rng) {
 const shifted = (v, by) => (by === 0 ? v : `${v} ${by < 0 ? '+' : '-'} ${Math.abs(by)}`);
 const times = (m) => (m.d === 1 ? (m.n === 1 ? '' : m.n === -1 ? '-' : String(m.n)) : `${m.n}/${m.d}`);
 
-/** Point-slope back to slope-intercept: expand the bracket, then move the number. */
+/** Point-slope back to slope-intercept: Distribute, then move the number. */
 function pointSlope(rng) {
   const m = slope(rng);
-  // A slope of 1 or −1 would leave a bare bracket, y + 1 = (x − 3), which
-  // no textbook writes; those lines are no different to practise otherwise.
+  // A slope of 1 or −1 would leave a bare parentheses, y + 1 = (x − 3), which
+  // no textbook writes; those lines are no different to practice otherwise.
   if (m.d === 1 && Math.abs(m.n) === 1) return pointSlope(rng);
   const x1 = m.d * rng.nonZero(-4, 4);
   const y1 = rng.nonZero(-9, 9);
@@ -62,7 +62,7 @@ function pointSlope(rng) {
     text: `point-slope ${eq}`,
     answer: lineAnswer(m, whole(b)),
     visual: null,
-    explain: `This line has slope ${show(m)} and passes through ${pt([x1, y1])}. Expand the bracket: `
+    explain: `This line has slope ${show(m)} and passes through ${pt([x1, y1])}. Distribute: `
       + `${tm(shifted('y', y1))} = ${lineText(m, whole(-mx1)).slice(4)}. `
       + `${y1 > 0 ? `Add ${y1} to` : `Take ${-y1} from`} both sides: ${lineText(m, whole(b))}.`,
   };
@@ -253,11 +253,11 @@ function whichForm(rng) {
     'point-slope': [
       { say: [T.prose(`You know the slope is ${show(m)} and the line passes through ${pt(p)}, and you need its equation.`)],
         key: `slope ${plain(m)}, point ${ptPlain(p)}`,
-        why: 'A slope and a point fill in y − y₁ = m(x − x₁) directly, with nothing to work out first.' },
+        why: 'A slope and a point fill in y − y₁ = m(x − x₁) directly, with nothing to calculate first.' },
       { say: [T.prose(`You know the line passes through ${pt(p)} and ${pt(q)}, and you need its equation.`)],
         key: `points ${ptPlain(p)} ${ptPlain(q)}`,
         why: 'Two points give the slope, and then either point goes straight into y − y₁ = m(x − x₁). '
-          + 'Slope-intercept would need b worked out as an extra step.' },
+          + 'Slope-intercept would need b calculated as an extra step.' },
     ],
     standard: [
       { say: [T.prose('You need both places where'), ...terms(standardText(A, B, C)), T.prose('crosses the axes.')],
@@ -282,7 +282,7 @@ const CONTENT = [pointSlope, standard, flatOrUpright, parallel, perpendicular, r
 /** @param {import('../../web/engine/rng.js').Rng} rng @param {number} level */
 export function generate(rng, level) {
   // The mixed level deals from the five levels that ask for a line. The
-  // judgement and the strategy levels stay out: both are answered with
+  // judgment and the strategy levels stay out: both are answered with
   // buttons, and a line question turning into buttons would say something.
   const p = CONTENT[level >= LAST_LEVEL ? rng.int(0, 4) : level](rng);
   p.parSeconds = PAR_SECONDS[level];

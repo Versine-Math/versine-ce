@@ -205,7 +205,7 @@ export function ticks(P, Q, n, tone = LINE) {
     return { kind: 'segment', from: toward(d + 90, 0.2, at), to: toward(d - 90, 0.2, at), tone };
   });
 }
-/** The angle at V between the directions to U and W, as [from, to] degrees anticlockwise. */
+/** The angle at V between the directions to U and W, as [from, to] degrees counterclockwise. */
 export function cornerAt(V, U, W) {
   let a = dirTo(V, U), b = dirTo(V, W);
   let span = (((b - a) % 360) + 360) % 360;
@@ -257,7 +257,7 @@ export function roundedSaid(x, a, exact = f(x)) {
   return more ? `${exact}, which is ${shown(a)} ${to}` : `${exact}, written ${shown(a)} ${to}`;
 }
 
-/** k lots of π as it is written: π, not 1π. */
+/** k times π as it is written: π, not 1π. */
 export const piTimes = (k) => (k === 1 ? 'π' : `${f(k)}π`);
 
 /** A unit as a question asks for it: "in inches", never "in in". */
@@ -306,7 +306,7 @@ function crosses(P, Q, R, S) {
  * nearest the middle and nearest the line, then further along and further
  * out -- where its box is clear of every line and label in `others`. A
  * label lying across a second line reads as that line's length: a height
- * labelled on a slant edge is taken for the slant.
+ * labeled on a slant edge is taken for the slant.
  */
 export function clearLabel(A, B, label, others, tone = GIVEN, { gaps = [0.15, 0.3, 0.45, 0.6] } = {}) {
   // The line measured is not in the way of its own label; every other one is.

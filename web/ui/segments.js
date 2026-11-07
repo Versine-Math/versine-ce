@@ -1,7 +1,7 @@
 import { el, mount } from './dom.js';
 
 /**
- * A length cut into segments, with some of them emphasised.
+ * A length cut into segments, with some of them emphasized.
  *
  * This is one primitive wearing four names. Adding fractions, showing
  * equivalence, counting wholes out of an improper fraction, and counting how
@@ -24,9 +24,9 @@ import { el, mount } from './dom.js';
  * @typedef {object} Bar
  * @property {number} total    how many segments the bar is cut into
  * @property {number} filled   how many are shaded, from the left
- * @property {string} [tone]   CSS colour for the shading
+ * @property {string} [tone]   CSS color for the shading
  * @property {number} [ghost]  segments after `filled` drawn as outlines --
- *                             what subtraction takes away
+ *                             what subtraction subtracts
  * @property {number} [unit]   segments shaded as the comparison tile
  * @property {number} [copies] shade in alternating bands this many segments
  *                             wide, so copies can be counted at a glance
@@ -44,7 +44,7 @@ import { el, mount } from './dom.js';
  * @property {'note'} [tone]        a separator that explains rather than
  *                                  operates, set quieter and further in
  * @property {string} [value]       the result, picked out of an answer line
- * @property {string} [answer]      a concluding line, set in the result colour
+ * @property {string} [answer]      a concluding line, set in the result color
  * @property {boolean} [verdict]    show the tick or cross on this row
  */
 

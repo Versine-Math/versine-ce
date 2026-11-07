@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for trigonometric
+ * Catalog authoring tool: builds the problem library for trigonometric
  * ratios.
  *
  * NOT part of the running application. Nothing here is served to a browser
@@ -401,7 +401,7 @@ function applied(rng) {
     } else if (kind === 'depression') {
       [knownRole, wantRole] = ['opposite', 'adjacent'];
       prompt = `From the top of a cliff ${L} ${U.word} high, the angle of depression to a boat is ${theta}°. How far is the boat from the base of the cliff, in ${U.word}, ${placeWords(1)}?`;
-      say = `The angle of depression from the top equals the angle of elevation from the boat (alternate angles), so at the boat the height ${L} is opposite the ${theta}° and the distance is adjacent`;
+      say = `The angle of depression from the top equals the angle of elevation from the boat (alternate interior angles), so at the boat the height ${L} is opposite the ${theta}° and the distance is adjacent`;
     } else {
       wantRole = rng.pick(['opposite', 'adjacent']);
       knownRole = 'hypotenuse';

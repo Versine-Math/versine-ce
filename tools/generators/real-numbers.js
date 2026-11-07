@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for rational and
+ * Catalog authoring tool: builds the problem library for rational and
  * irrational numbers.
  *
  * NOT part of the running application. Nothing here is served to a browser
@@ -79,7 +79,7 @@ function endsOrRepeats(rng) {
   const ends = without2s5s(r.d) === 1;
   const { text } = expansion(r.n, r.d);
   const lowest = r.d === d ? `${n}/${d} is already in lowest terms` : `${n}/${d} is ${r.n}/${r.d} in lowest terms`;
-  const factors = factorise(r.d);
+  const factors = factorize(r.d);
   const madeOf = factors.includes('×') ? `${r.d} = ${factors}`
     : r.d === 2 || r.d === 5 ? `the bottom is just ${r.d}` : `${r.d} is prime`;
   return {
@@ -107,7 +107,7 @@ function endsOrRepeats(rng) {
   };
 }
 
-function factorise(n) {
+function factorize(n) {
   if (n === 1) return '1';
   const out = [];
   for (let p = 2; n > 1; p++) while (n % p === 0) { out.push(p); n /= p; }
@@ -443,7 +443,7 @@ function sumsAndProducts(rng) {
     }
     case 'cancel':
       shown = `√${n} − √${n}`; rational = true;
-      why = `Anything take away itself is 0, and 0 is 0/1. Rational.`;
+      why = `Anything minus itself is 0, and 0 is 0/1. Rational.`;
       break;
     case 'double':
       shown = `√${n} + √${n}`; rational = false;

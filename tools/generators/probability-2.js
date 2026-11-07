@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for compound
+ * Catalog authoring tool: builds the problem library for compound
  * probability.
  *
  * NOT part of the running application. Nothing here is served to a browser
@@ -144,7 +144,7 @@ function addition(rng) {
       text: `or counts: total ${T0}, a ${a}, b ${b}, both ${k}`,
       answer: fracAnswer(want, T0),
       visual: null,
-      explain: `The ${k} who ${P.who === 'shoppers' ? 'bought' : 'do'} both are among the ${a} and among the ${b}, so take them off once: ${a} + ${b} − ${k} = ${want}. `
+      explain: `The ${k} who ${P.who === 'shoppers' ? 'bought' : 'do'} both are among the ${a} and among the ${b}, so subtract them once: ${a} + ${b} − ${k} = ${want}. `
         + `So ${fracWork(want, T0)}. (${a} + ${b} = ${a + b} counts the ${k} twice.) So ${fracText(want, T0)}.`,
     };
   }
@@ -161,7 +161,7 @@ function addition(rng) {
       text: `or exclusive: ${said(pa)} ${said(pb)}`,
       answer: dec(v),
       visual: null,
-      explain: `Mutually exclusive means P(A and B) = 0, so there is no overlap to take off: ${said(pa)} + ${said(pb)} = ${said(v)}. `
+      explain: `Mutually exclusive means P(A and B) = 0, so there is no overlap to subtract: ${said(pa)} + ${said(pb)} = ${said(v)}. `
         + `(Multiplying, ${said(pa)} × ${said(pb)}, is for "and" between independent events, not "or".) So ${said(v)}.`,
     };
   }

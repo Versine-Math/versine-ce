@@ -1,9 +1,9 @@
 /**
- * The Binomial Theorem: (a + b)ⁿ multiplied out without multiplying.
+ * The Binomial Theorem: (a + b)ⁿ expanded without multiplying.
  *
  * Each row of Pascal's triangle is the row above added in pairs, and row n
  * lists the coefficients of (a + b)ⁿ. Those numbers are C(n, k), the ways to
- * choose which k of the n brackets give a b, so the term with bᵏ is
+ * choose which k of the n parentheses give a b, so the term with bᵏ is
  * C(n, k)aⁿ⁻ᵏbᵏ -- with a and b's own numbers and signs raised along. One
  * term can be found alone, the whole expansion written out, and the
  * constant term of (x + 1/x)ⁿ found where the powers cancel. The same count
@@ -23,7 +23,7 @@ export const LEVELS = [
     dependsOn: [{ skill: 'monomials', level: 2 }] },
   { name: 'Full Expansion', slug: 'full-expansion',
     blurb: 'Every term at once: the row of coefficients, a falling power of the first term and a rising power of the second.',
-    // (a + b)² multiplied out is polynomials' Special Products.
+    // (a + b)² expanded is polynomials' Special Products.
     dependsOn: [{ skill: 'polynomials', level: 5 }] },
   // The constant terms run out at a few hundred, where coefficients of
   // other powers do not, so a full library would fill up with the second

@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for scientific notation.
+ * Catalog authoring tool: builds the problem library for scientific notation.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -189,7 +189,7 @@ function tidy(rng) {
     explain: shift > 0
       ? `${shownFront} is ${factor}. That ${ten} joins the power of ten, so the exponent `
         + `goes up by ${shift}: ${shownFront} × 10${sup(shownE)} = ${sci(m, e)}.`
-      : `${shownFront} is ${factor}. Dividing by ${ten} takes ${-shift} off the power `
+      : `${shownFront} is ${factor}. Dividing by ${ten} subtracts ${-shift} from the power `
         + `of ten, so the exponent goes down by ${-shift}: `
         + `${shownFront} × 10${sup(shownE)} = ${sci(m, e)}.`,
   };
@@ -204,7 +204,7 @@ function compare(rng) {
   const kind = rng.pick(['trap', 'trap', 'negative', 'tie']);
   let a, b;
   if (kind === 'tie') {
-    // Never ten to the nought here: "both are counted in 10⁰s" is true and
+    // Never ten to the zero here: "both are counted in 10⁰s" is true and
     // reads as nonsense.
     const e = rng.pick([-6, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6, 7, 8]);
     let ma = digitsFor(rng, 2), mb = digitsFor(rng, 2);
@@ -225,7 +225,7 @@ function compare(rng) {
   const [x, y] = rng.chance(0.5) ? [a, b] : [b, a];
   const label = ({ m, e }) => sci(m, e);
   const why = a.e === b.e
-    ? `Both are counted in lots of 10${sup(a.e)}, so the front numbers decide: `
+    ? `Both are counted in groups of 10${sup(a.e)}, so the front numbers decide: `
       + `${front(bigger.m)} is more than ${front(smaller.m)}. ${label(bigger)} is bigger.`
     : `The powers decide before the front numbers do. 10${sup(bigger.e)} is ${bigger.e - smaller.e === 1 ? 'ten' : `${tenTo(bigger.e - smaller.e)}`} `
       + `times 10${sup(smaller.e)}, and no front number below 10 can make that up. ${label(bigger)} is bigger.`;
@@ -277,7 +277,7 @@ function mulDiv(rng) {
   const rules = [`front numbers ${divide ? 'divide' : 'multiply'}, powers ${divide ? 'subtract' : 'add'}: ${powerLine}`];
   if (tidyNeeded) {
     lines.push(sci(R.m, re));
-    rules.push(`${rawStr} is not between 1 and 10, so tidy it`);
+    rules.push(`${rawStr} is not between 1 and 10, so fix it`);
   }
   return {
     prompt: [T.group([T.num(front(A.m)), T.op('×'), T.pow(10, expTerm(ae), 1)]), T.op(op),
@@ -292,14 +292,14 @@ function mulDiv(rng) {
     explain: `${divide ? 'Divide' : 'Multiply'} the front numbers: ${front(A.m)} ${op} ${front(B.m)} = ${rawStr}. `
       + `${divide ? 'Subtract' : 'Add'} the powers: ${powerLine}. `
       + (tidyNeeded
-        ? `${rawStr} × 10${sup(rawE)} is not tidy, because ${rawStr} is not between 1 and 10. `
+        ? `${rawStr} × 10${sup(rawE)} is not in scientific notation, because ${rawStr} is not between 1 and 10. `
           + `Moving the point to fix that changes the power: ${sci(R.m, re)}.`
         : `${rawStr} is already between 1 and 10, so the answer is ${sci(R.m, re)}.`),
   };
 }
 
 /**
- * Adding and taking away. There is no rule for the powers here, which is the
+ * Adding and subtracting. There is no rule for the powers here, which is the
  * lesson: they have to be made to match first, and then it is decimals. One
  * number is sometimes given written out, since problems mix the two forms.
  */
@@ -312,7 +312,7 @@ function addSub(rng) {
   // Exact sum or difference on the shared grid of the smaller power.
   const k = Math.min(x.k, y.k);
   const at = (n) => n.m * 10 ** (n.k - k);
-  // Equal numbers would take away to nothing, which has no scientific form.
+  // Equal numbers would subtract to nothing, which has no scientific form.
   if (at(x) === at(y)) return addSub(rng);
   if (subtract && at(x) < at(y)) [x, y] = [y, x];
   const total = subtract ? at(x) - at(y) : at(x) + at(y);
@@ -335,10 +335,10 @@ function addSub(rng) {
   const lines = [`${sci(x.m, xe)} ${op} ${yStr}`,
                  `${xFront} × 10${sup(xe)} ${op} ${yInX} × 10${sup(xe)}`,
                  `${combined} × 10${sup(xe)}`];
-  const rules = [`write both as lots of 10${sup(xe)}`, `${xFront} ${op} ${yInX} = ${combined}`];
+  const rules = [`write both as groups of 10${sup(xe)}`, `${xFront} ${op} ${yInX} = ${combined}`];
   if (re !== xe) {
     lines.push(sci(rm, re));
-    rules.push('tidy the front number');
+    rules.push('fix the front number');
   }
   return {
     prompt: [T.num(xFront), T.op('×'), T.pow(10, expTerm(xe), 1), T.op(op), ...yTerm,
@@ -349,10 +349,10 @@ function addSub(rng) {
       kind: 'evalmodel', lines, rules,
       hint: 'There is no rule for adding powers. What has to match first?',
     },
-    explain: `The powers have to match before anything can be ${subtract ? 'taken away' : 'added'}. In lots of 10${sup(xe)}, `
+    explain: `The powers have to match before anything can be ${subtract ? 'subtracted' : 'added'}. In groups of 10${sup(xe)}, `
       + `${yStr} is ${yInX} × 10${sup(xe)}, so this is ${xFront} ${op} ${yInX} = ${combined} `
-      + `lots of 10${sup(xe)}`
-      + (re !== xe ? `, which tidies to ${sci(rm, re)}.` : `: ${sci(rm, re)}.`),
+      + `groups of 10${sup(xe)}`
+      + (re !== xe ? `, which becomes ${sci(rm, re)}.` : `: ${sci(rm, re)}.`),
   };
 }
 

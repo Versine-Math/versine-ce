@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for trig-graphs.
+ * Catalog authoring tool: builds the problem library for trig-graphs.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -48,14 +48,14 @@ function bxText(b, x = 'x') {
   return b.d === 1 ? top : `${top}/${b.d}`;
 }
 
-/** The inside of f, factored (2(x − π/6)) or multiplied out (2x − π/3). */
+/** The inside of f, factored (2(x − π/6)) or expanded (2x − π/3). */
 function inner(s, expanded = false, x = 'x') {
   const { b, h } = s;
   if (h.n === 0) return bxText(b, x);
   const sign = h.n > 0 ? '−' : '+';
   const H = Q(Math.abs(h.n), h.d);
   if (expanded || (b.d !== 1 && !b.pi)) {
-    // b·h, the number subtracted after multiplying out.
+    // b·h, the number subtracted after expanding.
     const K = Q(b.n * H.n, b.d * H.d);
     return `${bxText(b, x)} ${sign} ${b.pi ? piText(K.n, K.d) : piText(K.n, K.d)}`;
   }
@@ -69,7 +69,7 @@ function inner(s, expanded = false, x = 'x') {
 
 /**
  * y = −3 sin 2x + 1, as the student reads it: a single term goes bare (sin x,
- * cos 2x), anything with a fraction, a π or a shift in brackets.
+ * cos 2x), anything with a fraction, a π or a shift in parentheses.
  */
 function eq(s, { expanded = false, x = 'x', y = 'y' } = {}) {
   const lead = s.a === 1 ? '' : s.a === -1 ? '−' : `${minus(s.a)} `;
@@ -87,7 +87,7 @@ function peakQ(s) {
   return s.fn === 'cos' ? (s.a > 0 ? Q(0) : Q(b.d, b.n)) : (s.a > 0 ? Q(b.d, 2 * b.n) : Q(3 * b.d, 2 * b.n));
 }
 const at0 = (q) => (q.n === 0 ? '0' : piText(q.n, q.d));
-/** cos π bare, cos(3π/4) in brackets. */
+/** cos π bare, cos(3π/4) in parentheses. */
 const bareCos = (a) => (/^\d*π$/.test(a) ? `cos ${a}` : `cos(${a})`);
 const GRAPH_B = [B(1), B(2), B(1, 2), B(3), B(1), B(2)];
 const EQUATION_B = [B(1), B(2), B(3), B(4), B(1, 2), B(1, 3), B(2, 3), B(3, 2), B(1, 4)];
@@ -319,8 +319,8 @@ function phaseShift(rng) {
       explain: `${expanded ? `Factor b out of the inside first: ${fn}(${inner(s, true)}) = ${factored}. ` : ''}`
         + `In ${fn}(${b.n === 1 ? '' : 'b('}x − h${b.n === 1 ? '' : ')'}) the wave moves h to the right, and here h = ${piText(H.n, H.d)}, so it moves ${piText(size.n, size.d)} to the ${dir}. `
         + `(${b.n === 1 ? `A minus inside moves the wave right, the opposite of how it reads, and by exactly ${piText(size.n, size.d)}, not twice or half that.`
-          : divided ? `${expanded ? `Divide ${piText(K.n, K.d)} by ${b.n} once` : `Factored, the number in the brackets is already the shift`}: ${piText(size.n, size.d)}, not ${piText(wrongSize.n, wrongSize.d)}.`
-            : expanded ? `The ${piText(K.n, K.d)} is b × h, not the shift: divide it by ${b.n}.` : `Factored, the number in the brackets is already the shift: it is not multiplied by ${b.n}.`}) So ${shiftLabel(dir, size)}.`,
+          : divided ? `${expanded ? `Divide ${piText(K.n, K.d)} by ${b.n} once` : `Factored, the number in the parentheses is already the shift`}: ${piText(size.n, size.d)}, not ${piText(wrongSize.n, wrongSize.d)}.`
+            : expanded ? `The ${piText(K.n, K.d)} is b × h, not the shift: divide it by ${b.n}.` : `Factored, the number in the parentheses is already the shift: it is not multiplied by ${b.n}.`}) So ${shiftLabel(dir, size)}.`,
     };
   }
 }
@@ -411,7 +411,7 @@ function models(rng) {
           text: `${base}; want height at ${t}${exact ? '' : placeText(1)}`,
           answer: exact ? fracAnswer(Math.round(x), 1) : roundedAnswer(q, 1),
           visual: null,
-          explain: `At t = ${t} the wheel has turned ${frac[0]}/${frac[1]} of the way round, an angle of 2π × ${t}/${T0} = ${piText(2 * frac[0], frac[1])}. `
+          explain: `At t = ${t} the wheel has turned ${frac[0]}/${frac[1]} of the way around, an angle of 2π × ${t}/${T0} = ${piText(2 * frac[0], frac[1])}. `
             + `h = ${c} − ${r} ${bareCos(piText(2 * frac[0], frac[1]))} = ${c} − ${r} × ${(Math.round(Math.cos(angle) * 1e4) / 1e4).toString().replace('-', '−')} ${exact ? `= ${Math.round(x)}` : `≈ ${(Math.round(x * 1e4) / 1e4)}`}. `
             + `(Put the calculator in radians, or use the turn: ${frac[0]}/${frac[1]} of a turn from the bottom.) So ${exact ? Math.round(x) : roundedText(q, 1)} ${unit}.`,
         };

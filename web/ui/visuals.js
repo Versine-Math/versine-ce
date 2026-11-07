@@ -16,17 +16,17 @@ import { drawIntervals } from './intervals.js';
 /**
  * Visual registry.
  *
- * A catalogue item names the kind of picture it wants and supplies its
+ * A catalog item names the kind of picture it wants and supplies its
  * parameters; the play screen never needs to know what kinds exist. Adding a
  * new kind of picture -- an x/y plane, a triangle, a unit circle -- means
- * adding one entry here, and every catalogue item can use it immediately.
+ * adding one entry here, and every catalog item can use it immediately.
  *
  * Each entry declares a `schema` alongside its renderer. The schema is plain
  * data, not code, for a specific reason: scripts/build-library.mjs writes the
  * schemas out to web/library/schemas.json, and the Python deploy gate reads
  * them from there. So a malformed visual spec is caught before it ships,
  * rather than failing silently in a student's browser -- which is what happens
- * today, and is the whole reason the catalogue needs a declared vocabulary
+ * today, and is the whole reason the catalog needs a declared vocabulary
  * rather than an implied one.
  *
  * Schema types: 'int' | 'number' | 'string' | 'bool' | 'frac' ({n,d}) |
@@ -47,7 +47,7 @@ import { drawIntervals } from './intervals.js';
  * exactly one skill, because each was named after the situation that
  * prompted it rather than the shape it draws. `barmodel`, `fitsmodel`,
  * `wholesmodel` and `equivmodel` are all a length cut into segments with some
- * emphasised. Name a primitive after its geometry, not its pedagogy, and it
+ * emphasized. Name a primitive after its geometry, not its pedagogy, and it
  * gets reused; name it after the lesson and it never will. `ratiomodel` and
  * `quantitymodel` are the two entries that arrived as adapters over that
  * primitive rather than as renderers of their own, which is what the lesson
@@ -299,7 +299,7 @@ const RENDERERS = {
 };
 
 // Every declared kind must have a renderer and vice versa; a mismatch means a
-// catalogue item could name a picture nothing knows how to draw.
+// catalog item could name a picture nothing knows how to draw.
 for (const kind of Object.keys(VISUALS)) {
   if (!RENDERERS[kind]) throw new Error(`Visual "${kind}" is declared but has no renderer`);
 }

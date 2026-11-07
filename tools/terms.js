@@ -2,7 +2,7 @@
  * Term builders for prompts.
  *
  * Authoring-time only: generators compose these into the term arrays stored in
- * the catalogue. The matching renderer is web/ui/prompt.js, which is the half
+ * the catalog. The matching renderer is web/ui/prompt.js, which is the half
  * that ships. Keep the two in step — the term kinds here are the ones it knows.
  */
 export const num = (v, s = 1) => ({ t: 'num', v: String(v), s });
@@ -21,7 +21,7 @@ export const root = (v, c, s = 1) => (c === undefined
 export const letter = (v, s = 1) => ({ t: 'var', v: String(v), s });
 export const op = (v) => ({ t: 'op', v });
 /**
- * Brackets around a nested list of terms.
+ * Parentheses around a nested list of terms.
  *
  * Needed the moment a negative operand follows an operator: `1/2 − −3/4` is
  * unreadable and `1/2 − (−3/4)` is how it is written everywhere else.

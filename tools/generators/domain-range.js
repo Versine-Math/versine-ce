@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for domain-range.
+ * Catalog authoring tool: builds the problem library for domain-range.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -49,7 +49,7 @@ const except = (...qs) => {
 /** ax + b, written: 2x − 6, −x + 4, x. */
 const linText = (a, b, v = 'x') => `${a === 1 ? '' : a === -1 ? '−' : minus(a)}${v}${b === 0 ? '' : ` ${b < 0 ? '−' : '+'} ${Math.abs(b)}`}`;
 const linAscii = (a, b, v = 'x') => `${a}*${v}${b === 0 ? '' : ` ${b < 0 ? '-' : '+'} ${Math.abs(b)}`}`;
-/** b − ax read the friendlier way round when a < 0: 6 − 2x. */
+/** b − ax read the friendlier way around when a < 0: 6 − 2x. */
 const linNice = (a, b, v = 'x') => (a < 0 && b > 0 ? `${b} − ${a === -1 ? '' : Math.abs(a)}${v}` : linText(a, b, v));
 const rootOf = (s) => (s === 'x' ? '√x' : `√(${s})`);
 const nz = (rng, lo, hi) => { let v; do v = rng.int(lo, hi); while (v === 0); return v; };
@@ -67,7 +67,7 @@ function domainFormula(rng) {
     return {
       show: `f(x) = ${rootOf(linNice(a, b))}`, ascii: `sqrt(${linAscii(a, b)})`, parts,
       work: `The expression under the root must not be negative: ${linNice(a, b)} ≥ 0. `
-        + `${a === 1 ? 'So' : a < 0 ? `Divide by ${minus(a)}, turning the sign round since ${minus(a)} is negative:` : `Divide by ${a}:`} x ${a > 0 ? '≥' : '≤'} ${qText(edge)}.`,
+        + `${a === 1 ? 'So' : a < 0 ? `Divide by ${minus(a)}, turning the sign around since ${minus(a)} is negative:` : `Divide by ${a}:`} x ${a > 0 ? '≥' : '≤'} ${qText(edge)}.`,
       trap: `(At x = ${qText(edge)} the root is √0 = 0, which is allowed, so the end is in.)`,
     };
   }
@@ -94,7 +94,7 @@ function domainFormula(rng) {
       show: `f(x) = (${top})/(${den})`, ascii: `(${linAscii(1, c)})/(${denA})`, parts: except(Q(lo), Q(hi)),
       work: `The denominator may not be zero: ${den} = (x ${-lo < 0 ? '−' : '+'} ${Math.abs(lo)})(x ${-hi < 0 ? '−' : '+'} ${Math.abs(hi)})`.replace(/\+ 0\)/g, ')').replace(/− 0\)/g, ')')
         + `, which is 0 at x = ${minus(lo)} and at x = ${minus(hi)}. Both are left out.`,
-      trap: `(${square ? `x² = ${p * p} has two roots, ${p} and −${p}` : 'A quadratic denominator can be zero twice'}: missing one leaves a number in the domain where f cannot be worked out.)`,
+      trap: `(${square ? `x² = ${p * p} has two roots, ${p} and −${p}` : 'A quadratic denominator can be zero twice'}: missing one leaves a number in the domain where f cannot be calculated.)`,
     };
   }
   if (kind === 'rootOver') {
@@ -125,7 +125,7 @@ function domainFormula(rng) {
     ascii: cube ? `cbrt(${linAscii(a, b)})` : `${a}*x**2${b === 0 ? '' : ` ${b < 0 ? '-' : '+'} ${Math.abs(b)}`}`,
     parts: ALL,
     work: cube ? 'A cube root takes negatives as well, since (−2)³ = −8: there is no root to keep positive and no denominator.'
-      : 'There is no root and no denominator: a polynomial can be worked out at every x.',
+      : 'There is no root and no denominator: a polynomial can be calculated at every x.',
     trap: cube ? '(Only an even root, like √, needs what is under it to be at least 0.)' : '(A domain is only limited by something that cannot be done.)',
   };
 }
@@ -190,7 +190,7 @@ function rangeParts(pieces) {
   return out;
 }
 
-/** The arrowhead at an end, pointing away from its neighbour. */
+/** The arrowhead at an end, pointing away from its neighbor. */
 function arrowhead([x, y], [px, py], tone) {
   const L = Math.hypot(x - px, y - py), ux = (x - px) / L, uy = (y - py) / L;
   const wing = (s) => { const c = Math.cos(s), n = Math.sin(s); return [x - 0.7 * (ux * c - uy * n), y - 0.7 * (uy * c + ux * n)]; };
@@ -362,7 +362,7 @@ function piecewiseTable(rng) {
     visual: { kind: 'table', cols: ['f(x) =', 'when'], rows: rules.map((r, j) => [r.show, conds[j][0]]),
       workingCol: `at x = ${minus(at)}`, working: rules.map((r, j) => (j === i ? r.say(at) : '')) },
     explain: `x = ${minus(at)} meets the condition ${conds[i][0]}${boundary ? `: at the boundary, the ${conds[i][0].includes('≤') || conds[i][0].includes('≥') ? 'piece with the "or equal" sign' : 'other piece has the strict sign'} owns ${minus(at)}` : ''}, so use that rule only: f(${minus(at)}) = ${rules[i].say(at)}. `
-      + `(${boundary ? 'At a boundary only one piece applies: the one whose sign includes it.' : 'Working out every rule and picking one at random is not the same as finding the right piece.'}) So f(${minus(at)}) = ${minus(value)}.`,
+      + `(${boundary ? 'At a boundary only one piece applies: the one whose sign includes it.' : 'Calculating every rule and picking one at random is not the same as finding the right piece.'}) So f(${minus(at)}) = ${minus(value)}.`,
   };
 }
 
@@ -498,7 +498,7 @@ function stepRange(rng) {
       answer: setOf('y', parts),
       visual: null,
       explain: `${inner}${inner ? 'the' : 'The'} ${kind === 'ceil' ? 'ceiling' : 'floor'} takes each whole number from ${minus(first)} to ${minus(last)}. ${endWords}. `
-        + `${kind === 'scaled' ? `Then multiply each by ${minus(m)}${c ? ` and ${c > 0 ? 'add' : 'take away'} ${Math.abs(c)}` : ''}: ${listed(values.map(minus))}. ` : ''}`
+        + `${kind === 'scaled' ? `Then multiply each by ${minus(m)}${c ? ` and ${c > 0 ? 'add' : 'subtract'} ${Math.abs(c)}` : ''}: ${listed(values.map(minus))}. ` : ''}`
         + '(A step function jumps from one value to the next, so its range is separate values, not an interval.) '
         + `So the range is ${said('y', parts)}.`,
     };
@@ -569,7 +569,7 @@ function steps(rng) {
   const S = rng.pick([
     { thing: 'A parking garage charges', unit: 'hour', units: 'hours', per: 60, sub: 'minutes', amount: () => rng.int(1, 9) * 60 + rng.pick([0, 5, 15, 20, 30, 40, 45, 50]), say: timeSay, rates: [[300, 150], [400, 200], [250, 125], [500, 300]] },
     { thing: 'Mailing a letter costs', unit: 'ounce', units: 'ounces', per: 10, sub: 'tenths of an ounce', amount: () => rng.int(11, 69), say: (t) => `${(t / 10).toFixed(1)} ounces`, rates: [[73, 24], [68, 21], [80, 25]] },
-    { thing: 'A courier charges', unit: 'kilogram', units: 'kilograms', per: 10, sub: 'tenths of a kilogram', amount: () => rng.int(11, 79), say: (t) => `${(t / 10).toFixed(1)} kilograms`, rates: [[450, 175], [600, 250], [525, 150]] },
+    { thing: 'A delivery service charges', unit: 'kilogram', units: 'kilograms', per: 10, sub: 'tenths of a kilogram', amount: () => rng.int(11, 79), say: (t) => `${(t / 10).toFixed(1)} kilograms`, rates: [[450, 175], [600, 250], [525, 150]] },
     { thing: 'A bike rental costs', unit: 'half hour', units: 'half hours', per: 30, sub: 'minutes', amount: () => rng.int(1, 8) * 30 + rng.pick([0, 5, 10, 20, 25]), say: timeSay, rates: [[500, 250], [400, 300], [600, 200]] },
   ]);
   const [first, each] = rng.pick(S.rates);

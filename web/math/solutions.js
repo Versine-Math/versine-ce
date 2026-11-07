@@ -177,10 +177,10 @@ export function parseSet(raw) {
     const pieces = text.split(/\s*(?:\bu\b|\bor\b)\s*/);
     for (const piece of pieces) {
       const m = piece.match(/^([([])\s*([+-]?[\d./]+|-inf)\s*,\s*(\+?inf|[+-]?[\d./]+)\s*([)\]])$/);
-      if (!m) return { ok: false, hint: 'An interval is two ends in brackets, like (−2, 5].' };
+      if (!m) return { ok: false, hint: 'An interval is two ends in parentheses or square brackets, like (−2, 5].' };
       const lo = end(m[2]), hi = end(m[3]);
       if ((lo === null && m[1] === '[') || (hi === null && m[4] === ']')) {
-        return { ok: false, hint: 'Infinity is never included: it takes a round bracket.' };
+        return { ok: false, hint: 'Infinity is never included: it takes a parenthesis.' };
       }
       if ((lo === null && !/inf/.test(m[2])) || (hi === null && !/inf/.test(m[3]))) return { ok: false };
       parts.push({ lo, loIn: m[1] === '[', hi, hiIn: m[4] === ']' });
@@ -277,7 +277,7 @@ function allBut(set) {
 const pointsOnly = (set) => set.length > 0 && set.every((p) => p.lo !== null && p.hi !== null && cmp(p.lo, p.hi) === 0);
 
 /**
- * Typed exactly the other way round: every number but the excluded ones,
+ * Typed exactly the other way around: every number but the excluded ones,
  * for the excluded ones, or the reverse. Told only where one of the two is
  * a few numbers -- the hint would hand over the answer to an inequality.
  */
@@ -323,7 +323,7 @@ export function formatSet({ letter = 'x', parts }) {
 
 /**
  * The same text as prompt terms, so the preview and the reveal draw a set
- * in the type the rest of the maths is set in.
+ * in the type the rest of the math is set in.
  */
 export function setTerms(value) {
   return formatSet(value).split(' ').map((w) => {

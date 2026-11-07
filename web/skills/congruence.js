@@ -3,7 +3,7 @@
  * two triangles congruent, and what a congruence then gives you.
  *
  * A congruence statement is a matching: △ABC ≅ △QRP pairs A with Q, B with
- * R and C with P, whatever way round the second triangle is drawn. Reading
+ * R and C with P, whatever way around the second triangle is drawn. Reading
  * it off by position on the page, or in alphabetical order, is the slip the
  * first two levels are built on.
  *

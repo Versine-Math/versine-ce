@@ -7,18 +7,18 @@
  * through two, showing a region, and later a curve and its tangent are all
  * this one picture with different marks on it.
  *
- * Marks are plain data, so a curve is a polyline the catalogue already holds
+ * Marks are plain data, so a curve is a polyline the catalog already holds
  * rather than a function the renderer evaluates. That keeps the renderer
  * incapable of computing anything -- which is the property that stops a
  * picture quietly solving the problem.
  *
  * A region is a filled polygon -- the part of the plane an inequality keeps,
- * already clipped to the grid by the catalogue -- and is drawn under every
+ * already clipped to the grid by the catalog -- and is drawn under every
  * line and point, so shading never hides what it is the shading of.
  *
  * @typedef {object} Mark
  * @property {'point'|'segment'|'path'|'region'|'text'} kind
- *   A text mark is words alone, centred on `at`: the size of an angle,
+ *   A text mark is words alone, centered on `at`: the size of an angle,
  *   written inside it, where a label offset from a point would drift.
  * @property {[number, number]} [at]     for a point
  * @property {[number, number]} [from]   for a segment
@@ -26,7 +26,7 @@
  * @property {Array<[number, number]>} [points]  for a path, or a region's corners
  * @property {boolean} [dashed]          for a line not included: y < 2x + 1
  * @property {string} [label]            drawn beside it
- * @property {string} [tone]             CSS colour
+ * @property {string} [tone]             CSS color
  * @property {boolean} [open]            hollow, for a point not included
  *
  * @typedef {object} PlaneSpec
@@ -188,7 +188,7 @@ export function drawPlane(svg, spec, { verdict = null } = {}) {
       }));
     }
     if (m.label) {
-      // A segment is labelled at its middle: at one end, the labels of two
+      // A segment is labeled at its middle: at one end, the labels of two
       // segments that share a corner -- a run and a rise -- land on each other.
       const [lx, ly] = m.kind === 'segment' && m.from && m.to
         ? [(m.from[0] + m.to[0]) / 2, (m.from[1] + m.to[1]) / 2]

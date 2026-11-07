@@ -48,7 +48,7 @@ export default {
   glyph: 'P ÷ (x − c)',
   blurb: 'Long and synthetic division, the remainder, factor and rational root theorems, and every zero from one.',
   answerInput: 'choice',
-  // Multiplying out from polynomials and monomials; zeros from quadratic-eq.
+  // Expanding from polynomials and monomials; zeros from quadratic-eq.
   dependsOn: ['monomials', 'polynomials', 'evaluate', 'quadratic-eq'],
   levels: LEVELS,
 };

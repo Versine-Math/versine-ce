@@ -1,5 +1,5 @@
 /**
- * Catalogue authoring tool: builds the problem library for circles.
+ * Catalog authoring tool: builds the problem library for circles.
  *
  * NOT part of the running application. Nothing here is served to a browser
  * or imported by the server. It exists to produce web/library/ once, and to
@@ -119,7 +119,7 @@ function arcOrSector(rng, sector) {
     const sizeSaid = big ? `${t === 180 ? 'arc ACB, a semicircle,' : 'major arc ACB'} measures ${t}°` : `∠AOB = ${t}°`;
     const whole = sector ? `A = πr² = π × ${r}² = ${r * r}π` : `C = 2πr = 2 × π × ${r} = ${2 * r}π`;
     const trap = sector ? `(The circumference 2πr gives an arc’s length, not a sector’s area${byD ? '; and r is half the diameter' : ''}.)`
-      : `(πr² is the area, not the length round the edge${byD ? '; and r is half the diameter' : ''}.)`;
+      : `(πr² is the area, not the length around the edge${byD ? '; and r is half the diameter' : ''}.)`;
     const given = byD ? `diameter ${2 * r}` : `radius ${r}`;
     const rFrom = byD ? `The radius is half the diameter: ${r}. ` : '';
     const angleWord = big ? 'arc’s measure' : 'central angle';
@@ -144,7 +144,7 @@ function arcOrSector(rng, sector) {
         answer,
         visual: sectorFig(t, start, `${t}°`, GIVEN, [answerAt(labelAt, `${shown}`)], sector),
         explain: `${rFrom}The ${what} is the ${angleWord}’s share of the whole circle, ${share}. The whole: ${whole}. `
-          + `So ${share} × ${sector ? r * r : 2 * r}π = ${piWork}${usePi ? '' : ` ≈ ${exactShown ? `${shownExact(exactShown)} × 3.14` : `${n} × 3.14 ÷ ${d}`} = ${((314 * n) / (100 * d)).toFixed(4).replace(/\.?0+$/, '')}, which is ${shown} to 1 dp`}. `
+          + `So ${share} × ${sector ? r * r : 2 * r}π = ${piWork}${usePi ? '' : ` ≈ ${exactShown ? `${shownExact(exactShown)} × 3.14` : `${n} × 3.14 ÷ ${d}`} = ${((314 * n) / (100 * d)).toFixed(4).replace(/\.?0+$/, '')}, which is ${shown} to 1 decimal place`}. `
           + `${trap} So ${shown}${sector ? ' cm²' : ' cm'}.`,
       };
     }
@@ -188,7 +188,7 @@ function inscribed(rng) {
     const Dat = a0 + rng.int(15, c - 15), D = on(Dat);
     // requiem: catalogue/content/circle-rules-before-equations
     // The rule is the new idea, so most rows give a number and ask for the
-    // other angle, every way round; the x-equations are one mode of eight,
+    // other angle, every way around; the x-equations are one mode of eight,
     // and the level's cap keeps them near a third of its library.
     const mode = rng.pick(['central', 'arc', 'inscribed', 'arc-back', 'minor', 'minor-back', 'opposite', 'x']);
     const half = c / 2;
@@ -206,7 +206,7 @@ function inscribed(rng) {
         visual: draw([...base, seg(D, A), seg(D, B), pointName(D, 'D'), angleText(D, A, B, deg(gv)), angleText(O, A, B, '?', ASKED)],
           [answerAt([on(0), on(180), on(270)], `∠AOB = ${deg(c)}`)]),
         explain: `${fact}∠ADB stands on the major arc AB, the one away from D, so that arc's central angle is 2 × ${gv} = ${2 * gv}°. `
-          + `∠AOB is the rest of the way round: 360 − ${2 * gv} = ${c}°. (Doubling ${gv} gives the major arc, not ∠AOB.) So ∠AOB = ${deg(c)}.`,
+          + `∠AOB is the rest of the way around: 360 − ${2 * gv} = ${c}°. (Doubling ${gv} gives the major arc, not ∠AOB.) So ∠AOB = ${deg(c)}.`,
       };
     }
     if (mode === 'opposite') {
@@ -464,7 +464,7 @@ function tangentRadius(rng) {
     text: `tangent: ${shown.map((n) => `${n} ${vals[n]}`).join(', ')}; find ${ask}`,
     answer: { type: 'int', value: vals[ask] },
     visual: draw(marks, [rightMark(T0, O, P), answerAt([O, T0, P, on(270)], `${ask} = ${vals[ask]}`)]),
-    explain: `A tangent meets the radius at its point of contact at a right angle, so △OTP is right-angled at T, with OP the hypotenuse. `
+    explain: `A tangent meets the radius at its point of contact at a right angle, so △OTP has a right angle at T, with OP the hypotenuse. `
       + `${work}. (${ask === 'OP' ? 'OP is the longest side, opposite the right angle.' : 'OP is the hypotenuse, so subtract: adding the squares would make it longer than OP.'}) So ${ask} = ${vals[ask]}.`,
   };
 }
@@ -533,9 +533,9 @@ function equation(rng) {
         text: `circle center: ${eqA}`,
         answer: pairOf([h, k]),
         visual: { ...base, marks: [], answer: [circle, ...reveal] },
-        explain: `In (x − h)² + (y − k)² = r² the center is (h, k), the numbers that make each bracket zero. `
+        explain: `In (x − h)² + (y − k)² = r² the center is (h, k), the numbers that make each set of parentheses zero. `
           + `${h === 0 ? 'x² is (x − 0)², so h = 0' : `${sq(h)} is zero at x = ${num(h)}`}, and ${k === 0 ? 'y² is (y − 0)², so k = 0' : `${sqY(k)} is zero at y = ${num(k)}`}. `
-          + `(The signs flip: a plus inside the bracket means a negative coordinate.) So ${pt([h, k])}.`,
+          + `(The signs flip: a plus inside the parentheses means a negative coordinate.) So ${pt([h, k])}.`,
       };
     }
     if (mode === 'radius') {
@@ -610,7 +610,7 @@ function general(rng) {
       answer: ask === 'center' ? pairOf([h, k]) : { type: 'int', value: r },
       visual: { ...plane(h, k, r), marks: [], answer: [circlePath([h, k], r, LINE), { kind: 'point', at: [h, k], label: `center ${pt([h, k])}`, tone: RESULT }, seg([h, k], [h + r, k], RESULT)] },
       explain: `${work}${ask === 'center'
-        ? `The center is ${pt([h, k])}, the opposite signs to those in the brackets. (Half of ${num(D)} with its sign kept, ${num(half(D))}, gives the bracket, not the coordinate.)`
+        ? `The center is ${pt([h, k])}, the opposite signs to those in the parentheses. (Half of ${num(D)} with its sign kept, ${num(half(D))}, gives the number in the parentheses, not the coordinate.)`
         : `So r² = ${r * r} and r = ${r}. (Taking r² = ${num(-F)} forgets the squares added to both sides.)`} `
         + `So ${ask === 'center' ? pt([h, k]) : `r = ${r}`}.`,
     };

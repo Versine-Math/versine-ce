@@ -19,7 +19,7 @@ export const LEVELS = [
   { name: 'Venn Diagrams', slug: 'venn-diagrams', libraryCap: 500,
     blurb: 'And is the overlap, or is everything in either circle, and neither is outside both.' },
   { name: 'Addition Rule', slug: 'addition-rule',
-    blurb: 'P(A or B) = P(A) + P(B) − P(A and B): the overlap is in both, so take it off once.' },
+    blurb: 'P(A or B) = P(A) + P(B) − P(A and B): the overlap is in both, so subtract it once.' },
   { name: 'Conditional From a Table', slug: 'conditional-from-a-table',
     blurb: '"Given" shrinks the whole to one row or column. Divide by its total, not by everyone.',
     // Reading a two-way table, and its row and column totals, is taught there.

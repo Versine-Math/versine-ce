@@ -11,6 +11,15 @@ API contract (`contract/`), since that is what any other server depends on:
 Home installs keep following `main` through `scripts/update.sh`; a release is for
 anyone who wants a known version, and these notes say what changed either way.
 
+## Unreleased
+
+**Python 3.14 and current libraries.** The server runs on Python 3.14, with
+FastAPI 0.163, Starlette 1.10, uvicorn 0.54, pydantic 2.14 and this year's
+time-zone data. Nothing in the API or the catalog changes, and every check
+passes as before. Home installs rebuild their image once on the next update,
+as for any change to `requirements.txt` or the `Dockerfile`; a checkout run
+with `dev.sh` needs its `.venv` made again with Python 3.14.
+
 ## 2.0.0 — 2026-11-06
 
 **Time Trials sized to the problems.** A trial now asks for as many problems

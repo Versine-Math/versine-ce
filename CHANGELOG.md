@@ -11,7 +11,7 @@ API contract (`contract/`), since that is what any other server depends on:
 Home installs keep following `main` through `scripts/update.sh`; a release is for
 anyone who wants a known version, and these notes say what changed either way.
 
-## Unreleased
+## 2.0.1 — 2026-11-15
 
 **Python 3.14 and current libraries.** The server runs on Python 3.14, with
 FastAPI 0.163, Starlette 1.10, uvicorn 0.54, pydantic 2.14 and this year's

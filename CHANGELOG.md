@@ -11,6 +11,16 @@ API contract (`contract/`), since that is what any other server depends on:
 Home installs keep following `main` through `scripts/update.sh`; a release is for
 anyone who wants a known version, and these notes say what changed either way.
 
+## Unreleased
+
+**Even spacing in the UI kit.** `.stack--sm` now lays its children out as a column
+by itself; before, it only set a gap, which did nothing unless `.stack` was on the
+same element, so fields, buttons and text inside a bare `.stack--sm` touched. In a
+stack, buttons keep their own width (`.btn--block` for full width), paragraphs are
+spaced by the stack rather than their own margins as well, and an empty slot such as
+an error line with nothing to say yet takes no room. The practice screen's answer
+line keeps its reserved height.
+
 ## 2.0.1 — 2026-11-15
 
 **Python 3.14 and current libraries.** The server runs on Python 3.14, with

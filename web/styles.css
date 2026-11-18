@@ -419,8 +419,23 @@ h1, h2, h3, .display { font-family: var(--display); font-weight: 700; letter-spa
 
 
 /* ── Utility ──────────────────────────────────────────────────────────── */
-.stack   { display: flex; flex-direction: column; gap: 14px; }
+/* Vertical rhythm. A stack spaces its children evenly: 14px, or 8px for --sm. Either class
+   works alone, so spacing never depends on remembering to pair them; a bare `.stack--sm`
+   once set only a gap, which does nothing outside a flex box, and its contents touched. */
+.stack, .stack--sm { display: flex; flex-direction: column; gap: 14px; }
 .stack--sm { gap: 8px; }
+/* Paragraphs are spaced by the stack, not by their own margins as well. */
+.stack > p, .stack--sm > p { margin: 0; }
+/* A button keeps its own width in a stack (use .btn--block for full width) and follows the
+   stack's alignment: left, or centred in a .center stack. */
+.stack > .btn:not(.btn--block), .stack--sm > .btn:not(.btn--block) { align-self: flex-start; }
+.center.stack > .btn:not(.btn--block), .center.stack--sm > .btn:not(.btn--block) { align-self: center; }
+/* An empty slot (an error line with nothing to say yet, a note not needed now) takes no
+   room: it cancels its own gap and drops its reserved height, but stays in the page so a
+   live region still announces what is later written into it. The practice screen's answer
+   line (.feedback[role=status]) keeps its height, so the screen doesn't jump. */
+.stack > :is(div, p, ul, ol, section):empty:not(.feedback[role=status]) { min-height: 0; margin-top: -14px; }
+.stack--sm > :is(div, p, ul, ol, section):empty:not(.feedback[role=status]) { min-height: 0; margin-top: -8px; }
 .row-flex { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .between { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .center { text-align: center; }

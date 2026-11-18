@@ -21,6 +21,8 @@ spaced by the stack rather than their own margins as well, and an empty slot suc
 an error line with nothing to say yet takes no room. The practice screen's answer
 line keeps its reserved height.
 
+The `hidden` attribute now always hides an element, whatever layout class it carries.
+
 ## 2.0.1 — 2026-11-15
 
 **Python 3.14 and current libraries.** The server runs on Python 3.14, with

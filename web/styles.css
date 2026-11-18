@@ -441,6 +441,8 @@ h1, h2, h3, .display { font-family: var(--display); font-weight: 700; letter-spa
 .center { text-align: center; }
 .grow { flex: 1; }
 .hidden { display: none !important; }
+/* The hidden attribute wins over any layout class (.stack and .btn set display themselves). */
+[hidden] { display: none !important; }
 
 .chips { display: flex; gap: 6px; flex-wrap: wrap; }
 .chip {

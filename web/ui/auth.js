@@ -1,7 +1,8 @@
 import { api } from '../engine/api.js';
 import { el, mount } from './dom.js';
 import { ICONS, ACCENTS } from './icons.js';
-import { state, go } from './router.js';
+import { state, go, takeStartRoute } from './router.js';
+import { isScreen } from '../engine/extensions.js';
 
 function wordmark() {
   return el('div.wordmark', {}, el('b', {}, 'MATH'), el('span.slash', {}, '/'), 'TRAINER');
@@ -10,7 +11,8 @@ function wordmark() {
 async function enter(me) {
   state.me = me;
   state.progress = await api.progress();
-  go({ name: me.role === 'teacher' ? 'teacher' : 'map' }, { replace: true });
+  // Signed in from a page whose address named a screen: there, if they may open it.
+  go(takeStartRoute(me, isScreen) ?? { name: me.role === 'teacher' ? 'teacher' : 'map' }, { replace: true });
 }
 
 /**

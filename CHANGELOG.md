@@ -13,6 +13,16 @@ anyone who wants a known version, and these notes say what changed either way.
 
 ## Unreleased
 
+**Every screen has an address** (a minor change: 2.1.0). The address bar now
+follows the app (`/teacher`, `/skill?skillId=…`), so a reload stays where you
+were, a bookmark or a new tab opens that screen, and the browser's history
+lists real places. Someone signed out who opens an address signs in and lands
+there, if their role may open it. The root still carries emailed links'
+parameters and puts none of them in history. The server answers a screen's
+address with the app's page. For extensions, `addScreen(name, render, rules)`
+takes optional `roles`, `title` and `restore: false`, and the context gains
+`replaceRoute` and `startRoute`.
+
 **Even spacing in the UI kit.** `.stack--sm` now lays its children out as a column
 by itself; before, it only set a gap, which did nothing unless `.stack` was on the
 same element, so fields, buttons and text inside a bare `.stack--sm` touched. In a

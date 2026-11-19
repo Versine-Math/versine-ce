@@ -69,7 +69,7 @@ function signOutButton() {
       }
       clearTimeout(armed);
       await api.logout();
-      location.reload();
+      location.replace('/');
     },
   }, 'Switch');
   return btn;

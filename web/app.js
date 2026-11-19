@@ -1,10 +1,11 @@
 import { api } from './engine/api.js';
 import { unlockOnFirstGesture } from './engine/audio.js';
 import { mount } from './ui/dom.js';
-import { state, setRenderer, go, rerender } from './ui/router.js';
+import { state, setRenderer, go, rerender, replaceRoute, rememberAddress, takeStartRoute } from './ui/router.js';
+import { routeFromUrl } from './ui/addresses.js';
 import { loginScreen, setupScreen } from './ui/auth.js';
 import { mapScreen, skillScreen, modeScreen } from './ui/map.js';
-import { blockersFor, signInScreen, screenFor, loadExtensions } from './engine/extensions.js';
+import { blockersFor, isScreen, signInScreen, screenFor, loadExtensions } from './engine/extensions.js';
 import { el } from './ui/dom.js';
 import { playScreen, summaryScreen } from './ui/play.js';
 import { teacherScreen, studentScreen } from './ui/teacher.js';
@@ -54,14 +55,17 @@ setRenderer(render);
 unlockOnFirstGesture();
 
 (async function boot() {
-  await loadExtensions({ api, state, go, rerender, el, mount });
+  // requiem: web/screens-have-addresses -- read before anything rewrites the address.
+  rememberAddress(routeFromUrl(location.pathname, location.search));
+  const startRoute = (me) => takeStartRoute(me, isScreen);
+  await loadExtensions({ api, state, go, rerender, el, mount, replaceRoute, startRoute });
   const data = await api.bootstrap();
   state.needsSetup = data.needs_setup;
   state.users = data.users;
   state.me = data.me;
   if (state.me) {
     state.progress = await api.progress();
-    go({ name: state.me.role === 'teacher' ? 'teacher' : 'map' }, { replace: true });
+    go(startRoute(state.me) ?? { name: state.me.role === 'teacher' ? 'teacher' : 'map' }, { replace: true });
   } else {
     render();
   }

@@ -11,17 +11,23 @@
  * serve its own list, and each module it names receives the sockets:
  *
  *   setSignIn(render)          replace the sign-in screen (default: PIN profiles)
- *   addScreen(name, render)    a screen reached by go({ name })
+ *   addScreen(name, render, rules)  a screen reached by go({ name }), and by its
+ *                              address /name; `rules` may give its `roles`, a `title`,
+ *                              or `restore: false` (see ui/addresses.js)
  *   addLink({ label, route, roles })  a link in the top bar, for those roles
  *   setGatePolicy(policy)      decide which skills a student may open
  *   setLockNote(note)          say, in the extension's words, why a skill is locked
  *   setTeacherPractise(action) relabel the console's Practice button and change what it does
  *
  * A module is an ES module whose default export receives { extensions, api,
- * state, go, rerender, el, mount }. One that fails to load is reported on the
+ * state, go, rerender, el, mount, replaceRoute, startRoute }: `replaceRoute(route)`
+ * changes the current address without drawing again, and `startRoute(me)` is
+ * where someone just signed in should go if the page's address named a screen
+ * (null otherwise), for an extension's own sign-in to honour. One that fails to load is reported on the
  * console and skipped: the app keeps its defaults rather than failing to start.
  */
 import { lockedBy } from './registry.js';
+import { CORE_SCREENS, setScreenRules } from '../ui/addresses.js';
 
 const sockets = {
   signIn: null,
@@ -37,7 +43,7 @@ export const extensionErrors = [];
 
 export const extensions = {
   setSignIn(render) { sockets.signIn = render; },
-  addScreen(name, render) { sockets.screens.set(name, render); },
+  addScreen(name, render, rules) { sockets.screens.set(name, render); setScreenRules(name, rules); },
   addLink(link) { sockets.links.push(link); },
   /**
    * requiem: server/extensions/gate-policy
@@ -90,6 +96,11 @@ export function signInScreen() {
  */
 export function hasCustomSignIn() {
   return sockets.signIn !== null;
+}
+
+/** Whether a screen by this name exists: one of the app's own, or an extension's. */
+export function isScreen(name) {
+  return CORE_SCREENS.has(name) || sockets.screens.has(name);
 }
 
 /** An extension's screen for a route name, or undefined. */

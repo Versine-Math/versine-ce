@@ -52,7 +52,7 @@ function header() {
       practiceButton(),
       ...extensionLinks(),
       el('button.btn.btn--sm.btn--ghost', {
-        onclick: async () => { await api.logout(); location.reload(); },
+        onclick: async () => { await api.logout(); location.replace('/'); },
       }, 'Sign out')));
 }
 

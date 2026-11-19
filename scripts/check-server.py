@@ -1161,6 +1161,21 @@ def _():
 
 
 # ── Run them ─────────────────────────────────────────────────────────────────
+# requiem: web/screens-have-addresses
+@test("a screen's address is the app's page; a missing file or an unknown /api path is still a 404")
+def _():
+    from fastapi.testclient import TestClient
+    client = TestClient(api.app)
+    page = client.get("/").text
+    for address in ("/family", "/skill?skillId=integers-add", "/add-student"):
+        r = client.get(address)
+        equal(r.status_code, 200, address)
+        check(r.text == page, f"{address} is not the app's page")
+    for missing in ("/nothing-here.js", "/api", "/api/nothing", "/ui/nothing", "/Family"):
+        equal(client.get(missing).status_code, 404, missing)
+    equal(client.get("/styles.css").status_code, 200, "a real file is still itself")
+
+
 for name, fn in TESTS:
     try:
         fn()

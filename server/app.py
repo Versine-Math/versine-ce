@@ -8,6 +8,7 @@ from __future__ import annotations
 import json
 import math
 import os
+import re
 import sqlite3
 import statistics
 from datetime import date, timedelta
@@ -18,6 +19,7 @@ from contextlib import asynccontextmanager
 from fastapi import Cookie, Depends, FastAPI, HTTPException, Response
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
+from starlette.exceptions import HTTPException as StarletteHTTPException
 from pydantic import BaseModel, Field
 
 import auth
@@ -840,6 +842,7 @@ def delete_user(user_id: int, teacher=Depends(current_teacher)):
 # deploy one can run a fresh map.js against a stale rating.js -- an import
 # that no longer resolves, and a blank page.
 REVALIDATE = {"Cache-Control": "no-cache"}
+SCREEN_ADDRESS = re.compile(r"[a-z][a-z0-9-]*")
 
 
 class RevalidatedFiles(StaticFiles):
@@ -847,6 +850,17 @@ class RevalidatedFiles(StaticFiles):
         response = super().file_response(*args, **kwargs)
         response.headers.update(REVALIDATE)
         return response
+
+    async def get_response(self, path, scope):
+        # requiem: web/screens-have-addresses -- a screen's address (/family, /skill?...)
+        # is the app's page, which reads the address and opens that screen. Only a bare
+        # lowercase name qualifies, so a missing file or an unknown /api path stays a 404.
+        try:
+            return await super().get_response(path, scope)
+        except StarletteHTTPException as exc:
+            if exc.status_code == 404 and SCREEN_ADDRESS.fullmatch(path) and path != "api":
+                return FileResponse(WEB_DIR / "index.html", headers=REVALIDATE)
+            raise
 
 
 @app.get("/")

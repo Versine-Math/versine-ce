@@ -11,9 +11,9 @@ API contract (`contract/`), since that is what any other server depends on:
 Home installs keep following `main` through `scripts/update.sh`; a release is for
 anyone who wants a known version, and these notes say what changed either way.
 
-## Unreleased
+## 2.1.0 — 2026-11-18
 
-**Every screen has an address** (a minor change: 2.1.0). The address bar now
+**Every screen has an address.** The address bar now
 follows the app (`/teacher`, `/skill?skillId=…`), so a reload stays where you
 were, a bookmark or a new tab opens that screen, and the browser's history
 lists real places. Someone signed out who opens an address signs in and lands
